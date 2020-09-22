@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background: #EDF3FF;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+input {
+  font-size: 1rem;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+.error {
+  font-size: 0.85rem;
+  line-height: 14px;
+  color: #EC1B1B;
+  margin: 4px 0 0 26px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.mobile {
+  display: block;
+}
+
+//authorization
+.auth {
+  margin: auto;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
