@@ -4,7 +4,7 @@ import tmLogin from '../components/tm-login'
 import tmRegistration from '../components/tm-registration'
 import tmChangePassword from '../components/tm-change-password'
 import tmMainPage from '../components/tm-main-page'
-import tmTasksList from '../components/tm-tasks-list'
+import tmMyTasks from '../components/tm-my-tasks'
 import store from '../vuex/store'
 Vue.use(Router);
 
@@ -31,16 +31,14 @@ let router=new Router({
             name: 'mainPage',
             component: tmMainPage,
             beforeEnter(to,from,next) {
-                console.log(store.state.user.user)
                 store.state.user.id ? next() : next('/');
             }
         },
         {
-            path: '/tasksList',
-            name: 'TasksList',
-            component: tmTasksList,
+            path: '/MyTasks',
+            name: 'tmMyTasks',
+            component: tmMyTasks,
             beforeEnter(to,from,next) {
-                console.log(store.state.user.user)
                 store.state.user.id ? next() : next('/');
             }
         }

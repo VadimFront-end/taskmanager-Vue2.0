@@ -12,20 +12,25 @@
      <div style="margin-left: 15px" class="mobile">Описание</div>
    </div>
    <div
-       v-for="(task,index) in TASKS"
+       v-for="(task,index) in LASTTASKS"
        :key="index"
        class="last-tasks"
-       :style="{borderRadius: index===TASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}">
+       :style="{borderRadius: index===LASTTASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}">
      <div class="tasks-status">
-       <div style="margin: auto">{{task.status}}</div>
+       <svg v-if="task.status===2" width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M0 5.3444H9.50538L6.05604 1.87436L6.97752 0.947357L12 5.99999L6.97752 11.0526L6.05604 10.1256L9.50538 6.65558H0V5.3444Z" fill="#4F8AFD"/>
+       </svg>
+       <svg v-if="task.status===3" width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M6 0C2.6916 0 0 2.6916 0 6C0 9.3084 2.6916 12 6 12C9.3084 12 12 9.3084 12 6C12 2.6916 9.3084 0 6 0ZM6 10.8C3.3534 10.8 1.2 8.6466 1.2 6C1.2 3.3534 3.3534 1.2 6 1.2C8.6466 1.2 10.8 3.3534 10.8 6C10.8 8.6466 8.6466 10.8 6 10.8Z" fill="#2CCF11"/>
+         <path d="M4.79941 6.95213L3.42001 5.57513L2.57281 6.42473L4.80062 8.64773L8.82421 4.62413L7.97581 3.77573L4.79941 6.95213Z" fill="#2CCF11"/>
+       </svg>
+       <div v-if="task.status===1" class="status-none" style="width: 15px;height: 15px"></div>
      </div>
      <div class="tasks-title">
        <div style="margin: auto 15px">{{task.title}}</div>
      </div>
      <div class="executer">
-       <div class="executer-round">
-         <div style="margin: auto">{{task.executer[0]}}</div>
-       </div>
+       <div class="executer-round">{{task.executer[0]}}</div>
      </div>
      <div class="tasks-status">
        <div style="margin: auto">{{task.deadline}}</div>
@@ -45,6 +50,10 @@
      </div>
      <div class="tasks-title mobile">
        <div style="margin: auto 15px;font-size: 0.85rem">{{task.description}}</div>
+     </div>
+     <div class="container-for-arrow mobile">
+       <div class="arrow-for-small-task" style="transform: rotate(45deg);margin-right: -2px"></div>
+       <div class="arrow-for-small-task" style="transform: rotate(-45deg);margin-left: -2px"></div>
      </div>
    </div>
    <div class="title-main-page">Текущие проекты</div>
@@ -80,7 +89,7 @@ export default {
   name: "tm-main-page",
   computed: {
     ...mapGetters([
-        'TASKS'
+        'LASTTASKS'
     ])
   }
 }
@@ -88,6 +97,7 @@ export default {
 
 <style>
 .tm-container-for-content-page {
+  width: 100%;
   padding-left: 70px;
   margin: 56px auto 0;
   max-width: 1170px;
@@ -107,13 +117,15 @@ export default {
 }
 .last-tasks {
   display: grid;
-  grid-template-columns: 82px 340px 100px 82px 100px 82px 100px 285px;
+  grid-template-columns: 82px 340px 100px 82px 100px 82px 100px 203px 82px;
   grid-auto-rows: 72px;
   box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
   margin-bottom: 2px;
   background: white;
 }
 .tasks-status {
+  justify-content: center;
+  align-items: center;
   display: flex;
 }
 .tasks-title {
@@ -132,6 +144,8 @@ export default {
   color: #FCFCFD;
   border-radius: 50%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .executer-oval {
   padding: 5px 11px;
@@ -140,6 +154,18 @@ export default {
   background: #F1EAA5;
   border-radius: 14px;
   display: flex;
+}
+.container-for-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.arrow-for-small-task {
+  background: #B0BCD3;
+  border-radius: 1px;
+  width: 10px;
+  height: 2px;
 }
 .project-now {
   display: grid;
