@@ -1,8 +1,9 @@
 <template>
   <div class="tm-container-for-content-page">
+    <modalWindowTask v-show="showWindow" @closeWindow="closeWindow" />
     <div style="display: flex;align-items: center;justify-content: space-between">
       <div class="title-main-page">Мои задачи</div>
-      <button class="button-for-add-task">Добавить задачу</button>
+      <button class="button-for-add-task" @click="showWindow=true">Добавить задачу</button>
     </div>
     <tmControlFilters @view="getView"/>
     <tmMyTasksList v-if="view"/>
@@ -14,22 +15,28 @@
 import tmControlFilters from '../components/tm-control-filters'
 import tmMyTasksList from '../components/tm-my-tasks-list'
 import tmMyTasksTable from '../components/tm-my-tasks-table'
+import modalWindowTask from '../components/modal-window-task'
 
 export default {
   name: "tm-tasks-list",
   components: {
     tmControlFilters,
     tmMyTasksList,
-    tmMyTasksTable
+    tmMyTasksTable,
+    modalWindowTask
   },
   data() {
     return {
-      view: true
+      view: true,
+      showWindow: false
     }
   },
   methods: {
     getView(data) {
       this.view=data;
+    },
+    closeWindow(data) {
+      this.showWindow=data;
     }
   }
 }

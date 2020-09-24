@@ -14,7 +14,7 @@
         v-for="(task,index) in TASKS"
         :key="index"
         class="last-tasks"
-        v-show="task.status===3&&STATUSFILTER.statusToDo||task.status===2&&STATUSFILTER.statusWork||!task.status===1&&STATUSFILTER.statusDane"
+        v-show="task.status===3&&STATUSFILTER.statusToDo||task.status===2&&STATUSFILTER.statusWork||task.status===1&&STATUSFILTER.statusDane"
         :style="{borderRadius: index===TASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}">
       <div class="tasks-status">
         <svg v-if="task.status===2" width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
