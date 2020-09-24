@@ -32,17 +32,13 @@
      <div class="executer">
        <div class="executer-round">{{task.executer[0]}}</div>
      </div>
-     <div class="tasks-status">
-       <div style="margin: auto">{{task.deadline}}</div>
-     </div>
+     <div class="tasks-status">{{task.deadline}}</div>
      <div class="executer mobile">
        <div class="executer-oval">
          <div style="margin: auto">{{task.difficulty}}</div>
        </div>
      </div>
-     <div class="tasks-status mobile">
-       <div style="margin: auto">{{task.time}}</div>
-     </div>
+     <div class="tasks-status mobile">{{task.time}}</div>
      <div class="executer mobile">
        <div class="executer-round">
          <div style="margin: auto">{{task.author[0]}}</div>

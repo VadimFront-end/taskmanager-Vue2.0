@@ -12,15 +12,15 @@
         </div>
         <div class="filters">
           <span style="margin-right: 8px">Статус:</span>
-          <div class="status-filter" style="border-radius: 50px 0 0 50px">
+          <div @click="showOnlyThis(0)" class="status-filter" style="border-radius: 50px 0 0 50px">
             <div class="status-none"></div>
           </div>
-          <div class="status-filter">
+          <div @click="showOnlyThis(1)" class="status-filter">
             <svg style="margin: auto" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 5.3444H9.50538L6.05604 1.87436L6.97752 0.947357L12 5.99999L6.97752 11.0526L6.05604 10.1256L9.50538 6.65558H0V5.3444Z" fill="#4F8AFD"/>
             </svg>
           </div>
-          <div class="status-filter" style="border-radius: 0 50px 50px 0;">
+          <div @click="showOnlyThis(2)" class="status-filter" style="border-radius: 0 50px 50px 0">
             <svg style="margin: auto" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6 0C2.6916 0 0 2.6916 0 6C0 9.3084 2.6916 12 6 12C9.3084 12 12 9.3084 12 6C12 2.6916 9.3084 0 6 0ZM6 10.8C3.3534 10.8 1.2 8.6466 1.2 6C1.2 3.3534 3.3534 1.2 6 1.2C8.6466 1.2 10.8 3.3534 10.8 6C10.8 8.6466 8.6466 10.8 6 10.8Z" fill="#2CCF11"/>
               <path d="M4.79941 6.95213L3.42001 5.57513L2.57281 6.42473L4.80062 8.64773L8.82421 4.62413L7.97581 3.77573L4.79941 6.95213Z" fill="#2CCF11"/>
@@ -81,8 +81,10 @@ export default {
   methods: {
     pushView(view) {
       this.view=view;
-      console.log(this.view)
-      this.$emit('view', this.view)
+      this.$emit('view', this.view);
+    },
+    showOnlyThis(index) {
+      this.$store.commit('showOnlyThis', index);
     }
   }
 }

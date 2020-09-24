@@ -33,6 +33,10 @@
       <div class="error" v-if="(ERROR&&!$v.password.required)">Необходимо ввести пароль</div>
       <div class="error" v-else-if="(ERROR&&!$v.password.minLength)">Минимум 8 символов</div>
       <div class="error" v-else-if="(ERROR&&!$v.password.maxLength)">Максимум 27 символов</div>
+      <div class="server-error" v-if="typeof(ERROR)==='string'">
+        <div class="sign-error">!</div>
+        <div class="error" style="margin: 0 5px">{{ERROR}}</div>
+      </div>
       <button class="log-butt" @click="sendLoginPasswordToServer">Войти</button>
       <div class="links-container">
         <div class="link-to-authorization-items" @click="forgotPassword=true;$store.commit('deleteError')">Не удается войти</div>

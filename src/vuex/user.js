@@ -81,6 +81,9 @@ export default {
         setError(state) {
             state.error=true;
         },
+        setErrorFromServer(state,error) {
+          state.error=error;
+        },
         deleteError(state) {
             state.error=false;
         }
@@ -97,8 +100,8 @@ export default {
                     router.push('/mainPage');
                 })
                 .catch(error => {
-                    console.log(error.response);
-                    this.state.error=error.response;
+                    console.log(error.response.data.login);
+                    commit('setErrorFromServer', error.response.data.login);
                 })
         },
         async signUp({commit}, userData) {
@@ -114,8 +117,8 @@ export default {
                     router.push('/mainPage');
                 })
                 .catch(error => {
-                    console.log(error.response);
-                    this.state.error=error.response;
+                    console.log(error.response.data.login);
+                    this.state.error=error.response.data.login;
                 })
         }
     },
