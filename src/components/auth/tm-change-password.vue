@@ -1,6 +1,6 @@
 <template>
  <div class="auth">
-   <img class="log-img" src="../assets/images/loginImg.png">
+   <img class="log-img" src="../../assets/images/loginImg.png">
    <div class="content-form">
      <div class="form-title">Сменить пароль</div>
      <div

@@ -13,7 +13,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd'
+                description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
+                subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
@@ -23,7 +24,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd'
+                description: 'asdasdasdasdasd',
+                subtasks: ['1','2','3','4']
             },
             {
                 status: 1,
@@ -33,7 +35,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd'
+                description: 'asdasdasdasdasd',
+                subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
@@ -43,7 +46,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd'
+                description: 'asdasdasdasdasd',
+                subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
@@ -53,7 +57,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd'
+                description: 'asdasdasdasdasd',
+                subtasks: ['1','2','3','4']
             },
             {
                 status: 3,
@@ -63,7 +68,8 @@ export default {
                 difficulty: 'normal',
                 time: '2:34',
                 author: 'Vadim',
-                description: 'asdasdasdasdasd'
+                description: 'asdasdasdasdasd',
+                subtasks: ['1','2','3','4']
             }
         ],
         error: false,
@@ -77,6 +83,8 @@ export default {
         },
         signUp(state,userData) {
             state.user=userData;
+            localStorage.setItem('token', userData.auth_token);
+            state.id=userData.auth_token;
         },
         setError(state) {
             state.error=true;
@@ -86,6 +94,9 @@ export default {
         },
         deleteError(state) {
             state.error=false;
+        },
+        createNewTask(state,newTask) {
+            state.tasks.push(newTask);
         }
     },
     actions: {
@@ -98,10 +109,12 @@ export default {
                     console.log(res.data)
                     commit('logIn', res.data);
                     router.push('/mainPage');
+                    commit('deleteError');
                 })
                 .catch(error => {
-                    console.log(error.response.data.login);
-                    commit('setErrorFromServer', error.response.data.login);
+                    if(error.response.data.login)commit('setErrorFromServer', error.response.data.login);
+                    else if(error.response.data.password)commit('setErrorFromServer', error.response.data.password);
+                    else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
         },
         async signUp({commit}, userData) {
@@ -112,13 +125,16 @@ export default {
                 confirmPassword: userData.confirmPassword
             })
                 .then(res => {
-                    console.log(res.data)
-                    commit('signUp', res.data);
+                    console.log(res.data.original)
+                    commit('signUp', res.data.original);
                     router.push('/mainPage');
+                    commit('deleteError');
                 })
                 .catch(error => {
-                    console.log(error.response.data.login);
-                    this.state.error=error.response.data.login;
+                    if(error.response.data.email)commit('setErrorFromServer', error.response.data.email[0]);
+                    else if(error.response.data.username)commit('setErrorFromServer', error.response.data.username[0]);
+                    else if(error.response.data.password)commit('setErrorFromServer', error.response.data.password[0]);
+                    else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
         }
     },

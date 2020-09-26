@@ -1,6 +1,6 @@
 <template>
   <div class="auth">
-    <img class="log-img" src="../assets/images/loginImg.png">
+    <img class="log-img" src="../../assets/images/loginImg.png">
     <div class="content-form" v-if="!forgotPassword">
       <div class="form-title">Добро пожаловать!</div>
       <tmEmailInput @getEmail="getEmail" class="first-input-margin" />
@@ -63,7 +63,7 @@
 
 <script>
 import {required,email,maxLength,minLength} from 'vuelidate/lib/validators'
-import tmEmailInput from '../components/tm-email-input'
+import tmEmailInput from './tm-email-input'
 import {mapGetters} from 'vuex'
 
 export default {

@@ -114,10 +114,10 @@ export default {
 .last-tasks {
   display: grid;
   grid-template-columns: 82px 340px 100px 82px 100px 82px 100px 203px 82px;
-  grid-auto-rows: 72px;
+  grid-auto-rows: minmax(72px,auto);
   box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
   margin-bottom: 2px;
-  background: white;
+  background: #FFFFFF;
 }
 .tasks-status {
   justify-content: center;

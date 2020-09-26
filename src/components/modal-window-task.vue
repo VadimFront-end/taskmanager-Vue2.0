@@ -2,7 +2,7 @@
  <div class="mask-modal-window-task">
    <div class="modal-window">
     <div style="color: #344360;margin-bottom: 8px">Задача</div>
-     <input type="text" class="edit-tasks-title" placeholder="Название задачи">
+     <input type="text" class="edit-tasks-title" placeholder="Название задачи" v-model.trim="task.title">
      <div class="persons">
       <div style="margin-right: 30px;align-self: flex-end">
         <div style="display: flex;align-items: center">
@@ -11,7 +11,7 @@
             <path d="M0.999846 14.5H14.9998V16H0.999846V14.5Z" fill="#A7B4CF"/>
           </svg>
           <div class="container-for-input-edit-task">
-            <input type="text" placeholder="Исполнитель" class="input-edit">
+            <input type="text" placeholder="Исполнитель" class="input-edit" v-model.trim="task.executer">
             <div class="container-for-arrow">
               <div class="arrow-for-small-task" style="transform: rotate(45deg);margin-right: -2px"></div>
               <div class="arrow-for-small-task" style="transform: rotate(-45deg);margin-left: -2px"></div>
@@ -35,7 +35,7 @@
        <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 13C0 12.8232 0.070238 12.6537 0.195262 12.5286C0.320287 12.4036 0.489856 12.3334 0.666667 12.3334H10C10.1768 12.3334 10.3464 12.4036 10.4714 12.5286C10.5964 12.6537 10.6667 12.8232 10.6667 13C10.6667 13.1769 10.5964 13.3464 10.4714 13.4714C10.3464 13.5965 10.1768 13.6667 10 13.6667H0.666667C0.489856 13.6667 0.320287 13.5965 0.195262 13.4714C0.070238 13.3464 0 13.1769 0 13ZM0 9.00004C0 8.82323 0.070238 8.65366 0.195262 8.52864C0.320287 8.40361 0.489856 8.33337 0.666667 8.33337H15.3333C15.5101 8.33337 15.6797 8.40361 15.8047 8.52864C15.9298 8.65366 16 8.82323 16 9.00004C16 9.17685 15.9298 9.34642 15.8047 9.47145C15.6797 9.59647 15.5101 9.66671 15.3333 9.66671H0.666667C0.489856 9.66671 0.320287 9.59647 0.195262 9.47145C0.070238 9.34642 0 9.17685 0 9.00004ZM0 5.00004C0 4.82323 0.070238 4.65366 0.195262 4.52864C0.320287 4.40361 0.489856 4.33337 0.666667 4.33337H10C10.1768 4.33337 10.3464 4.40361 10.4714 4.52864C10.5964 4.65366 10.6667 4.82323 10.6667 5.00004C10.6667 5.17685 10.5964 5.34642 10.4714 5.47145C10.3464 5.59647 10.1768 5.66671 10 5.66671H0.666667C0.489856 5.66671 0.320287 5.59647 0.195262 5.47145C0.070238 5.34642 0 5.17685 0 5.00004ZM0 1.00004C0 0.82323 0.070238 0.653661 0.195262 0.528636C0.320287 0.403612 0.489856 0.333374 0.666667 0.333374H15.3333C15.5101 0.333374 15.6797 0.403612 15.8047 0.528636C15.9298 0.653661 16 0.82323 16 1.00004C16 1.17685 15.9298 1.34642 15.8047 1.47145C15.6797 1.59647 15.5101 1.66671 15.3333 1.66671H0.666667C0.489856 1.66671 0.320287 1.59647 0.195262 1.47145C0.070238 1.34642 0 1.17685 0 1.00004Z" fill="#A7B4CF"/>
        </svg>
-       <input type="text" placeholder="Описание задачи..." class="edit-tasks-description">
+       <input type="text" placeholder="Описание задачи..." class="edit-tasks-description" v-model.trim="task.description">
      </div>
      <div class="edit-tasks-time">
        <div style="display: flex;align-items: center">
@@ -51,7 +51,7 @@
            </defs>
          </svg>
          <div class="container-for-input-edit-task">
-           <input type="text" placeholder="Время на задачу" class="input-edit">
+           <input type="text" placeholder="Время на задачу" class="input-edit" v-model.trim="task.time">
          </div>
        </div>
        <div style="display: flex;align-items: center">
@@ -59,7 +59,7 @@
            <path d="M8 16C8.88 16 9.6 15.28 9.6 14.4L9.592 11.856C9.592 11.432 9.424 11.032 9.128 10.728L6.4 8L9.128 5.256C9.424 4.96 9.592 4.552 9.592 4.128L9.6 1.6C9.6 0.72 8.88 0 8 0H1.6C0.72 0 0 0.72 0 1.6V4.128C0 4.552 0.168 4.96 0.464 5.264L3.2 8L0.472 10.72C0.168 11.024 0 11.432 0 11.856V14.4C0 15.28 0.72 16 1.6 16H8ZM1.6 4.072V2.4C1.6 1.96 1.96 1.6 2.4 1.6H7.2C7.64 1.6 8 1.96 8 2.4V4.072C8 4.288 7.912 4.488 7.768 4.64L4.8 7.6L1.832 4.632C1.688 4.488 1.6 4.28 1.6 4.072Z" fill="#A7B4CF"/>
          </svg>
          <div class="container-for-input-edit-task">
-           <input type="text" placeholder="Дедлайн" class="input-edit">
+           <input type="text" placeholder="Дедлайн" class="input-edit" v-model.trim="task.deadline">
            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
              <path d="M4.79999 7.19995H6.39999V8.79995H4.79999V7.19995ZM4.79999 10.4H6.39999V12H4.79999V10.4ZM7.99999 7.19995H9.59999V8.79995H7.99999V7.19995ZM7.99999 10.4H9.59999V12H7.99999V10.4ZM11.2 7.19995H12.8V8.79995H11.2V7.19995ZM11.2 10.4H12.8V12H11.2V10.4Z" fill="#889ABD"/>
              <path d="M3.19998 16H14.4C15.2824 16 16 15.2824 16 14.4V3.2C16 2.3176 15.2824 1.6 14.4 1.6H12.8V0H11.2V1.6H6.39998V0H4.79998V1.6H3.19998C2.31758 1.6 1.59998 2.3176 1.59998 3.2V14.4C1.59998 15.2824 2.31758 16 3.19998 16ZM14.4 4.8L14.4008 14.4H3.19998V4.8H14.4Z" fill="#889ABD"/>
@@ -98,9 +98,26 @@
 <script>
 export default {
 name: "modal-window-task",
+  data() {
+    return {
+      task: {
+        status: 1,
+        title: '',
+        executer: '',
+        deadline: '',
+        difficulty: '',
+        time: '',
+        author: '',
+        description: ''
+      }
+    }
+  },
   methods: {
     closeWindow() {
-      this.$emit('closeWindow', false);
+      if((this.task.title)&&(this.task.executer)) {
+        this.$store.commit('createNewTask', this.task);
+        this.$emit('closeWindow', false);
+      }
     }
   }
 }
@@ -170,6 +187,7 @@ name: "modal-window-task",
   margin-bottom: 56px;
 }
 .tasks-differently-item {
+  cursor: pointer;
   width: 70px;
   display: flex;
   justify-content: center;

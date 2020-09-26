@@ -1,6 +1,6 @@
 <template>
   <div class="auth">
-    <img class="log-img" src="../assets/images/registImg.png">
+    <img class="log-img" src="../../assets/images/registImg.png">
     <div class="content-form">
       <div class="form-title">Регистрация</div>
       <div
@@ -98,6 +98,10 @@
       </div>
       <div class="error" v-if="(ERROR&&!$v.passwordConfirm.required)">Необходимо заполнить поле</div>
       <div class="error" v-else-if="(ERROR&&!$v.passwordConfirm.sameAsPassword)">Пароли не совпадают</div>
+      <div class="server-error" v-if="typeof(ERROR)==='string'">
+        <div class="sign-error">!</div>
+        <div class="error" style="margin: 0 5px">{{ERROR}}</div>
+      </div>
       <button class="log-butt" @click="sendUserDataToServer">Зарегистрироваться</button>
       <div class="conditions">Нажимая Зарегистрироваться я принимаю <span class="link-to-conditions">Правила использования сайта</span> и даю <span class="link-to-conditions">Согласие на обработку персональных данных</span></div>
       <router-link :to="'/'">
@@ -109,7 +113,7 @@
 
 <script>
 import {email, maxLength, minLength, required,sameAs} from "vuelidate/lib/validators";
-import tmEmailInput from '../components/tm-email-input'
+import tmEmailInput from './tm-email-input'
 import {mapGetters} from 'vuex'
 
 export default {
