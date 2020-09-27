@@ -35,7 +35,7 @@
   user-select: none;
   font-family: 'Montserrat', sans-serif;
   display: flex;
-  margin: auto 15%;
+  margin: auto 17px;
 }
 .suffix {
   margin-top: -1px;

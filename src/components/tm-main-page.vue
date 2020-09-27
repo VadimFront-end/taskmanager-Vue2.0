@@ -94,7 +94,6 @@ export default {
 <style>
 .tm-container-for-content-page {
   width: 100%;
-  padding-left: 70px;
   margin: 56px auto 0;
   max-width: 1170px;
 }

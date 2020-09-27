@@ -117,6 +117,8 @@ name: "modal-window-task",
       if((this.task.title)&&(this.task.executer)) {
         this.$store.commit('createNewTask', this.task);
         this.$emit('closeWindow', false);
+        // this.task.status=1;
+        // this.task.title=this.task.executer=this.task.deadline=this.task.difficulty=this.task.time=this.task.time=this.task.author=this.task.description= '';
       }
     }
   }
