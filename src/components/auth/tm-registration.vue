@@ -30,7 +30,8 @@
           </svg>
         </div>
       </div>
-      <div class="error" v-if="(ERROR&&$v.name.$invalid)">Некорректный формат имени</div>
+      <div class="error" v-if="(ERROR&&(!$v.name.checkDefise||!$v.name.nameSigns))">Некорректный формат имени</div>
+      <div class="error" v-else-if="(ERROR&&!$v.name.maxLength)">Максимум 24 символа</div>
       <tmEmailInput
           @getEmail="getEmail"
           class="second-input-margin"
