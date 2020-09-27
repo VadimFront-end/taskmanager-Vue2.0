@@ -37,7 +37,7 @@
       </div>
       <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true">+ Добавить задачу</div>
       <div v-else class="add-subtask">
-        <div contenteditable="true" class="subtask-description"></div>
+        <div contenteditable="true" class="subtask-description" style="border-bottom: 1px solid #889ABD"></div>
       </div>
     </div>
   </div>

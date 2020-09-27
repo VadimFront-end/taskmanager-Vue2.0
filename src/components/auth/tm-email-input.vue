@@ -21,6 +21,10 @@
             @focus="focusEmail=true"
             @blur="writeEmail">
         <div class="sign-error" v-if="ERROR&&$v.email.$invalid">!</div>
+        <svg v-else-if="!$v.email.$invalid&&isRegistration" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="8" fill="#2CCF11"/>
+          <path d="M11.75 5L6.5 11L4.25 8.75" stroke="white" stroke-width="1.69643" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </div>
     <div class="error" v-if="(ERROR&&!$v.email.required)">Необходимо ввести e-mail</div>
@@ -34,6 +38,14 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: "tm-email-input",
+  props: {
+    isRegistration: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    }
+  },
   data() {
     return {
       email: '',

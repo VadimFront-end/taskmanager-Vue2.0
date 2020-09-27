@@ -31,7 +31,10 @@
         </div>
       </div>
       <div class="error" v-if="(ERROR&&$v.name.$invalid)">Некорректный формат имени</div>
-      <tmEmailInput @getEmail="getEmail" class="second-input-margin" />
+      <tmEmailInput
+          @getEmail="getEmail"
+          class="second-input-margin"
+          :isRegistration="true"/>
       <div
           class="form-helper second-input-margin"
           :style="{visibility: (ERROR&&$v.password.$invalid) ? 'visible' : password.length ? 'visible' : 'hidden',

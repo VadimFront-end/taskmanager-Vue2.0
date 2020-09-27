@@ -3,7 +3,10 @@
     <img class="log-img" src="../../assets/images/loginImg.png">
     <div class="content-form" v-if="!forgotPassword">
       <div class="form-title">Добро пожаловать!</div>
-      <tmEmailInput @getEmail="getEmail" class="first-input-margin" />
+      <tmEmailInput
+          @getEmail="getEmail"
+          class="first-input-margin"
+          :isRegistration="false"/>
       <div
           class="form-helper second-input-margin"
           :style="{visibility: (ERROR&&$v.password.$invalid) ? 'visible' : password.length ? 'visible' : 'hidden',

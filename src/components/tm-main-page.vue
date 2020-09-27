@@ -47,10 +47,24 @@
      <div class="tasks-title mobile">
        <div style="margin: auto 15px;font-size: 0.85rem">{{task.description}}</div>
      </div>
-     <div class="container-for-arrow mobile">
-       <div class="arrow-for-small-task" style="transform: rotate(45deg);margin-right: -2px"></div>
-       <div class="arrow-for-small-task" style="transform: rotate(-45deg);margin-left: -2px"></div>
+     <div
+         class="container-for-arrow mobile"
+         @click.prevent="showSubtasks(index)"
+         :index="indexForShow">
+       <div
+           class="arrow-for-small-task"
+           :style="{transform: index===indexForShow ? 'rotate(-45deg)' : 'rotate(45deg)'}"
+           style="margin-right: -2px"></div>
+       <div
+           class="arrow-for-small-task"
+           :style="{transform: index===indexForShow ? 'rotate(45deg)' : 'rotate(-45deg)'}"
+           style="margin-left: -2px"></div>
      </div>
+     <tmSubTasks
+         :subtasks="task.subtasks"
+         :index="index"
+         class="mobile"
+         v-show="indexForShow===index"/>
    </div>
    <div class="title-main-page">Текущие проекты</div>
    <div class="project-now">
@@ -80,13 +94,28 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import tmSubTasks from '../components/tm-subtasks'
 
 export default {
   name: "tm-main-page",
+  components: {
+    tmSubTasks
+  },
+  data() {
+    return {
+      indexForShow: NaN
+    }
+  },
   computed: {
     ...mapGetters([
         'LASTTASKS'
     ])
+  },
+  methods: {
+    showSubtasks(index) {
+      if(index===this.indexForShow)this.indexForShow=NaN;
+      else this.indexForShow=index;
+    }
   }
 }
 </script>
