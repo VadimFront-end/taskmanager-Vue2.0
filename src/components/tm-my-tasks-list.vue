@@ -70,7 +70,8 @@
           :subtasks="task.subtasks"
           :index="index"
           class="mobile"
-          v-show="indexForShow===index"/>
+          v-show="indexForShow===index"
+          :whereSubTasksShow="true"/>
     </div>
     <div style="display: none">
       <tmContainerForDragAndDrop id="bord-1">

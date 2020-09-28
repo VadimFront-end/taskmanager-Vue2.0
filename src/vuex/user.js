@@ -97,6 +97,12 @@ export default {
         },
         createNewTask(state,newTask) {
             state.tasks.push(newTask);
+        },
+        createSubtask(state, newSubtask) {
+            state.tasks[newSubtask.index].subtasks.push(newSubtask.subtask);
+        },
+        deleteSubtask(state,deleteSubtask) {
+            state.tasks[deleteSubtask.indexTask].subtasks.splice(deleteSubtask.indexSubtask, 1);
         }
     },
     actions: {
@@ -136,6 +142,12 @@ export default {
                     else if(error.response.data.password)commit('setErrorFromServer', error.response.data.password[0]);
                     else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
+        },
+        async createSubtask({commit}, newSubtask) {
+            commit('createSubtask', newSubtask);
+        },
+        async deleteSubtask({commit},deleteSubtask) {
+            commit('deleteSubtask', deleteSubtask);
         }
     },
     getters: {
