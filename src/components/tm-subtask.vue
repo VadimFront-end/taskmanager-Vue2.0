@@ -16,6 +16,7 @@
         contenteditable="true"
         v-model="subtaskToEdit"
         @focus="rememberSubtask=subtaskToEdit"
+        :style="{background: indexSubTask%2 ? '#F6F8FB' : ''}"
         @blur="kostil"
         @click="editingSubtask=true;deletingSubtask=false"/>
     <div v-if="editingSubtask&&indexSubTask===indexFocus" style="display: flex">
@@ -120,6 +121,14 @@ export default {
     ...mapGetters([
       'TASKS'
     ])
+  },
+  watch: {
+    indexFocus() {
+      if(this.indexSubTask!==this.indexFocus) {
+        this.deletingSubtask=false;
+        this.editingSubtask=false;
+      }
+    }
   }
 }
 </script>

@@ -85,6 +85,11 @@ export default {
     ...mapGetters([
         'TASKS'
     ])
+  },
+  watch: {
+    indexFocus() {
+      if (!Number.isNaN(this.indexFocus))this.creatingSubtask = false;
+    }
   }
 }
 </script>
