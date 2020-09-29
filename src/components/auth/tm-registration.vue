@@ -102,7 +102,7 @@
       </div>
       <div class="error" v-if="(ERROR&&!$v.passwordConfirm.required)">Необходимо заполнить поле</div>
       <div class="error" v-else-if="(ERROR&&!$v.passwordConfirm.sameAsPassword)">Пароли не совпадают</div>
-      <div class="server-error" v-if="typeof(ERROR)==='string'">
+      <div class="server-error" v-if="ERROR==='Неизвестная ошибка'">
         <div class="sign-error">!</div>
         <div class="error" style="margin: 0 5px">{{ERROR}}</div>
       </div>
@@ -145,7 +145,7 @@ export default {
         else return true;
       },
       nameSigns(name) {
-        if(name.length)return /^[-Ёёа-яА-Яa-zA-Z0-9\s]+$/.test(name)
+        if(name.length)return /^[-ЁёА-яA-z0-9\s]+$/.test(name)
         else return true;
       }
     },

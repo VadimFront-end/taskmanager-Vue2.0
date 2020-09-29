@@ -136,15 +136,12 @@ export default {
                 confirmPassword: userData.confirmPassword
             })
                 .then(res => {
-                    console.log(res.data.original)
                     commit('signUp', res.data.original);
                     router.push('/mainPage');
                     commit('deleteError');
                 })
                 .catch(error => {
                     if(error.response.data.email)commit('setErrorFromServer', error.response.data.email[0]);
-                    else if(error.response.data.username)commit('setErrorFromServer', error.response.data.username[0]);
-                    else if(error.response.data.password)commit('setErrorFromServer', error.response.data.password[0]);
                     else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
         },
