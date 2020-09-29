@@ -97,7 +97,6 @@ export default {
             state.error=false;
         },
         createNewTask(state,newTask) {
-            console.log(newTask,newTask.subtasks)
             state.tasks.push(newTask);
         },
         createSubtask(state, newSubtask) {

@@ -49,15 +49,22 @@
      </div>
      <div
          class="container-for-arrow mobile"
+         @mousemove="arrowColor=index"
+         @mouseout="arrowColor=-1"
+         :style="{borderTopRightRadius: index===0 ? '14px': '',
+                  borderBottomRightRadius: index===LASTTASKS.length-1 ? '14px 14px': ''}"
+
          @click.prevent="showSubtasks(index)"
          :index="indexForShow">
        <div
            class="arrow-for-small-task"
-           :style="{transform: index===indexForShow ? 'rotate(-45deg)' : 'rotate(45deg)'}"
+           :style="{transform: index===indexForShow ? 'rotate(-45deg)' : 'rotate(45deg)',
+                    background: arrowColor===index ? '#FFFFFF': '#4F8AFD'}"
            style="margin-right: -2px"></div>
        <div
            class="arrow-for-small-task"
-           :style="{transform: index===indexForShow ? 'rotate(45deg)' : 'rotate(-45deg)'}"
+           :style="{transform: index===indexForShow ? 'rotate(45deg)' : 'rotate(-45deg)',
+                    background: arrowColor===index ? '#FFFFFF': '#4F8AFD'}"
            style="margin-left: -2px"></div>
      </div>
      <tmSubTasks
@@ -104,7 +111,8 @@ export default {
   },
   data() {
     return {
-      indexForShow: NaN
+      indexForShow: NaN,
+      arrowColor: -1
     }
   },
   computed: {
@@ -149,6 +157,9 @@ export default {
   margin-bottom: 2px;
   background: #FFFFFF;
 }
+.last-tasks:hover {
+  box-shadow: 0 0 20px rgba(2, 57, 164, 0.2);
+}
 .tasks-status {
   justify-content: center;
   align-items: center;
@@ -187,8 +198,11 @@ export default {
   align-items: center;
   cursor: pointer;
 }
+.container-for-arrow:hover {
+  background: #4F8AFD;
+}
 .arrow-for-small-task {
-  background: #B0BCD3;
+  background: #4F8AFD;
   border-radius: 1px;
   width: 10px;
   height: 2px;
