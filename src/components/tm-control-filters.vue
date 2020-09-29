@@ -29,11 +29,26 @@
         </div>
         <div class="filters">
           <span style="margin-right: 8px">Сложность:</span>
-          <div class="diff-filter" style="border-radius: 50px 0 0 50px;background: #B9ECB5">
+          <div
+              @click="showOnlyThis2(0)"
+              class="diff-filter"
+              style="border-radius: 50px 0 0 50px"
+              :style="{background: DIFFICULTY_FILTER.easy ? '#A7D4A3': '#B9ECB5',
+                       border: DIFFICULTY_FILTER.easy ? '3px solid #E5E5E5': ''}">
           </div>
-          <div class="diff-filter" style="background: #F1EAA5;width: 18px">
+          <div
+              @click="showOnlyThis2(1)"
+              class="diff-filter"
+              style="width: 18px"
+              :style="{background: DIFFICULTY_FILTER.normal ? '#D9D395': '#F1EAA5',
+                       border: DIFFICULTY_FILTER.normal ? '3px solid #E5E5E5': ''}">
           </div>
-          <div class="diff-filter" style="border-radius: 0 50px 50px 0;background: #F3B6B8">
+          <div
+              @click="showOnlyThis2(2)"
+              class="diff-filter"
+              style="border-radius: 0 50px 50px 0;background: #F3B6B8"
+              :style="{background: DIFFICULTY_FILTER.hard ? '#DBA4A6': '#F3B6B8',
+                       border: DIFFICULTY_FILTER.hard ? '3px solid #E5E5E5': ''}">
           </div>
         </div>
     </div>
@@ -71,6 +86,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: "tm-control-filters",
   data() {
@@ -84,8 +100,16 @@ export default {
       this.$emit('view', this.view);
     },
     showOnlyThis(index) {
-      this.$store.commit('showOnlyThis', index);
+      this.$store.commit('showOnlyThis1', index);
+    },
+    showOnlyThis2(index) {
+      this.$store.commit('showOnlyThis2', index);
     }
+  },
+  computed: {
+    ...mapGetters([
+        'DIFFICULTY_FILTER'
+    ])
   }
 }
 </script>
@@ -127,6 +151,7 @@ export default {
   border: 1px solid #889ABD;
 }
 .diff-filter {
+  cursor: pointer;
   height: 18px;
   border: 3px solid white;
   width: 20px;

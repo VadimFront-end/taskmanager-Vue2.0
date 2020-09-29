@@ -10,7 +10,7 @@ export default {
                 title: 'FUCK фывфывфы вфыв фыв',
                 executer: 'Madim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 1,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
@@ -21,7 +21,7 @@ export default {
                 title: 'FUCK',
                 executer: 'Vadim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 1,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -32,7 +32,7 @@ export default {
                 title: 'FUCK',
                 executer: 'Badim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 3,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -43,7 +43,7 @@ export default {
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 2,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -54,7 +54,7 @@ export default {
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 1,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -65,7 +65,7 @@ export default {
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
-                difficulty: 'normal',
+                difficulty: 3,
                 time: '2:34',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -97,6 +97,7 @@ export default {
             state.error=false;
         },
         createNewTask(state,newTask) {
+            console.log(newTask,newTask.subtasks)
             state.tasks.push(newTask);
         },
         createSubtask(state, newSubtask) {

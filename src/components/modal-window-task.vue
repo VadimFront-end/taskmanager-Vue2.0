@@ -74,9 +74,30 @@
          <path d="M4.36364 15.2727H0V8.72729H4.36364V15.2727Z" fill="#A7B4CF"/>
        </svg>
        <div style="color: #889ABD;margin-right: 16px">Сложность</div>
-       <div class="tasks-differently-item" style="background: #B9ECB5;border-radius: 50px 0 0 50px">Легкая</div>
-       <div class="tasks-differently-item" style="background: #F1EAA5">Средняя</div>
-       <div class="tasks-differently-item" style="background: #F3B6B8;border-radius: 0 50px 50px 0">Сложная</div>
+       <div
+           class="tasks-differently-item"
+           style="background: #B9ECB5;border-radius: 50px 0 0 50px"
+           @click="showOnlyThis2(0)"
+           :style="{background: DIFFICULTY_FILTER.easy ? '#A7D4A3': '#B9ECB5',
+                       border: DIFFICULTY_FILTER.easy ? '3px solid #E5E5E5': ''}"
+       >Легкая
+       </div>
+       <div
+           class="tasks-differently-item"
+           style="background: #F1EAA5"
+           @click="showOnlyThis2(1)"
+           :style="{background: DIFFICULTY_FILTER.normal ? '#D9D395': '#F1EAA5',
+                       border: DIFFICULTY_FILTER.normal ? '3px solid #E5E5E5': ''}"
+       >Средняя
+       </div>
+       <div
+           class="tasks-differently-item"
+           style="background: #F3B6B8;border-radius: 0 50px 50px 0"
+           @click="showOnlyThis2(2)"
+           :style="{background: DIFFICULTY_FILTER.hard ? '#DBA4A6': '#F3B6B8',
+                       border: DIFFICULTY_FILTER.hard ? '3px solid #E5E5E5': ''}"
+       >Сложная
+       </div>
      </div>
      <div class="save-edits" @click="closeWindow">
        <svg style="margin-right: 4px" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +117,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
 name: "modal-window-task",
   data() {
@@ -115,12 +137,31 @@ name: "modal-window-task",
   methods: {
     closeWindow() {
       if((this.task.title)&&(this.task.executer)) {
-        this.$store.commit('createNewTask', this.task);
+        const newTask = {
+          status: this.task.status,
+          title: this.task.title,
+          executer: this.task.executer,
+          deadline: this.task.deadline,
+          difficulty: this.task.difficulty,
+          time: this.task.time,
+          author: this.task.author,
+          description: this.task.description,
+          subtasks: []
+        };
+        this.$store.commit('createNewTask', newTask);
         this.$emit('closeWindow', false);
-        // this.task.status=1;
-        // this.task.title=this.task.executer=this.task.deadline=this.task.difficulty=this.task.time=this.task.time=this.task.author=this.task.description= '';
+        this.task.status=1;
+        this.task.title=this.task.executer=this.task.deadline=this.task.difficulty=this.task.time=this.task.author=this.task.description= '';
       }
+    },
+    showOnlyThis2(index) {
+      this.$store.commit('showOnlyThis2', index);
     }
+  },
+  computed: {
+    ...mapGetters([
+        'DIFFICULTY_FILTER'
+    ])
   }
 }
 </script>

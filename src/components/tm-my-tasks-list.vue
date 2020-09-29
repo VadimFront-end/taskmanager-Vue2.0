@@ -14,8 +14,9 @@
         v-for="(task,index) in TASKS"
         :key="index"
         class="last-tasks"
-        v-show="task.status===3&&STATUSFILTER.statusToDo||task.status===2&&STATUSFILTER.statusWork||task.status===1&&STATUSFILTER.statusDane"
+        v-show="(!DIFFICULTY_FILTER.easy&&!DIFFICULTY_FILTER.normal&&!DIFFICULTY_FILTER.hard)||task.difficulty===1&&DIFFICULTY_FILTER.easy||task.difficulty===2&&DIFFICULTY_FILTER.normal||task.difficulty===3&&DIFFICULTY_FILTER.hard"
         :style="{borderRadius: index===TASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}">
+<!--      v-show="task.status===3&&STATUSFILTER.statusToDo||task.status===2&&STATUSFILTER.statusWork||task.status===1&&STATUSFILTER.statusDane"-->
         <div class="tasks-status">
           <svg v-if="task.status===2" width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 5.3444H9.50538L6.05604 1.87436L6.97752 0.947357L12 5.99999L6.97752 11.0526L6.05604 10.1256L9.50538 6.65558H0V5.3444Z" fill="#4F8AFD"/>
@@ -109,7 +110,8 @@ name: "tm-container-for-my-tasks",
   computed: {
     ...mapGetters([
       'TASKS',
-      'STATUSFILTER'
+      'STATUSFILTER',
+      'DIFFICULTY_FILTER'
     ])
   },
   methods: {
