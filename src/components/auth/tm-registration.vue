@@ -145,7 +145,7 @@ export default {
         else return true;
       },
       nameSigns(name) {
-        if(name.length)return /^[-Ёёа-яА-Яa-zA-Z]+$/.test(name)
+        if(name.length)return /^[-Ёёа-яА-Яa-zA-Z0-9\s]+$/.test(name)
         else return true;
       }
     },

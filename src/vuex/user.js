@@ -72,6 +72,7 @@ export default {
                 subtasks: ['1','2','3','4']
             }
         ],
+        selectedSubtaskIndex: 0,
         error: false,
         id: null
     },
@@ -99,10 +100,13 @@ export default {
             state.tasks.push(newTask);
         },
         createSubtask(state, newSubtask) {
-            state.tasks[newSubtask.index].subtasks.push(newSubtask.subtask);
+            state.tasks[newSubtask.indexTask].subtasks.push(newSubtask.subtask);
         },
         deleteSubtask(state,deleteSubtask) {
             state.tasks[deleteSubtask.indexTask].subtasks.splice(deleteSubtask.indexSubtask, 1);
+        },
+        editSubtaskTitle(state, editedSubtask) {
+            state.tasks[editedSubtask.indexTask].subtasks[editedSubtask.indexSubtask]=editedSubtask.newTitle;
         }
     },
     actions: {
@@ -148,6 +152,9 @@ export default {
         },
         async deleteSubtask({commit},deleteSubtask) {
             commit('deleteSubtask', deleteSubtask);
+        },
+        async editSubtaskTitle({commit}, editedSubtask) {
+            commit('editSubtaskTitle', editedSubtask);
         }
     },
     getters: {

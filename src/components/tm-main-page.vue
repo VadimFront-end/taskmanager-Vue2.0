@@ -62,8 +62,9 @@
      </div>
      <tmSubTasks
          :subtasks="task.subtasks"
-         :index="index"
+         :indexTask="index"
          class="mobile"
+         :whereSubTasksShow="false"
          v-show="indexForShow===index"/>
    </div>
    <div class="title-main-page">Текущие проекты</div>
@@ -122,6 +123,7 @@ export default {
 
 <style>
 .tm-container-for-content-page {
+  padding-left: 70px;
   width: 100%;
   margin: 56px auto 0;
   max-width: 1170px;

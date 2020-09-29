@@ -3,15 +3,17 @@
     <div class="header">
       <div class="header-container">
         <div class="container-for-burgMenu" @click="showLeftMenu=!showLeftMenu">
-          <div class="burger-item"></div>
-          <div class="burger-item"></div>
-          <div class="burger-item"></div>
+          <div v-if="$store.state.user.id">
+            <div class="burger-item"></div>
+            <div class="burger-item"></div>
+            <div class="burger-item"></div>
+          </div>
         </div>
         <tmLogo/>
       </div>
     </div>
     <div class="content">
-      <div class="left-menu" v-if="$store.state.user.id&&showLeftMenu">
+      <div class="left-menu" v-if="$store.state.user.id">
         <div>
           <router-link :to="'/mainPage'">
             <div

@@ -68,7 +68,7 @@
         </div>
       <tmSubTasks
           :subtasks="task.subtasks"
-          :index="index"
+          :indexTask="index"
           class="mobile"
           v-show="indexForShow===index"
           :whereSubTasksShow="true"/>
