@@ -107,6 +107,9 @@ export default {
         },
         editSubtaskTitle(state, editedSubtask) {
             state.tasks[editedSubtask.indexTask].subtasks[editedSubtask.indexSubtask]=editedSubtask.newTitle;
+        },
+        editStatusTask(state, newStatus) {
+            state.tasks[newStatus.indexTask].status=newStatus.status;
         }
     },
     actions: {
@@ -152,6 +155,9 @@ export default {
         },
         async editSubtaskTitle({commit}, editedSubtask) {
             commit('editSubtaskTitle', editedSubtask);
+        },
+        async editStatusTask({commit}, newStatus) {
+            commit('editStatusTask', newStatus);
         }
     },
     getters: {

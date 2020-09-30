@@ -28,28 +28,56 @@
          <path d="M6 0C2.6916 0 0 2.6916 0 6C0 9.3084 2.6916 12 6 12C9.3084 12 12 9.3084 12 6C12 2.6916 9.3084 0 6 0ZM6 10.8C3.3534 10.8 1.2 8.6466 1.2 6C1.2 3.3534 3.3534 1.2 6 1.2C8.6466 1.2 10.8 3.3534 10.8 6C10.8 8.6466 8.6466 10.8 6 10.8Z" fill="#2CCF11"/>
          <path d="M4.79941 6.95213L3.42001 5.57513L2.57281 6.42473L4.80062 8.64773L8.82421 4.62413L7.97581 3.77573L4.79941 6.95213Z" fill="#2CCF11"/>
        </svg>
-       <div v-if="task.status===1" class="status-none" style="width: 15px;height: 15px"></div>
+       <div v-if="task.status===1" class="status-none" style="width: 13px;height: 13px"></div>
        <div class="description-for-status" v-show="indexForShowStatus===index">
-         <div v-show="task.status===3" style="color: #27B310">Готово</div>
-         <div v-show="task.status===2" style="color: #0356F6">В работе</div>
-         <div v-show="task.status===1" style="color: #576F9D">Нужно сделать</div>
+         <div
+             v-show="task.status===3"
+             style="color: #27B310"
+         >Готово
+         </div>
+         <div
+             v-show="task.status===2"
+             style="color: #0356F6"
+         >В работе
+         </div>
+         <div
+             v-show="task.status===1"
+             style="color: #576F9D"
+             @click="selectThisStatus(1,index)"
+         >Нужно сделать
+         </div>
        </div>
-       <div class="select-status-for-task">
+       <div class="select-status-for-task" v-if="indexForOpenStatus===index">
          <div
              style="color: #576F9D"
              :style="{background: task.status===1 ? '#E5EBF3': ''}"
              class="container-for-statuses"
-         >Нужно сделать</div>
+             @click="selectThisStatus(1,index)"
+         >Нужно сделать
+           <svg v-show="task.status===1" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.43434 1.11228C8.60579 0.934339 8.83724 0.834197 9.07865 0.8335C9.32006 0.832802 9.55204 0.931606 9.72442 1.10855C9.89681 1.28549 9.99575 1.52636 9.99987 1.77908C10.004 2.03179 9.91293 2.27605 9.74641 2.45904L4.85587 8.85938C4.77182 8.95416 4.67038 9.03023 4.55761 9.08302C4.44483 9.13582 4.32305 9.16427 4.19954 9.16667C4.07602 9.16906 3.95332 9.14535 3.83876 9.09696C3.72419 9.04857 3.62013 8.97649 3.53278 8.88503L0.292438 5.49118C0.202165 5.40312 0.12976 5.29691 0.0795416 5.17891C0.029323 5.06091 0.0023197 4.93353 0.000142992 4.80436C-0.00203372 4.6752 0.0206608 4.5469 0.0668722 4.42712C0.113084 4.30733 0.181865 4.19852 0.269114 4.10717C0.356363 4.01583 0.460292 3.94381 0.5747 3.89543C0.689108 3.84705 0.811652 3.82329 0.935022 3.82557C1.05839 3.82785 1.18006 3.85612 1.29277 3.9087C1.40547 3.96127 1.50691 4.03708 1.59103 4.13159L4.15635 6.81614L8.41107 1.1405C8.41866 1.13056 8.42684 1.12113 8.43557 1.11228H8.43434Z" fill="#576F9D"/>
+           </svg>
+         </div>
          <div
              style="color: #0356F6"
              :style="{background: task.status===2 ? '#EDF3FF': ''}"
+             @click="selectThisStatus(2,index)"
              class="container-for-statuses"
-         >В работе</div>
+         >В работе
+           <svg v-show="task.status===2" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.43434 1.11228C8.60579 0.934339 8.83724 0.834197 9.07865 0.8335C9.32006 0.832802 9.55204 0.931606 9.72442 1.10855C9.89681 1.28549 9.99575 1.52636 9.99987 1.77908C10.004 2.03179 9.91293 2.27605 9.74641 2.45904L4.85587 8.85938C4.77182 8.95416 4.67038 9.03023 4.55761 9.08302C4.44483 9.13582 4.32305 9.16427 4.19954 9.16667C4.07602 9.16906 3.95332 9.14535 3.83876 9.09696C3.72419 9.04857 3.62013 8.97649 3.53278 8.88503L0.292438 5.49118C0.202165 5.40312 0.12976 5.29691 0.0795416 5.17891C0.029323 5.06091 0.0023197 4.93353 0.000142992 4.80436C-0.00203372 4.6752 0.0206608 4.5469 0.0668722 4.42712C0.113084 4.30733 0.181865 4.19852 0.269114 4.10717C0.356363 4.01583 0.460292 3.94381 0.5747 3.89543C0.689108 3.84705 0.811652 3.82329 0.935022 3.82557C1.05839 3.82785 1.18006 3.85612 1.29277 3.9087C1.40547 3.96127 1.50691 4.03708 1.59103 4.13159L4.15635 6.81614L8.41107 1.1405C8.41866 1.13056 8.42684 1.12113 8.43557 1.11228H8.43434Z" fill="#0356F6"/>
+           </svg>
+         </div>
          <div
-             style="color: #27B310"
+             style="color: #27B310;border-radius: 0 0 5px 5px"
              :style="{background: task.status===3 ? '#DFFCDB': ''}"
+             @click="selectThisStatus(3,index)"
              class="container-for-statuses"
-         >Готово</div>
+         >Готово
+           <svg v-show="task.status===3" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.43434 1.11228C8.60579 0.934339 8.83724 0.834197 9.07865 0.8335C9.32006 0.832802 9.55204 0.931606 9.72442 1.10855C9.89681 1.28549 9.99575 1.52636 9.99987 1.77908C10.004 2.03179 9.91293 2.27605 9.74641 2.45904L4.85587 8.85938C4.77182 8.95416 4.67038 9.03023 4.55761 9.08302C4.44483 9.13582 4.32305 9.16427 4.19954 9.16667C4.07602 9.16906 3.95332 9.14535 3.83876 9.09696C3.72419 9.04857 3.62013 8.97649 3.53278 8.88503L0.292438 5.49118C0.202165 5.40312 0.12976 5.29691 0.0795416 5.17891C0.029323 5.06091 0.0023197 4.93353 0.000142992 4.80436C-0.00203372 4.6752 0.0206608 4.5469 0.0668722 4.42712C0.113084 4.30733 0.181865 4.19852 0.269114 4.10717C0.356363 4.01583 0.460292 3.94381 0.5747 3.89543C0.689108 3.84705 0.811652 3.82329 0.935022 3.82557C1.05839 3.82785 1.18006 3.85612 1.29277 3.9087C1.40547 3.96127 1.50691 4.03708 1.59103 4.13159L4.15635 6.81614L8.41107 1.1405C8.41866 1.13056 8.42684 1.12113 8.43557 1.11228H8.43434Z" fill="#27B210"/>
+           </svg>
+         </div>
        </div>
      </div>
      <div class="tasks-title">
@@ -60,8 +88,8 @@
      </div>
      <div class="tasks-status">{{task.deadline}}</div>
      <div class="executer mobile">
-       <div class="executer-oval">
-         <div style="margin: auto">{{task.difficulty}}</div>
+       <div class="executer-oval" :style="{background: task.difficulty===3 ? '#F3B6B8': task.difficulty===2 ? '#F1EAA5': '#B9ECB5'}">
+         <div style="margin: auto">{{task.difficulty===3 ? 'Сложная': task.difficulty===2 ? 'Средняя': 'Легкая'}}</div>
        </div>
      </div>
      <div class="tasks-status mobile">{{task.time}}</div>
@@ -98,7 +126,7 @@
          :indexTask="index"
          class="mobile"
          :whereSubTasksShow="false"
-         v-show="indexForShow===index"/>
+         v-if="indexForShow===index"/>
    </div>
    <div class="title-main-page">Текущие проекты</div>
    <div class="project-now">
@@ -145,21 +173,22 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'LASTTASKS'
+        'LASTTASKS',
+        'TASKS'
     ])
   },
   methods: {
     showSubtasks(index) {
       if(index===this.indexForShow)this.indexForShow=NaN;
       else this.indexForShow=index;
+    },
+    selectThisStatus(status,indexTask) {
+      const newStatus = {
+        status,
+        indexTask: this.TASKS.length - 5 + indexTask
+      }
+      this.$store.dispatch('editStatusTask', newStatus);
     }
-    // selectStatus(index) {
-    //   const newSubtask = {
-    //     indexTask: this.whereSubTasksShow ? this.indexTask : this.TASKS.length - 5 + this.indexTask,
-    //     subtask: this.newSubtask
-    //   }
-    //   this.$store.dispatch('createSubtask', newSubtask);
-    // }
   }
 }
 </script>
@@ -224,6 +253,8 @@ export default {
   width: 134px;
 }
 .container-for-statuses {
+  display: flex;
+  justify-content: space-between;
   padding: 8px 16px;
   font-size: 0.85rem;
 }
@@ -250,7 +281,6 @@ export default {
   padding: 5px 11px;
   margin: auto;
   font-size: 0.85rem;
-  background: #F1EAA5;
   border-radius: 14px;
   display: flex;
 }

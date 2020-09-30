@@ -17,7 +17,11 @@
           :indexFocus="indexFocus"/>
       <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true;indexFocus=NaN">+ Добавить задачу</div>
       <div v-else class="add-subtask">
-        <input class="subtask-description" style="border-bottom: 1px solid #889ABD" v-model.trim="newSubtask">
+        <input
+            class="subtask-description"
+            placeholder="Название подзадачи"
+            style="border-bottom: 1px solid #889ABD"
+            v-model.trim="newSubtask">
         <div class="edit-or-not" @click="createSubtask(true)">
           <svg class="my-pain1" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1212 0.522327C10.327 0.317343 10.6047 0.201979 10.8944 0.201176C11.1841 0.200373 11.4624 0.314195 11.6693 0.518034C11.8762 0.721874 11.9949 0.999353 11.9998 1.29048C12.0048 1.58161 11.8955 1.86299 11.6957 2.0738L5.82705 9.44699C5.72619 9.55618 5.60445 9.6438 5.46913 9.70463C5.3338 9.76545 5.18766 9.79822 5.03944 9.80098C4.89123 9.80374 4.74398 9.77643 4.60651 9.72068C4.46903 9.66494 4.34416 9.5819 4.23934 9.47654L0.350925 5.56683C0.242598 5.46537 0.155712 5.34303 0.0954499 5.20709C0.0351876 5.07115 0.00278364 4.92441 0.00017159 4.77561C-0.00244046 4.62681 0.024793 4.47901 0.0802466 4.34102C0.1357 4.20303 0.218238 4.07768 0.322937 3.97245C0.427636 3.86722 0.55235 3.78426 0.68964 3.72852C0.82693 3.67279 0.973983 3.64541 1.12203 3.64804C1.27007 3.65066 1.41607 3.68323 1.55132 3.7438C1.68657 3.80437 1.80829 3.8917 1.90923 4.00058L4.98762 7.09318L10.0933 0.554835C10.1024 0.543389 10.1122 0.532531 10.1227 0.522327H10.1212Z"/>
@@ -111,6 +115,7 @@ export default {
   border-radius: 14px;
 }
 .subtask-description {
+  color: #10141D;
   white-space: nowrap;
   overflow: hidden;
   width: 555px;
@@ -145,4 +150,5 @@ export default {
 .edit-or-not:hover {
   box-shadow: 0 0 10px rgba(2, 57, 164, 0.25);
 }
+.subtask-description::placeholder { color: #889ABD; }
 </style>

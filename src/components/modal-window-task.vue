@@ -156,6 +156,7 @@ name: "modal-window-task",
     },
     showOnlyThis2(index) {
       this.$store.commit('showOnlyThis2', index);
+      this.task.difficulty=index+1;
     }
   },
   computed: {

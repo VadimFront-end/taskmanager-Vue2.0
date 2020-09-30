@@ -146,9 +146,9 @@ export default {
 .status-none {
   margin: auto;
   border-radius: 50%;
-  width: 11px;
-  height: 11px;
-  border: 1px solid #889ABD;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #889ABD;
 }
 .diff-filter {
   cursor: pointer;
