@@ -54,19 +54,26 @@
         <div class="tasks-title mobile">
           <div class="for-description">{{task.description}}</div>
         </div>
+      <div
+          class="container-for-arrow mobile"
+          @mousemove="arrowColor=index"
+          @mouseout="arrowColor=-1"
+          :style="{borderTopRightRadius: index===0 ? '14px': '',
+                   borderBottomRightRadius: index===TASKS.length-1 ? '14px': ''}"
+
+          @click.prevent="showSubtasks(index)"
+          :index="indexForShow">
         <div
-            class="container-for-arrow mobile"
-            @click.prevent="showSubtasks(index)"
-            :index="indexForShow">
-          <div
-              class="arrow-for-small-task"
-              :style="{transform: index===indexForShow ? 'rotate(-45deg)' : 'rotate(45deg)'}"
-              style="margin-right: -2px"></div>
-          <div
-              class="arrow-for-small-task"
-              :style="{transform: index===indexForShow ? 'rotate(45deg)' : 'rotate(-45deg)'}"
-              style="margin-left: -2px"></div>
-        </div>
+            class="arrow-for-small-task"
+            :style="{transform: index===indexForShow ? 'rotate(-45deg)' : 'rotate(45deg)',
+                    background: arrowColor===index ? '#FFFFFF': '#4F8AFD'}"
+            style="margin-right: -2px"></div>
+        <div
+            class="arrow-for-small-task"
+            :style="{transform: index===indexForShow ? 'rotate(45deg)' : 'rotate(-45deg)',
+                    background: arrowColor===index ? '#FFFFFF': '#4F8AFD'}"
+            style="margin-left: -2px"></div>
+      </div>
       <tmSubTasks
           :subtasks="task.subtasks"
           :indexTask="index"
@@ -104,7 +111,8 @@ name: "tm-container-for-my-tasks",
   },
   data() {
     return {
-      indexForShow: NaN
+      indexForShow: NaN,
+      arrowColor: -1
     }
   },
   computed: {

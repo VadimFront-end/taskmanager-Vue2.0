@@ -16,7 +16,11 @@
        :key="index"
        class="last-tasks"
        :style="{borderRadius: index===LASTTASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}">
-     <div class="tasks-status">
+     <div
+         class="tasks-status"
+         @mouseout="indexForShowStatus=NaN"
+         @mousemove="indexForShowStatus=index"
+         @click="indexForOpenStatus===index ? indexForOpenStatus=NaN: indexForOpenStatus=index">
        <svg v-if="task.status===2" width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
          <path d="M0 5.3444H9.50538L6.05604 1.87436L6.97752 0.947357L12 5.99999L6.97752 11.0526L6.05604 10.1256L9.50538 6.65558H0V5.3444Z" fill="#4F8AFD"/>
        </svg>
@@ -25,6 +29,28 @@
          <path d="M4.79941 6.95213L3.42001 5.57513L2.57281 6.42473L4.80062 8.64773L8.82421 4.62413L7.97581 3.77573L4.79941 6.95213Z" fill="#2CCF11"/>
        </svg>
        <div v-if="task.status===1" class="status-none" style="width: 15px;height: 15px"></div>
+       <div class="description-for-status" v-show="indexForShowStatus===index">
+         <div v-show="task.status===3" style="color: #27B310">Готово</div>
+         <div v-show="task.status===2" style="color: #0356F6">В работе</div>
+         <div v-show="task.status===1" style="color: #576F9D">Нужно сделать</div>
+       </div>
+       <div class="select-status-for-task">
+         <div
+             style="color: #576F9D"
+             :style="{background: task.status===1 ? '#E5EBF3': ''}"
+             class="container-for-statuses"
+         >Нужно сделать</div>
+         <div
+             style="color: #0356F6"
+             :style="{background: task.status===2 ? '#EDF3FF': ''}"
+             class="container-for-statuses"
+         >В работе</div>
+         <div
+             style="color: #27B310"
+             :style="{background: task.status===3 ? '#DFFCDB': ''}"
+             class="container-for-statuses"
+         >Готово</div>
+       </div>
      </div>
      <div class="tasks-title">
        <div style="margin: auto 15px">{{task.title}}</div>
@@ -112,7 +138,9 @@ export default {
   data() {
     return {
       indexForShow: NaN,
-      arrowColor: -1
+      arrowColor: -1,
+      indexForShowStatus: NaN,
+      indexForOpenStatus: NaN
     }
   },
   computed: {
@@ -125,6 +153,13 @@ export default {
       if(index===this.indexForShow)this.indexForShow=NaN;
       else this.indexForShow=index;
     }
+    // selectStatus(index) {
+    //   const newSubtask = {
+    //     indexTask: this.whereSubTasksShow ? this.indexTask : this.TASKS.length - 5 + this.indexTask,
+    //     subtask: this.newSubtask
+    //   }
+    //   this.$store.dispatch('createSubtask', newSubtask);
+    // }
   }
 }
 </script>
@@ -159,11 +194,38 @@ export default {
 }
 .last-tasks:hover {
   box-shadow: 0 0 20px rgba(2, 57, 164, 0.2);
+  position: relative;
 }
 .tasks-status {
+  cursor: pointer;
+  position: relative;
   justify-content: center;
   align-items: center;
   display: flex;
+}
+.description-for-status {
+  position: absolute;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  box-shadow: 0 0 10px rgba(2, 57, 164, 0.2);
+  white-space: nowrap;
+  background: white;
+  border-radius: 5px;
+  top: 75%;
+}
+.select-status-for-task {
+  position: absolute;
+  top: 75%;
+  box-shadow: 0 0 10px rgba(2, 57, 164, 0.2);
+  border-radius: 5px;
+  white-space: nowrap;
+  background: #FFFFFF;
+  z-index: 2;
+  width: 134px;
+}
+.container-for-statuses {
+  padding: 8px 16px;
+  font-size: 0.85rem;
 }
 .tasks-title {
   display: flex;
@@ -217,6 +279,9 @@ export default {
   background: white;
   box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
   border-radius: 10px;
+}
+.project-now-item:hover {
+  box-shadow: 0 0 25px rgba(2, 57, 164, 0.15);
 }
 .project-now-item-title {
   line-height: 22px;
