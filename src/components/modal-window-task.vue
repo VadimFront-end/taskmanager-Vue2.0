@@ -140,6 +140,7 @@ name: "modal-window-task",
       if((this.task.title)&&(this.task.executer)) {
         const newTask = {
           status: this.task.status,
+          type: this.task.type,
           title: this.task.title,
           executer: this.task.executer,
           deadline: this.task.deadline,
