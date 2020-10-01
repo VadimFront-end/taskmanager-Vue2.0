@@ -124,6 +124,7 @@ name: "modal-window-task",
     return {
       task: {
         status: 1,
+        type: 1,
         title: '',
         executer: '',
         deadline: '',
@@ -151,6 +152,7 @@ name: "modal-window-task",
         this.$store.commit('createNewTask', newTask);
         this.$emit('closeWindow', false);
         this.task.status=1;
+        this.type=1;
         this.task.title=this.task.executer=this.task.deadline=this.task.difficulty=this.task.time=this.task.author=this.task.description= '';
       }
     },

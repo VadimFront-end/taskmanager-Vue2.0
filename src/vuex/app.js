@@ -4,9 +4,9 @@
 export default {
     state: {
         statusFilter: {
-            statusDane: true,
-            statusWork: true,
-            statusToDo: true
+            statusDane: false,
+            statusWork: false,
+            statusToDo: false
         },
         statusFiltersIndex: -1,
         difficultyFilter: {
@@ -18,23 +18,14 @@ export default {
     },
     mutations: {
         showOnlyThis1(state, index) {
-            state.statusFilter.statusDane=true;
-            state.statusFilter.statusWork=true;
-            state.statusFilter.statusToDo=true;
+            state.statusFilter.statusDane=false;
+            state.statusFilter.statusWork=false;
+            state.statusFilter.statusToDo=false;
             if(state.statusFiltersIndex!==index) {
                 state.statusFiltersIndex=index;
-                if(index===0) {
-                    state.statusFilter.statusWork=false;
-                    state.statusFilter.statusToDo=false;
-                }
-                if(index===1) {
-                    state.statusFilter.statusDane=false;
-                    state.statusFilter.statusToDo=false;
-                }
-                if(index===2) {
-                    state.statusFilter.statusDane=false;
-                    state.statusFilter.statusWork=false;
-                }
+                if(index===0)state.statusFilter.statusDane=true;
+                if(index===1)state.statusFilter.statusWork=true;
+                if(index===2)state.statusFilter.statusToDo=true;
             }
             else state.statusFiltersIndex=-1;
         },

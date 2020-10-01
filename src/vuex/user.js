@@ -7,6 +7,7 @@ export default {
         tasks: [
             {
                 status: 1,
+                type: 1,
                 title: 'FUCK фывфывфы вфыв фыв',
                 executer: 'Madim',
                 deadline: '20',
@@ -18,6 +19,7 @@ export default {
             },
             {
                 status: 2,
+                type: 1,
                 title: 'FUCK',
                 executer: 'Vadim',
                 deadline: '20',
@@ -29,6 +31,7 @@ export default {
             },
             {
                 status: 1,
+                type: 2,
                 title: 'FUCK',
                 executer: 'Badim',
                 deadline: '20',
@@ -40,6 +43,7 @@ export default {
             },
             {
                 status: 2,
+                type: 1,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
@@ -51,6 +55,7 @@ export default {
             },
             {
                 status: 2,
+                type: 2,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
@@ -62,6 +67,7 @@ export default {
             },
             {
                 status: 3,
+                type: 2,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',

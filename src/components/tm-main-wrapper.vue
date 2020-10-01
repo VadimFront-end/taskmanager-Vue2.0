@@ -9,7 +9,10 @@
             <div class="burger-item"></div>
           </div>
         </div>
-        <tmLogo/>
+        <div class="container-for-logo-and-user-account">
+          <tmLogo/>
+          <img src="../assets/images/user.png" style="cursor: pointer;margin-right: 32px" v-if="$store.state.user.id">
+        </div>
       </div>
     </div>
     <div class="content">
@@ -109,6 +112,12 @@ export default {
   max-width: 1440px;
   margin: auto;
   display: flex;
+}
+.container-for-logo-and-user-account {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 .content {
   max-width: 1440px;
