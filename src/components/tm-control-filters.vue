@@ -163,6 +163,7 @@ export default {
   border: 2px solid #889ABD;
 }
 .diff-filter {
+  box-shadow: 0 0 10px rgba(2, 57, 164, 0.13);
   cursor: pointer;
   height: 18px;
   border: 3px solid white;
