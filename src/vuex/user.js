@@ -7,72 +7,84 @@ export default {
         tasks: [
             {
                 status: 1,
+                id: 0,
                 type: 1,
                 title: 'FUCK фывфывфы вфыв фыв',
                 executer: 'Madim',
                 deadline: '20',
                 difficulty: 1,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
                 subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
+                id: 1,
                 type: 1,
                 title: 'FUCK',
                 executer: 'Vadim',
                 deadline: '20',
                 difficulty: 1,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: ['1','2','3','4']
             },
             {
                 status: 1,
+                id: 2,
                 type: 2,
                 title: 'FUCK',
                 executer: 'Badim',
                 deadline: '20',
                 difficulty: 3,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
+                id: 3,
                 type: 1,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 2,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: ['1','2','3','4']
             },
             {
                 status: 2,
+                id: 4,
                 type: 2,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 1,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: ['1','2','3','4']
             },
             {
                 status: 3,
+                id: 5,
                 type: 2,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 3,
                 time: '2:34',
+                timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: ['1','2','3','4']
@@ -103,19 +115,32 @@ export default {
             state.error=false;
         },
         createNewTask(state,newTask) {
+            newTask.id=state.tasks.length;
             state.tasks.push(newTask);
         },
         createSubtask(state, newSubtask) {
             state.tasks[newSubtask.indexTask].subtasks.push(newSubtask.subtask);
         },
         deleteSubtask(state,deleteSubtask) {
-            state.tasks[deleteSubtask.indexTask].subtasks.splice(deleteSubtask.indexSubtask, 1);
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===deleteSubtask.indexTask) {
+                    state.tasks[i].subtasks.splice(deleteSubtask.indexSubtask, 1);
+                }
+            }
         },
         editSubtaskTitle(state, editedSubtask) {
-            state.tasks[editedSubtask.indexTask].subtasks[editedSubtask.indexSubtask]=editedSubtask.newTitle;
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===editedSubtask.indexTask) {
+                    state.tasks[i].subtasks[editedSubtask.indexSubtask]=editedSubtask.newTitle;
+                }
+            }
         },
         editStatusTask(state, newStatus) {
-            state.tasks[newStatus.indexTask].status=newStatus.status;
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===newStatus.indexTask) {
+                    state.tasks[i].status=newStatus.status;
+                }
+            }
         }
     },
     actions: {
@@ -180,27 +205,23 @@ export default {
             const lastTasks=state.tasks.filter((val,index)=> {
                 return index>=state.tasks.length-5;
             })
-            console.log(lastTasks)
             return lastTasks;
         },
         STATUSOK(state) {
             const ok=state.tasks.filter(val => {
                 return val.status===3;
             })
-            console.log(ok)
             return ok;
         },
         STATUSWORK(state) {
             const work=state.tasks.filter(val => {
                 return val.status===2;
             })
-            console.log(work)
             return work;
         },STATUSTODO(state) {
             const toDo=state.tasks.filter(val => {
                 return val.status===1;
             })
-            console.log(toDo)
             return toDo;
         }
     }

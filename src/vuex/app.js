@@ -1,5 +1,6 @@
 // import axios from 'axios'
 // import router from '../router/router'
+import user from '../vuex/user'
 
 export default {
     state: {
@@ -41,11 +42,11 @@ export default {
             }
             else state.difficultyFilterIndex=-1;
         },
-        nullIndex(state) {
-            state.difficultyFilter.easy=false;
-            state.difficultyFilter.normal=false;
-            state.difficultyFilter.hard=false;
-        }
+        // nullIndex(state) {
+        //     state.difficultyFilter.easy=false;
+        //     state.difficultyFilter.normal=false;
+        //     state.difficultyFilter.hard=false;
+        // }
     },
     actions: {},
     getters: {
@@ -54,6 +55,28 @@ export default {
         },
         DIFFICULTY_FILTER(state) {
             return state.difficultyFilter;
+        },
+        FILTERED(state) {
+            let filteredTasks=user.state.tasks;
+            if(state.statusFilter.statusDane)filteredTasks=user.state.tasks.filter((val) => {
+                return val.status===1
+            });
+            if(state.statusFilter.statusWork)filteredTasks=user.state.tasks.filter((val) => {
+                return val.status===2
+            });
+            if(state.statusFilter.statusToDo)filteredTasks=user.state.tasks.filter((val) => {
+                return val.status===3
+            });
+            if(state.difficultyFilter.easy)filteredTasks=filteredTasks.filter((val) => {
+                return val.difficulty===1
+            });
+            if(state.difficultyFilter.normal)filteredTasks=filteredTasks.filter((val) => {
+                return val.difficulty===2
+            });
+            if(state.difficultyFilter.hard)filteredTasks=filteredTasks.filter((val) => {
+                return val.difficulty===3
+            });
+            return filteredTasks;
         }
     }
 }

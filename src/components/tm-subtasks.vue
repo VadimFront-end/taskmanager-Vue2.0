@@ -5,14 +5,13 @@
       <span style="margin-right: 45px">Статус</span>
       <span>Название подадачи</span>
     </div>
-      <tmSubtasks
+      <tmSubtask
           v-for="(subtask,index) in subtasks"
           :style="{background: index%2 ? '#F6F8FB' : ''}"
           :key="index"
           :subtask="subtask"
           :indexSubTask="index"
           :indexTask="indexTask"
-          :whereSubTasksShow="whereSubTasksShow"
           @click.native="indexFocus=index"
           :indexFocus="indexFocus"/>
       <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true;indexFocus=NaN">+ Добавить задачу</div>
@@ -38,12 +37,11 @@
 </template>
 
 <script>
-import tmSubtasks from '../components/tm-subtask'
-import {mapGetters} from 'vuex'
+import tmSubtask from '../components/tm-subtask'
 export default {
   name: "tm-subtasks",
   components: {
-    tmSubtasks
+    tmSubtask
   },
   props: {
     subtasks: {
@@ -56,12 +54,6 @@ export default {
       type: Number,
       default() {
         return NaN;
-      }
-    },
-    whereSubTasksShow: {
-      type: Boolean,
-      default() {
-        return false
       }
     }
   },
@@ -76,7 +68,7 @@ export default {
     createSubtask(bool) {
       if (bool) {
         const newSubtask = {
-          indexTask: this.whereSubTasksShow ? this.indexTask : this.TASKS.length - 5 + this.indexTask,
+          indexTask: this.indexTask,
           subtask: this.newSubtask
         }
         this.$store.dispatch('createSubtask', newSubtask);
@@ -84,11 +76,6 @@ export default {
       this.creatingSubtask = false;
       this.newSubtask = '';
     }
-  },
-  computed: {
-    ...mapGetters([
-        'TASKS'
-    ])
   },
   watch: {
     indexFocus() {
@@ -135,6 +122,9 @@ export default {
   cursor: pointer;
   height: 54px;
   padding: 0 102px;
+}
+.add-subtask:hover {
+  color: #0239A4;
 }
 .edit-or-not {
   width: 24px;

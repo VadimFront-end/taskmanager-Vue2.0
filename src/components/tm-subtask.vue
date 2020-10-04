@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
 
 export default {
   name: "tm-subtask",
@@ -85,10 +84,10 @@ export default {
         return NaN
       }
     },
-    whereSubTasksShow: {
+    isProject: {
       type: Boolean,
       default() {
-        return false
+        return false;
       }
     }
   },
@@ -103,7 +102,7 @@ export default {
     deleteSubtask(bool) {
       if(bool) {
         const deleteSubtask = {
-          indexTask: this.whereSubTasksShow ? this.indexTask : this.TASKS.length - 5 + this.indexTask,
+          indexTask: this.indexTask,
           indexSubtask: this.indexSubTask
         }
         this.$store.dispatch('deleteSubtask', deleteSubtask);
@@ -115,7 +114,7 @@ export default {
         const editedSubtask = {
           newTitle: this.subtaskToEdit,
           indexSubtask: this.indexSubTask,
-          indexTask: this.whereSubTasksShow ? this.indexTask : this.TASKS.length - 5 + this.indexTask,
+          indexTask: this.indexTask,
         }
         this.rememberSubtask=this.subtaskToEdit;
         this.$store.dispatch('editSubtaskTitle', editedSubtask);
@@ -126,8 +125,9 @@ export default {
     kostil() {
       setTimeout(() => {
         this.subtaskToEdit=this.rememberSubtask;
+        this.editingSubtask=false;
         document.getElementById(`editTask${this.indexSubTask}`).setAttribute('disabled','disabled');
-      },100)
+      },100);
     },
     startEditSubtask() {
       setTimeout(() => {
@@ -137,17 +137,15 @@ export default {
       document.getElementById(`editTask${this.indexSubTask}`).removeAttribute('disabled');
     }
   },
-  computed: {
-    ...mapGetters([
-      'TASKS'
-    ])
-  },
   watch: {
     indexFocus() {
       if(this.indexSubTask!==this.indexFocus) {
         this.deletingSubtask=false;
         this.editingSubtask=false;
       }
+    },
+    subtask() {
+      this.subtaskToEdit=this.subtask;
     }
   }
 }

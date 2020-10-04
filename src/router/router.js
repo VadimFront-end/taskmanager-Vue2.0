@@ -5,6 +5,7 @@ import tmRegistration from '../components/auth/tm-registration'
 import tmChangePassword from '../components/auth/tm-change-password'
 import tmMainPage from '../components/tm-main-page'
 import tmMyTasks from '../components/tm-my-tasks'
+import tmProject from '../components/tm-project'
 import tmProjects from '../components/tm-projects'
 import store from '../vuex/store'
 Vue.use(Router);
@@ -47,6 +48,14 @@ let router=new Router({
             path: '/projects',
             name: 'tmProjects',
             component: tmProjects,
+            beforeEnter(to,from,next) {
+                store.state.user.id ? next() : next('/');
+            }
+        },
+        {
+            path: '/project',
+            name: 'tmProject',
+            component: tmProject,
             beforeEnter(to,from,next) {
                 store.state.user.id ? next() : next('/');
             }

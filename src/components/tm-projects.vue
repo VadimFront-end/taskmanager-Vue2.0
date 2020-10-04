@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="project-now">
-      <div class="project-now-item">
+      <div class="project-now-item" @click="fuck">
         <div class="project-now-item-title">Цифровая платформа “Название название”</div>
         <div class="project-now-status" style="margin-bottom: 4px">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,6 +59,12 @@
 <script>
 export default {
   name: "tm-projects",
+  methods: {
+    fuck() {
+      this.$router.push('/project');
+      console.log(1);
+    }
+  }
 }
 </script>
 

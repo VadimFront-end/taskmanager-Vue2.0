@@ -38,11 +38,6 @@ export default {
     closeWindow(data) {
       this.showWindow=data;
     }
-  },
-  watch: {
-    showWindow() {
-      this.$store.commit('nullIndex');
-    }
   }
 }
 </script>
