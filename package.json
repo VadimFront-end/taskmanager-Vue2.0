@@ -10,8 +10,10 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "material-design-icons": "^3.0.1",
     "vue": "^2.6.11",
     "vue-router": "^3.4.3",
+    "vue-single-date-picker": "^0.5.11",
     "vuelidate": "^0.7.5",
     "vuex": "^3.5.1"
   },
