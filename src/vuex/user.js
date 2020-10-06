@@ -8,7 +8,7 @@ export default {
             {
                 status: 1,
                 id: 0,
-                type: 1,
+                type: true,
                 title: 'FUCK фывфывфы вфыв фыв',
                 executer: 'Madim',
                 deadline: '20',
@@ -22,7 +22,7 @@ export default {
             {
                 status: 2,
                 id: 1,
-                type: 1,
+                type: false,
                 title: 'FUCK',
                 executer: 'Vadim',
                 deadline: '20',
@@ -36,7 +36,7 @@ export default {
             {
                 status: 1,
                 id: 2,
-                type: 2,
+                type: true,
                 title: 'FUCK',
                 executer: 'Badim',
                 deadline: '20',
@@ -50,7 +50,7 @@ export default {
             {
                 status: 2,
                 id: 3,
-                type: 1,
+                type: false,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
@@ -64,7 +64,7 @@ export default {
             {
                 status: 2,
                 id: 4,
-                type: 2,
+                type: false,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
@@ -78,7 +78,7 @@ export default {
             {
                 status: 3,
                 id: 5,
-                type: 2,
+                type: false,
                 title: 'FUCK ыыыыы ыыыыы ',
                 executer: 'Tadim',
                 deadline: '20',
@@ -92,7 +92,9 @@ export default {
         ],
         selectedSubtaskIndex: 0,
         error: false,
-        id: null
+        id: null,
+        showTaskWindow: false,
+        getTaskData: {}
     },
     mutations: {
         logIn(state,userData) {
@@ -118,6 +120,23 @@ export default {
             newTask.id=state.tasks.length;
             state.tasks.push(newTask);
         },
+        editTask(state,newTask) {
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===newTask.id) {
+                    state.tasks[i]=newTask;
+                    state.tasks.push(newTask);
+                    state.tasks.pop();
+                    break;
+                }
+            }
+        },
+        deleteTask(state, taskId) {
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===taskId) {
+                    state.tasks.splice(i, 1);
+                }
+            }
+        },
         createSubtask(state, newSubtask) {
             state.tasks[newSubtask.indexTask].subtasks.push(newSubtask.subtask);
         },
@@ -141,6 +160,21 @@ export default {
                     state.tasks[i].status=newStatus.status;
                 }
             }
+        },
+        showTaskWindow(state,status) {
+            if(status!==-1) {
+                for(let i=0;i<state.tasks.length;i++) {
+                   if(state.tasks[i].id===status) {
+                       state.getTaskData=state.tasks[i];
+                       break;
+                   }
+                }
+            }
+            else state.getTaskData={kostil: 'kostil'};
+            state.showTaskWindow=true;
+        },
+        closeTaskWindow(state) {
+            state.showTaskWindow=false;
         }
     },
     actions: {
@@ -189,6 +223,9 @@ export default {
         },
         async editStatusTask({commit}, newStatus) {
             commit('editStatusTask', newStatus);
+        },
+        async deleteTask({commit}, taskId) {
+            commit('deleteTask', taskId);
         }
     },
     getters: {
@@ -201,7 +238,8 @@ export default {
         TASKS(state) {
             return state.tasks;
         },
-        LASTTASKS(state) {
+        LAST_TASKS(state) {
+            console.log(1)
             const lastTasks=state.tasks.filter((val,index)=> {
                 return index>=state.tasks.length-5;
             })
@@ -223,6 +261,12 @@ export default {
                 return val.status===1;
             })
             return toDo;
+        },
+        SHOW_TASK_WINDOW(state) {
+            return state.showTaskWindow;
+        },
+        GET_TASK_DATA(state) {
+            return state.getTaskData;
         }
     }
 }

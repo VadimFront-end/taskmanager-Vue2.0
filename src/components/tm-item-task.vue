@@ -1,20 +1,22 @@
 <template>
-  <div class="last-tasks" :style="{gridTemplateColumns: isProject ? '82px 340px 100px 82px 100px 82px 82px': ''}">
+  <div class="last-tasks"
+       :style="{gridTemplateColumns: isProject ? '82px 340px 100px 82px 100px 82px 82px': ''}">
     <tmStatusTask
         :isProject="true"
         :status="task.status"
         :taskId="task.id"
         :openThisTableStatuses="openThisTableStatuses"
         @click.native="openThisTableStatuses===task.id ? openThisTableStatuses=NaN: openThisTableStatuses=task.id"/>
-    <div class="tasks-title">
+    <div class="tasks-title" @click="exportDataTask">
       <div style="margin: auto 15px">{{task.title}}</div>
     </div>
     <div
+        @click="exportDataTask"
         class="executer"
         @mousemove="indexForShowTaskType=task.id"
         @mouseout="indexForShowTaskType=NaN"
         v-if="!isProject">
-      <svg v-if="task.type===1" style="margin: auto" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg v-if="!task.type" style="margin: auto" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M14.4 3.2H11.2V1.6C11.2 0.712 10.488 0 9.6 0H6.4C5.512 0 4.8 0.712 4.8 1.6V3.2H1.6C0.712 3.2 0.00799999 3.912 0.00799999 4.8L0 13.6C0 14.488 0.712 15.2 1.6 15.2H14.4C15.288 15.2 16 14.488 16 13.6V4.8C16 3.912 15.288 3.2 14.4 3.2ZM9.6 3.2H6.4V1.6H9.6V3.2Z" fill="#889ABD"/>
       </svg>
       <svg v-else style="margin: auto" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,11 +35,11 @@
           v-if="indexForShowTaskType===task.id">
         <div
             style="color: #485C83"
-            v-show="task.type===1"
+            v-show="!task.type"
         >Рабочая
         </div>
         <div
-            v-show="task.type===2"
+            v-show="task.type"
             style="color: #485C83"
         >Личная
         </div>
@@ -48,25 +50,25 @@
         <div style="margin: auto">{{task.executer[0]}}</div>
       </div>
     </div>
-    <div class="tasks-status">{{task.deadline}}</div>
-    <div class="executer mobile">
+    <div class="tasks-status" @click="exportDataTask">{{task.deadline}}</div>
+    <div class="executer mobile" @click="exportDataTask">
       <div class="executer-oval" :style="{background: task.difficulty===3 ? '#F3B6B8': task.difficulty===2 ? '#F1EAA5': '#B9ECB5'}">
         <div style="margin: auto">{{task.difficulty===3 ? 'Сложная': task.difficulty===2 ? 'Средняя': 'Легкая'}}</div>
       </div>
     </div>
-    <div class="tasks-time mobile">
+    <div class="tasks-time mobile" @click="exportDataTask">
       <div style="color: #576F9D">Оценочное</div>
       <div style="margin-top: 2px;font-size: 0.85rem">{{task.time}}</div>
       <div style="color: #576F9D;margin-top: 6px">Фактическое</div>
       <div style="margin-top: 2px;font-size: 0.85rem">{{task.timeF}}</div>
     </div>
-    <div class="executer mobile" v-show="!isProject">
+    <div class="executer mobile" v-show="!isProject" @click="exportDataTask">
       <div class="executer-round">
         <div style="margin: auto">{{task.author[0]}}</div>
       </div>
     </div>
-    <div class="tasks-title mobile" v-show="!isProject">
-      <div style="margin: auto 15px;font-size: 0.85rem">{{task.description}}</div>
+    <div class="tasks-title mobile" v-show="!isProject" @click="exportDataTask">
+      <div class="for-description">{{task.description}}</div>
     </div>
     <div
         class="container-for-arrow mobile"
@@ -144,6 +146,9 @@ export default {
     showSubtasks(taskId) {
       if(taskId===this.indexForShow)this.indexForShow=NaN;
       else this.indexForShow=taskId;
+    },
+    exportDataTask() {
+      this.$store.commit('showTaskWindow', this.task.id);
     }
   }
 }
@@ -232,6 +237,15 @@ export default {
   border-radius: 1px;
   width: 10px;
   height: 2px;
+}
+.for-description {
+  margin: auto 15px;
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 @media (max-width: 1250px) {
   .last-tasks {

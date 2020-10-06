@@ -3,7 +3,7 @@
     <div class="modal-window">
       <div style="display: flex;justify-content: space-between">
         <div style="color: #344360;margin-bottom: 8px">Задача</div>
-        <div class="button-to-exit" @click="closeWindowWithoutSave">
+        <div class="button-to-exit" @click="$store.commit('closeTaskWindow')">
           <div class="part-of-exit" style="transform: rotate(45deg)"></div>
           <div class="part-of-exit" style="transform: rotate(-45deg)"></div>
         </div>
@@ -87,9 +87,10 @@
       <div style="display: flex">
         <SingleDatePicker
             @selectDate="selectDate"
-            style="position: absolute;font-size: 14px"
+            style="position: absolute;font-size: 14px;top: 19%;left: 26%"
             v-show="showCalendar"/>
-        <label style="display: flex;align-items: center;margin-right: 30px;cursor: pointer" for="label-clock-sand">
+        <label style="display: flex;align-items: center;margin-right: 30px;cursor: pointer" for="label-clock-sand"
+               @click="showCalendar=!showCalendar">
           <svg style="margin-right: 8px" width="10" height="16" viewBox="0 0 10 16" fill="none"
                xmlns="http://www.w3.org/2000/svg">
             <path
@@ -99,13 +100,15 @@
           <div class="container-for-input-edit-task" :style="{borderBottom: focusDeadline ? '1px solid #0356F6': ''}">
             <input
                 id="label-clock-sand"
+                disabled
                 type="text"
+                style="cursor:pointer"
                 :placeholder="focusDeadline ? 'дд.мм.гггг': 'Дедлайн'"
                 class="input-edit"
                 v-model.trim="task.deadline"
                 @focus="focusDeadline=true"
                 @blur="focusDeadline=false">
-            <svg @click="showCalendar=true" width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                   d="M4.79999 7.19995H6.39999V8.79995H4.79999V7.19995ZM4.79999 10.4H6.39999V12H4.79999V10.4ZM7.99999 7.19995H9.59999V8.79995H7.99999V7.19995ZM7.99999 10.4H9.59999V12H7.99999V10.4ZM11.2 7.19995H12.8V8.79995H11.2V7.19995ZM11.2 10.4H12.8V12H11.2V10.4Z"
                   :fill="focusDeadline ? '#4F8AFD': '#A7B4CF'"/>
@@ -127,17 +130,17 @@
           <div style="margin: 0 12px 0 16px">Личная</div>
           <div
               class="container-for-change-type"
-              @click="changeTypeTask=!changeTypeTask"
-              :style="{border: changeTypeTask ? ' 1px solid #4F8AFD': ''}">
+              @click="task.type=!task.type"
+              :style="{border: task.type ? ' 1px solid #4F8AFD': ''}">
             <div
                 class="change-type"
                 style="margin-right: 2px"
-                :style="{visibility: !changeTypeTask ? 'visible': 'hidden'}">
+                :style="{visibility: !task.type ? 'visible': 'hidden'}">
             </div>
             <div
                 class="change-type"
                 style="background: #4F8AFD"
-                :style="{visibility: changeTypeTask ? 'visible': 'hidden'}">
+                :style="{visibility: task.type ? 'visible': 'hidden'}">
             </div>
           </div>
         </div>
@@ -247,8 +250,8 @@
         >Сложная
         </div>
       </div>
-      <div style="display: flex;align-items: center" :style="{justifyContent: task.id ? 'space-between': 'center'}">
-        <div style="display: flex;cursor: pointer" v-show="task.id">
+      <div style="display: flex;align-items: center" :style="{justifyContent: !Number.isNaN(task.id) ? 'space-between': 'center'}">
+        <div style="display: flex;cursor: pointer" v-show="!Number.isNaN(task.id)">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M4.99166 1.44H4.83333C4.92041 1.44 4.99166 1.368 4.99166 1.28V1.44H11.0083V1.28C11.0083 1.368 11.0796 1.44 11.1667 1.44H11.0083V2.88H12.4333V1.28C12.4333 0.574 11.8653 0 11.1667 0H4.83333C4.13468 0 3.56666 0.574 3.56666 1.28V2.88H4.99166V1.44ZM14.9667 2.88H1.03333C0.683015 2.88 0.399994 3.166 0.399994 3.52V4.16C0.399994 4.248 0.471244 4.32 0.558327 4.32H1.75374L2.2426 14.78C2.27426 15.462 2.83239 16 3.50729 16H12.4927C13.1696 16 13.7257 15.464 13.7574 14.78L14.2462 4.32H15.4417C15.5287 4.32 15.6 4.248 15.6 4.16V3.52C15.6 3.166 15.317 2.88 14.9667 2.88ZM12.3403 14.56H3.65968L3.18072 4.32H12.8193L12.3403 14.56Z"
@@ -269,11 +272,11 @@
          </span>
           <div v-show="deletingSubtask" style="display: flex;margin-left: 12px">
             <div style="color: #10141D">Вы точно хотите удалить задачу?</div>
-            <div @click="deletingSubtask=false" class="only-for-hover1">Удалить</div>
+            <div @click="deleteTask(task.id)" class="only-for-hover1">Удалить</div>
             <div @click="deletingSubtask=false" class="only-for-hover2">Назад</div>
           </div>
         </div>
-        <div class="save-edits" @click="closeWindow">
+        <div class="save-edits" @click="saveTask">
           <svg style="margin-right: 4px" width="12" height="12" viewBox="0 0 12 12" fill="none"
                xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0)">
@@ -296,6 +299,7 @@
 
 <script>
 import SingleDatePicker from 'vue-single-date-picker'
+import {mapGetters} from 'vuex'
 
 export default {
   name: "modal-window-task",
@@ -306,16 +310,16 @@ export default {
     return {
       task: {
         status: 1,
-        type: 1,
+        type: false,
         timeF: '',
         title: '',
-        executer: 'a',
+        executer: '',
         deadline: '',
         difficulty: 1,
         time: '',
-        author: this.$store.state.user.user.email,
+        author: '',
         description: '',
-        id: 1
+        id: NaN
       },
       easy: false,
       normal: false,
@@ -323,7 +327,6 @@ export default {
       difficultyFilterIndex: -1,
       focusTime: false,
       focusTimeF: false,
-      changeTypeTask: false,
       focusDeadline: false,
       focusExecuter: false,
       deletingSubtask: false,
@@ -331,9 +334,10 @@ export default {
     }
   },
   methods: {
-    closeWindow() {
-      if ((this.task.title) && (this.task.executer)) {
-        const newTask = {
+    saveTask() {
+      // && (this.task.executer)
+      if (this.task.title) {
+        let newTask = {
           status: this.task.status,
           type: this.task.type,
           title: this.task.title,
@@ -346,28 +350,10 @@ export default {
           description: this.task.description,
           subtasks: []
         };
-        this.$store.commit('createNewTask', newTask);
-        this.$emit('closeWindow', false);
-        this.task.status = 1;
-        this.type = 1;
-        this.task.difficulty = 1
-        this.task.title = this.task.executer = this.task.deadline = this.task.time = this.timeF = this.task.description = '';
-        this.easy = false;
-        this.normal = false;
-        this.hard = false;
-        this.difficultyFilterIndex = -1;
+        if (Number.isNaN(this.task.id))this.$store.commit('createNewTask', newTask);
+        else this.$store.commit('editTask', this.task);
+        this.$store.commit('closeTaskWindow');
       }
-    },
-    closeWindowWithoutSave() {
-      this.$emit('closeWindow', false);
-      this.task.status = 1;
-      this.type = 1;
-      this.task.difficulty = 1
-      this.task.title = this.task.executer = this.task.deadline = this.task.time = this.task.description = '';
-      this.easy = false;
-      this.normal = false;
-      this.hard = false;
-      this.difficultyFilterIndex = -1;
     },
     showOnlyThis2(index) {
       this.easy = false;
@@ -385,56 +371,73 @@ export default {
       }
     },
     selectDate(data) {
-      console.log(data)
-      this.showCalendar=false;
+      this.task.deadline = (String(data.date).length === 1 ? '0' + data.date : data.date) + '.' + (String(data.month).length === 1 ? '0' + data.month : data.month) + '.' + data.year;
+      this.showCalendar = false;
+    },
+    deleteTask(taskId) {
+      this.$store.dispatch('deleteTask', taskId);
+      this.$store.commit('closeTaskWindow');
     }
+  },
+  computed: {
+    ...mapGetters([
+        'GET_TASK_DATA'
+    ])
   },
   mounted() {
-    this.task.author = this.$store.state.user.user.username ? this.$store.state.user.user.username : this.$store.state.user.user.email;
-  },
-  watch: {
-    'task.deadline'(newVal, oldVal) {
-      for (let i = 0; i < this.task.deadline.length; i++) {
-        if (i !== 2 && i !== 5) {
-          if (!/^[0-9]+$/.test(newVal[i])) {
-            this.task.deadline = oldVal;
-            break;
-          }
-        } else {
-          if (!(newVal[i] === '.')) {
-            console.log(!(newVal[i] === '.'))
-            this.task.deadline = oldVal;
-            break;
-          }
-        }
-      }
-      if (newVal > oldVal) {
-        if (this.task.deadline.length === 2 || this.task.deadline.length === 5) this.task.deadline += '.';
-        if (this.task.deadline.length >= 11) this.task.deadline = this.task.deadline.slice(0, 10);
-      }
-      if (newVal < oldVal) {
-        if (newVal[newVal.length - 1] === '.') this.task.deadline = this.task.deadline.slice(0, newVal.length - 2);
-      }
-      // if(!(/^[0-9]+$/.test(newVal[newVal.length-1]))) {
-      //   this.task.deadline=oldVal;
-      // }
-      // if(newVal.length>2&&newVal[2]!=='.') {
-      //   this.task.deadline=oldVal;
-      //   return;
-      // }
-      // if(newVal.length>5&&newVal[5]!=='.') {
-      //   this.task.deadline=oldVal;
-      //   return;
-      // }
-      // if(newVal>oldVal) {
-      //   if(this.task.deadline.length===2||this.task.deadline.length===5)this.task.deadline+='.';
-      //   if(this.task.deadline.length>=11)this.task.deadline=this.task.deadline.slice(0,10);
-      // }
-      // if(newVal<oldVal) {
-      //   if(newVal[newVal.length-1]==='.')this.task.deadline=this.task.deadline.slice(0,newVal.length-2);
-      // }
+    if(!this.GET_TASK_DATA.kostil) {
+      this.task=JSON.stringify(this.GET_TASK_DATA);
+      this.task=JSON.parse(this.task);
     }
+    else {
+      this.task.author=this.$store.state.user.user.username ? this.$store.state.user.user.username: this.$store.state.user.user.email;
+    }
+    this.easy=this.task.difficulty===1;
+    this.normal=this.task.difficulty===2;
+    this.hard=this.task.difficulty===3;
   }
+  // watch: {
+  //   'task.deadline'(newVal, oldVal) {
+  //     for (let i = 0; i < this.task.deadline.length; i++) {
+  //       if (i !== 2 && i !== 5) {
+  //         if (!/^[0-9]+$/.test(newVal[i])) {
+  //           this.task.deadline = oldVal;
+  //           break;
+  //         }
+  //       } else {
+  //         if (!(newVal[i] === '.')) {
+  //           this.task.deadline = oldVal;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     if (newVal > oldVal) {
+  //       if (this.task.deadline.length === 2 || this.task.deadline.length === 5) this.task.deadline += '.';
+  //       if (this.task.deadline.length >= 11) this.task.deadline = this.task.deadline.slice(0, 10);
+  //     }
+  //     if (newVal < oldVal) {
+  //       if (newVal[newVal.length - 1] === '.') this.task.deadline = this.task.deadline.slice(0, newVal.length - 2);
+  //     }
+  //     // if(!(/^[0-9]+$/.test(newVal[newVal.length-1]))) {
+  //     //   this.task.deadline=oldVal;
+  //     // }
+  //     // if(newVal.length>2&&newVal[2]!=='.') {
+  //     //   this.task.deadline=oldVal;
+  //     //   return;
+  //     // }
+  //     // if(newVal.length>5&&newVal[5]!=='.') {
+  //     //   this.task.deadline=oldVal;
+  //     //   return;
+  //     // }
+  //     // if(newVal>oldVal) {
+  //     //   if(this.task.deadline.length===2||this.task.deadline.length===5)this.task.deadline+='.';
+  //     //   if(this.task.deadline.length>=11)this.task.deadline=this.task.deadline.slice(0,10);
+  //     // }
+  //     // if(newVal<oldVal) {
+  //     //   if(newVal[newVal.length-1]==='.')this.task.deadline=this.task.deadline.slice(0,newVal.length-2);
+  //     // }
+  //   }
+  // }
 }
 </script>
 
@@ -445,7 +448,7 @@ export default {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+  z-index: 100;
   left: 0;
   top: 0;
   display: flex;
@@ -454,6 +457,7 @@ export default {
 }
 
 .modal-window {
+  position: relative;
   width: 474px;
   background: white;
   padding: 40px 50px;
@@ -534,6 +538,7 @@ export default {
 
 .input-edit {
   font-size: 1rem;
+  background: white;
   color: #10141D;
 }
 

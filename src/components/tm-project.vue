@@ -19,7 +19,7 @@
             :index="index"
             :lengthArray="FILTERED.length"
             :task="task"
-            :style="{borderRadius: index===FILTERED.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}" />
+            :style="{borderRadius: (index===FILTERED.length-1)&&(index===0) ? '14px': index===FILTERED.length-1 ? '0 0 14px 14px': index===0 ? '14px 14px 0 0' : ''}"/>
       </div>
       <div class="description-of-project">
         <div style="display: flex;align-items: center">
@@ -53,6 +53,7 @@
 import {mapGetters} from 'vuex'
 import tmItemTask from '../components/tm-item-task'
 import tmControlFilters from '../components/tm-control-filters'
+
 export default {
   name: "tm-project",
   components: {
@@ -67,9 +68,6 @@ export default {
   methods: {
     getView(data) {
       this.view=data;
-    },
-    closeWindow(data) {
-      this.showWindow=data;
     }
   },
   computed: {

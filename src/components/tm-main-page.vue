@@ -12,12 +12,12 @@
      <div style="margin-left: 15px" class="mobile">Описание</div>
    </div>
    <tmItemTask
-       v-for="(task,index) in LASTTASKS"
+       v-for="(task,index) in LAST_TASKS"
        :key="index"
        :index="index"
-       :lengthArray="LASTTASKS.length"
+       :lengthArray="LAST_TASKS.length"
        :task="task"
-       :style="{borderRadius: index===LASTTASKS.length-1 ? '0 0 14px 14px' : index===0 ? '14px 14px 0 0' : ''}" />
+       :style="{borderRadius: (index===LAST_TASKS.length-1)&&(index===0) ? '14px': index===LAST_TASKS.length-1 ? '0 0 14px 14px': index===0 ? '14px 14px 0 0' : ''}"/>
    <div class="title-main-page">Текущие проекты</div>
    <div class="project-now">
      <div class="project-now-item">
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'LASTTASKS'
+        'LAST_TASKS'
     ])
   }
 }

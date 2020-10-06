@@ -40,9 +40,9 @@ let router=new Router({
             path: '/MyTasks',
             name: 'tmMyTasks',
             component: tmMyTasks,
-            // beforeEnter(to,from,next) {
-            //     store.state.user.id ? next() : next('/');
-            // }
+            beforeEnter(to,from,next) {
+                store.state.user.id ? next() : next('/');
+            }
         },
         {
             path: '/projects',
