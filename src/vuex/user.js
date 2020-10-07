@@ -17,7 +17,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             },
             {
                 status: 2,
@@ -31,7 +31,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             },
             {
                 status: 1,
@@ -45,7 +45,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             },
             {
                 status: 2,
@@ -59,7 +59,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             },
             {
                 status: 2,
@@ -73,7 +73,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             },
             {
                 status: 3,
@@ -87,7 +87,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: ['1','2','3','4']
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
             }
         ],
         selectedSubtaskIndex: 0,
@@ -126,7 +126,6 @@ export default {
                     state.tasks[i]=newTask;
                     state.tasks.push(newTask);
                     state.tasks.pop();
-                    break;
                 }
             }
         },
@@ -138,7 +137,11 @@ export default {
             }
         },
         createSubtask(state, newSubtask) {
-            state.tasks[newSubtask.indexTask].subtasks.push(newSubtask.subtask);
+            const addStatus= {
+                status: 1,
+                title: newSubtask.subtask
+            }
+            state.tasks[newSubtask.indexTask].subtasks.push(addStatus);
         },
         deleteSubtask(state,deleteSubtask) {
             for(let i=0;i<state.tasks.length;i++) {
@@ -150,7 +153,14 @@ export default {
         editSubtaskTitle(state, editedSubtask) {
             for(let i=0;i<state.tasks.length;i++) {
                 if(state.tasks[i].id===editedSubtask.indexTask) {
-                    state.tasks[i].subtasks[editedSubtask.indexSubtask]=editedSubtask.newTitle;
+                    state.tasks[i].subtasks[editedSubtask.indexSubtask].title=editedSubtask.newTitle;
+                }
+            }
+        },
+        editStatusSubtask(state, newStatus) {
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===newStatus.indexTask) {
+                    state.tasks[i].subtasks[newStatus.indexSubtask].status=newStatus.status;
                 }
             }
         },
@@ -234,9 +244,6 @@ export default {
         },
         ERROR(state) {
             return state.error;
-        },
-        TASKS(state) {
-            return state.tasks;
         },
         LAST_TASKS(state) {
             console.log(1)

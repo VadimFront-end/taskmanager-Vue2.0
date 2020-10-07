@@ -12,6 +12,8 @@
           :subtask="subtask"
           :indexSubTask="index"
           :indexTask="indexTask"
+          @openThisTable="openThisTable"
+          :openThisTableStatuses="openThisTableStatuses"
           @click.native="indexFocus=index"
           :indexFocus="indexFocus"/>
       <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true;indexFocus=NaN">+ Добавить задачу</div>
@@ -61,7 +63,8 @@ export default {
     return {
       indexFocus: NaN,
       creatingSubtask: false,
-      newSubtask: ''
+      newSubtask: '',
+      openThisTableStatuses: NaN
     }
   },
   methods: {
@@ -75,6 +78,10 @@ export default {
       }
       this.creatingSubtask = false;
       this.newSubtask = '';
+    },
+    openThisTable(data) {
+      if(data===this.openThisTableStatuses)this.openThisTableStatuses=NaN;
+      else this.openThisTableStatuses=data;
     }
   },
   watch: {

@@ -10,7 +10,7 @@
       </div>
       <input type="text" class="edit-tasks-title" placeholder="Название задачи" v-model.trim="task.title">
       <div class="persons">
-        <div @mousemove="focusExecuter=true" @mouseout="focusExecuter=false">
+        <div>
           <div class="title-for-input-mw"
                :style="{visibility: focusExecuter ? 'visible': 'hidden',color: focusExecuter ? '#0356F6': ''}">
             Исполнитель
@@ -29,7 +29,8 @@
                     type="text"
                     placeholder="Исполнитель"
                     class="input-edit"
-                    disabled
+                    @focus="focusExecuter=true"
+                    @blur="kostil"
                     style="background: white;cursor: pointer"
                     v-model.trim="task.executer">
                 <div class="container-for-arr" :style="{transform: focusExecuter ? 'rotate(180deg)': ''}">
@@ -39,17 +40,15 @@
                        style="transform: rotate(-45deg);margin-left: -2px;background: #B0BCD3"></div>
                 </div>
                 <div class="selected-executer-menu" v-show="focusExecuter">
-                  <div class="selected-executer-menu-item">
-                    <div class="selected-executer-menu-item-pic-person"></div>
-                    <div>Исполнитель1</div>
-                  </div>
-                  <div class="selected-executer-menu-item">
-                    <div class="selected-executer-menu-item-pic-person"></div>
-                    <div>Исполнитель1</div>
-                  </div>
-                  <div class="selected-executer-menu-item">
-                    <div class="selected-executer-menu-item-pic-person"></div>
-                    <div>Исполнитель1</div>
+                  <div
+                      :style="{background: item===task.executer ? '#D4E3FF':''}"
+                      v-show="item.toLocaleLowerCase().indexOf(task.executer)!==-1"
+                      v-for="(item,index) in persons"
+                      :key="index"
+                      @click="task.executer=item"
+                      class="selected-executer-menu-item">
+                    <div class="selected-executer-menu-item-pic-person">{{item[0]}}</div>
+                    <div>{{item}}</div>
                   </div>
                 </div>
               </div>
@@ -330,13 +329,13 @@ export default {
       focusDeadline: false,
       focusExecuter: false,
       deletingSubtask: false,
-      showCalendar: false
+      showCalendar: false,
+      persons: ['Iosif Guzeev','Djack Dag','Iosif Guzeev','Djack Dag','Iosif Guzeev','Djack Dag']
     }
   },
   methods: {
     saveTask() {
-      // && (this.task.executer)
-      if (this.task.title) {
+      if ((this.task.title) && (this.persons.includes(this.task.executer))) {
         let newTask = {
           status: this.task.status,
           type: this.task.type,
@@ -377,6 +376,11 @@ export default {
     deleteTask(taskId) {
       this.$store.dispatch('deleteTask', taskId);
       this.$store.commit('closeTaskWindow');
+    },
+    kostil() {
+      setTimeout(() => {
+        this.focusExecuter=false;
+      },100)
     }
   },
   computed: {
@@ -518,6 +522,8 @@ export default {
 }
 
 .selected-executer-menu-item-pic-person {
+  color: #FCFCFD;
+  font-size: 1.15rem;
   background: #91B6FE;
   margin-left: 16px;
   margin-right: 8px;
