@@ -96,7 +96,7 @@
         :id="'editTask' + indexSubTask"
         class="subtask-description"
         disabled
-        v-model="subtaskToEdit.title"
+        v-model="subtaskToEdit"
         @focus="rememberSubtask=subtaskToEdit"
         :style="{background: indexSubTask%2 ? '#F6F8FB' : '#FFFFFF'}"
         @blur="kostil"/>
@@ -188,7 +188,7 @@ export default {
     return {
       deletingSubtask: false,
       editingSubtask: false,
-      subtaskToEdit: this.subtask,
+      subtaskToEdit: this.subtask.title,
       ShowStatus: false
     }
   },
@@ -247,7 +247,8 @@ export default {
       }
     },
     subtask() {
-      this.subtaskToEdit = this.subtask;
+      console.log(this.subtask.title)
+      this.subtaskToEdit = this.subtask.title;
     }
   }
 }

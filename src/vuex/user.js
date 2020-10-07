@@ -17,7 +17,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             },
             {
                 status: 2,
@@ -31,7 +31,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             },
             {
                 status: 1,
@@ -45,7 +45,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             },
             {
                 status: 2,
@@ -59,7 +59,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             },
             {
                 status: 2,
@@ -73,7 +73,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             },
             {
                 status: 3,
@@ -87,7 +87,7 @@ export default {
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело1',status: 3},{title: 'Дело1',status: 1},{title: 'Дело1',status: 2}]
+                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             }
         ],
         selectedSubtaskIndex: 0,
