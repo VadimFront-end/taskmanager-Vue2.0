@@ -3,7 +3,7 @@
     <div class="container-for-subtasks">
     <div class="subtasks-title">
       <span style="margin-right: 45px">Статус</span>
-      <span>Название подадачи</span>
+      <span>Название подзадачи</span>
     </div>
       <tmSubtask
           v-for="(subtask,index) in subtasks"
@@ -16,7 +16,7 @@
           :openThisTableStatuses="openThisTableStatuses"
           @click.native="indexFocus=index"
           :indexFocus="indexFocus"/>
-      <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true;indexFocus=NaN">+ Добавить задачу</div>
+      <div v-if="!creatingSubtask" class="add-subtask" @click="creatingSubtask=true;indexFocus=NaN">+ Добавить подзадачу</div>
       <div v-else class="add-subtask">
         <input
             class="subtask-description"

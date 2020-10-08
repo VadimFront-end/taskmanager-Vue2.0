@@ -12,7 +12,7 @@
       <div class="persons">
         <div>
           <div class="title-for-input-mw"
-               :style="{visibility: focusExecuter ? 'visible': 'hidden',color: focusExecuter ? '#0356F6': ''}">
+               :style="{visibility: (focusExecuter||task.executer.length) ? 'visible': 'hidden',color: focusExecuter ? '#0356F6': ''}">
             Исполнитель
           </div>
           <div style="margin-right: 30px;align-self: flex-end">
@@ -147,7 +147,7 @@
       <div class="edit-tasks-time">
         <div>
           <div class="title-for-input-mw"
-               :style="{color: focusTime ? '#0356F6': '',visibility: focusTime ? 'visible': 'hidden'}">Исходная оценка
+               :style="{color: focusTime ? '#0356F6': '',visibility: (focusTime||task.time.length) ? 'visible': 'hidden'}">Исходная оценка
             времени
           </div>
           <label style="display: flex;align-items: center;cursor: pointer" for="label-time">
@@ -181,7 +181,7 @@
         </div>
         <div>
           <div class="title-for-input-mw"
-               :style="{color: focusTimeF ? '#0356F6': '',visibility: focusTimeF ? 'visible': 'hidden'}">Фактичекое
+               :style="{color: focusTimeF ? '#0356F6': '',visibility: (focusTimeF||task.timeF.length) ? 'visible': 'hidden'}">Фактичекое
             время
           </div>
           <label style="display: flex;align-items: center;cursor: pointer" for="label-timeF">
@@ -323,7 +323,6 @@ export default {
       easy: false,
       normal: false,
       hard: false,
-      difficultyFilterIndex: -1,
       focusTime: false,
       focusTimeF: false,
       focusDeadline: false,
@@ -358,16 +357,10 @@ export default {
       this.easy = false;
       this.normal = false;
       this.hard = false;
-      if (this.difficultyFilterIndex !== index) {
-        this.difficultyFilterIndex = index;
-        if (index === 0) this.easy = true;
-        if (index === 1) this.normal = true;
-        if (index === 2) this.hard = true;
-        this.task.difficulty = index + 1;
-      } else {
-        this.difficultyFilterIndex = -1;
-        this.task.difficulty = '';
-      }
+      if (index === 0) this.easy = true;
+      if (index === 1) this.normal = true;
+      if (index === 2) this.hard = true;
+      this.task.difficulty = index + 1;
     },
     selectDate(data) {
       this.task.deadline = (String(data.date).length === 1 ? '0' + data.date : data.date) + '.' + (String(data.month).length === 1 ? '0' + data.month : data.month) + '.' + data.year;
@@ -446,6 +439,7 @@ export default {
 </script>
 
 <style>
+@import '~vue-single-date-picker/dist/vue-single-date-picker.css';
 .mask-modal-window-task {
   color: #889ABD;
   position: fixed;
@@ -536,10 +530,9 @@ export default {
 }
 
 .container-for-input-edit-task {
-  width: 190px;
   display: flex;
   border-bottom: 1px solid #889ABD;
-  padding: 7px 4px;
+  padding: 7px 0 7px 4px;
 }
 
 .input-edit {

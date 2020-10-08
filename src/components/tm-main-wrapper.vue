@@ -5,9 +5,11 @@
       <div class="header-container">
         <div class="container-for-burgMenu" @click="showLeftMenu=!showLeftMenu">
           <div v-if="$store.state.user.id">
-            <div class="burger-item"></div>
-            <div class="burger-item"></div>
-            <div class="burger-item"></div>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect y="1" width="16" height="2" rx="0.3" fill="#889ABD"/>
+              <rect y="7" width="16" height="2" rx="0.3" fill="#889ABD"/>
+              <rect y="13" width="16" height="2" rx="0.3" fill="#889ABD"/>
+            </svg>
           </div>
         </div>
         <div class="container-for-logo-and-user-account">
@@ -157,11 +159,5 @@ export default {
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-}
-.burger-item {
-  width: 16px;
-  margin-bottom: 4px;
-  height: 2px;
-  background: #889ABD;
 }
 </style>

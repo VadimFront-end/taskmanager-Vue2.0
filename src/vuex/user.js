@@ -9,7 +9,7 @@ export default {
                 status: 1,
                 id: 0,
                 type: true,
-                title: 'FUCK фывфывфы вфыв фыв',
+                title: 'Создать макет авторизации регистрации',
                 executer: 'Madim',
                 deadline: '20',
                 difficulty: 1,
@@ -246,7 +246,6 @@ export default {
             return state.error;
         },
         LAST_TASKS(state) {
-            console.log(1)
             const lastTasks=state.tasks.filter((val,index)=> {
                 return index>=state.tasks.length-5;
             })

@@ -1,4 +1,8 @@
-@import '~vue-single-date-picker/dist/vue-single-date-picker.css';
+@font-face {
+  font-family: 'Ubuntu';
+  src: url(../fonts/Ubuntu-Light.ttf);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +19,7 @@ body {
 input {
   font-size: 1rem;
   border: none;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 input:focus {

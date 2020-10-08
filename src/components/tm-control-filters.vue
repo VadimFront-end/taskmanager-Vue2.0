@@ -2,7 +2,7 @@
   <div class="view-controls">
     <div class="left-filters">
         <div class="filters">
-          <span style="margin-right: 8px">Исполнитель:</span>
+          <span style="margin-right: 8px">Создатель:</span>
 <!--          <div class="executers">-->
 <!--            <div class="executers-item" style="background: black;z-index: 5;"></div>-->
 <!--            <div class="executers-item" style="background: blue;transform: translate(-15px);z-index: 4;border: 3px solid #FFFFFF;"></div>-->
@@ -171,6 +171,7 @@ export default {
   margin-right: 2px;
 }
 .view-tasks {
+  box-shadow: 0px 0px 10px rgba(2, 57, 164, 0.13);
   display: flex;
   padding: 7px 8px;
   cursor: pointer;

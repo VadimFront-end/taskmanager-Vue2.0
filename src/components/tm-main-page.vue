@@ -72,6 +72,7 @@ export default {
 .title-main-page {
   font-size: 1.4rem;
   line-height: 23px;
+  font-weight: 700;
   color: #10141D;
   margin: 24px 0;
 }
@@ -92,6 +93,7 @@ export default {
   background: white;
   box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
   border-radius: 10px;
+  cursor: pointer;
 }
 .project-now-item:hover {
   box-shadow: 0 0 25px rgba(2, 57, 164, 0.15);
