@@ -40,6 +40,8 @@
 
 <script>
 import tmSubtask from '../components/tm-subtask'
+import {maxLength, required} from "vuelidate/lib/validators";
+
 export default {
   name: "tm-subtasks",
   components: {
@@ -67,14 +69,29 @@ export default {
       openThisTableStatuses: NaN
     }
   },
+  validations: {
+    newSubtask: {
+      required,
+      maxLength: maxLength(64),
+      passwordSigns(newSubtask) {
+        return /^[0-9A-zА-яЁё.,!#$%&"*+/=?^_`{|}~@-]+$/.test(newSubtask);
+      }
+    }
+  },
   methods: {
     createSubtask(bool) {
       if (bool) {
-        const newSubtask = {
-          indexTask: this.indexTask,
-          subtask: this.newSubtask
+        if(!this.$v.newSubtask.$invalid) {
+          const newSubtask = {
+            indexTask: this.indexTask,
+            subtask: this.newSubtask
+          }
+          this.$store.dispatch('createSubtask', newSubtask);
         }
-        this.$store.dispatch('createSubtask', newSubtask);
+        else {
+          console.log('Validation!');
+          return;
+        }
       }
       this.creatingSubtask = false;
       this.newSubtask = '';

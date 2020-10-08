@@ -144,6 +144,8 @@
 
 <script>
 
+import {maxLength, required} from "vuelidate/lib/validators";
+
 export default {
   name: "tm-subtask",
   props: {
@@ -192,26 +194,38 @@ export default {
       ShowStatus: false
     }
   },
+  validations: {
+    subtaskToEdit: {
+        required,
+        maxLength: maxLength(64),
+        passwordSigns(newSubtask) {
+          return /^[-0-9A-zА-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
+        }
+    }
+  },
   methods: {
     deleteSubtask(bool) {
       if (bool) {
-        const deleteSubtask = {
-          indexTask: this.indexTask,
-          indexSubtask: this.indexSubTask
-        }
-        this.$store.dispatch('deleteSubtask', deleteSubtask);
+          const deleteSubtask = {
+            indexTask: this.indexTask,
+            indexSubtask: this.indexSubTask
+          }
+          this.$store.dispatch('deleteSubtask', deleteSubtask);
       }
       this.deletingSubtask = false;
     },
     editTask(bool) {
       if (bool) {
-        const editedSubtask = {
-          newTitle: this.subtaskToEdit,
-          indexSubtask: this.indexSubTask,
-          indexTask: this.indexTask,
+        if(!this.$v.subtaskToEdit.$invalid) {
+          const editedSubtask = {
+            newTitle: this.subtaskToEdit,
+            indexSubtask: this.indexSubTask,
+            indexTask: this.indexTask,
+          }
+          this.rememberSubtask = this.subtaskToEdit;
+          this.$store.dispatch('editSubtaskTitle', editedSubtask);
         }
-        this.rememberSubtask = this.subtaskToEdit;
-        this.$store.dispatch('editSubtaskTitle', editedSubtask);
+        else console.log('Validation!');
       }
       this.editingSubtask = false;
       document.getElementById(`editTask${this.indexSubTask}`).setAttribute('disabled', 'disabled');
@@ -247,7 +261,6 @@ export default {
       }
     },
     subtask() {
-      console.log(this.subtask.title)
       this.subtaskToEdit = this.subtask.title;
     }
   }

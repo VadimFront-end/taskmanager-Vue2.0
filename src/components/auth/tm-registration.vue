@@ -22,7 +22,7 @@
           <input
               class="log-input"
               type="text"
-              placeholder="Ваше имя (необязательно)"
+              placeholder="Ваше имя"
               v-model.trim="name"
               @focus="focusName=true"
               @blur="focusName=false">
@@ -35,7 +35,8 @@
           </svg>
         </div>
       </div>
-      <div class="error" v-if="(ERROR&&(!$v.name.checkDefise||!$v.name.nameSigns))">Некорректный формат имени</div>
+      <div class="error" v-if="ERROR&&!$v.name.required">Это поле обязательно</div>
+      <div class="error" v-else-if="(ERROR&&(!$v.name.checkDefise||!$v.name.nameSigns))">Некорректный формат имени</div>
       <div class="error" v-else-if="(ERROR&&!$v.name.maxLength)">Максимум 24 символа</div>
       <tmEmailInput
           @getEmail="getEmail"
@@ -152,6 +153,7 @@ export default {
   },
   validations: {
     name: {
+      required,
       maxLength: maxLength(24),
       checkDefise(name) {
         if (name.indexOf('-') === -1) return true;
@@ -159,8 +161,7 @@ export default {
         else return true;
       },
       nameSigns(name) {
-        if (name.length) return /^[-ЁёА-яA-z0-9\s]+$/.test(name)
-        else return true;
+        return /^[-ЁёА-яA-z0-9\s]+$/.test(name);
       }
     },
     email: {

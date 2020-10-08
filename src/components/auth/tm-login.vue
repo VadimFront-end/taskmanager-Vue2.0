@@ -122,9 +122,6 @@ export default {
       this.email=data;
     }
   },
-  mounted() {
-    console.log(this.USER)
-  },
   computed: {
     ...mapGetters([
         'USER',

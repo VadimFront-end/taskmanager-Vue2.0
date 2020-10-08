@@ -47,8 +47,8 @@
                       :key="index"
                       @click="task.executer=item"
                       class="selected-executer-menu-item">
-                    <div class="selected-executer-menu-item-pic-person">{{item[0]}}</div>
-                    <div>{{item}}</div>
+                    <div class="selected-executer-menu-item-pic-person">{{ item[0] }}</div>
+                    <div>{{ item }}</div>
                   </div>
                 </div>
               </div>
@@ -81,13 +81,14 @@
                v-model.trim="task.description">
       </div>
       <div class="title-for-input-mw"
-           :style="{color: focusDeadline ? '#0356F6': '',visibility: focusDeadline ? 'visible': 'hidden'}">Дедлайн
+           :style="{color: focusDeadline ? '#0356F6': '',visibility: task.deadline.length ? 'visible': 'hidden'}">
+        Дедлайн
       </div>
       <div style="display: flex">
         <SingleDatePicker
             @selectDate="selectDate"
-            style="position: absolute;font-size: 14px;top: 19%;left: 26%"
-            v-show="showCalendar"/>
+            v-show="showCalendar"
+            style="position: absolute;font-size: 14px;top: 19%;left: 26%"/>
         <label style="display: flex;align-items: center;margin-right: 30px;cursor: pointer" for="label-clock-sand"
                @click="showCalendar=!showCalendar">
           <svg style="margin-right: 8px" width="10" height="16" viewBox="0 0 10 16" fill="none"
@@ -104,9 +105,7 @@
                 style="cursor:pointer"
                 :placeholder="focusDeadline ? 'дд.мм.гггг': 'Дедлайн'"
                 class="input-edit"
-                v-model.trim="task.deadline"
-                @focus="focusDeadline=true"
-                @blur="focusDeadline=false">
+                v-model.trim="task.deadline">
             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                   d="M4.79999 7.19995H6.39999V8.79995H4.79999V7.19995ZM4.79999 10.4H6.39999V12H4.79999V10.4ZM7.99999 7.19995H9.59999V8.79995H7.99999V7.19995ZM7.99999 10.4H9.59999V12H7.99999V10.4ZM11.2 7.19995H12.8V8.79995H11.2V7.19995ZM11.2 10.4H12.8V12H11.2V10.4Z"
@@ -147,7 +146,8 @@
       <div class="edit-tasks-time">
         <div>
           <div class="title-for-input-mw"
-               :style="{color: focusTime ? '#0356F6': '',visibility: (focusTime||task.time.length) ? 'visible': 'hidden'}">Исходная оценка
+               :style="{color: focusTime ? '#0356F6': '',visibility: (focusTime||task.time.length) ? 'visible': 'hidden'}">
+            Исходная оценка
             времени
           </div>
           <label style="display: flex;align-items: center;cursor: pointer" for="label-time">
@@ -181,7 +181,8 @@
         </div>
         <div>
           <div class="title-for-input-mw"
-               :style="{color: focusTimeF ? '#0356F6': '',visibility: (focusTimeF||task.timeF.length) ? 'visible': 'hidden'}">Фактичекое
+               :style="{color: focusTimeF ? '#0356F6': '',visibility: (focusTimeF||task.timeF.length) ? 'visible': 'hidden'}">
+            Фактичекое
             время
           </div>
           <label style="display: flex;align-items: center;cursor: pointer" for="label-timeF">
@@ -249,7 +250,8 @@
         >Сложная
         </div>
       </div>
-      <div style="display: flex;align-items: center" :style="{justifyContent: !Number.isNaN(task.id) ? 'space-between': 'center'}">
+      <div style="display: flex;align-items: center"
+           :style="{justifyContent: !Number.isNaN(task.id) ? 'space-between': 'center'}">
         <div style="display: flex;cursor: pointer" v-show="!Number.isNaN(task.id)">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -329,12 +331,15 @@ export default {
       focusExecuter: false,
       deletingSubtask: false,
       showCalendar: false,
-      persons: ['Iosif Guzeev','Djack Dag','Iosif Guzeev','Djack Dag','Iosif Guzeev','Djack Dag']
+      persons: ['Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag']
     }
   },
   methods: {
     saveTask() {
-      if ((this.task.title) && (this.persons.includes(this.task.executer))) {
+      if (this.task.title &&
+          this.persons.includes(this.task.executer) &&
+          (this.checkOnTime(this.task.time)||this.task.time.length===0) &&
+          (this.checkOnTime(this.task.timeF)||this.task.timeF.length===0)) {
         let newTask = {
           status: this.task.status,
           type: this.task.type,
@@ -348,7 +353,7 @@ export default {
           description: this.task.description,
           subtasks: []
         };
-        if (Number.isNaN(this.task.id))this.$store.commit('createNewTask', newTask);
+        if (Number.isNaN(this.task.id)) this.$store.commit('createNewTask', newTask);
         else this.$store.commit('editTask', this.task);
         this.$store.commit('closeTaskWindow');
       }
@@ -372,26 +377,80 @@ export default {
     },
     kostil() {
       setTimeout(() => {
-        this.focusExecuter=false;
-      },100)
+        this.focusExecuter = false;
+      }, 100)
+    },
+    checkOnTime(time) {
+      if(time.length===5) {
+        if (+(time.slice(0, 2)) > 23 || +(time.slice(0, 2)) < 0) return false;
+        if (+(time.slice(3, 5)) > 59 || +(time.slice(3, 5)) < 0) return false;
+        console.log('true')
+        return true;
+      }
+      else return false;
     }
   },
   computed: {
     ...mapGetters([
-        'GET_TASK_DATA'
+      'GET_TASK_DATA'
     ])
   },
   mounted() {
-    if(!this.GET_TASK_DATA.kostil) {
-      this.task=JSON.stringify(this.GET_TASK_DATA);
-      this.task=JSON.parse(this.task);
+    if (!this.GET_TASK_DATA.kostil) {
+      this.task = JSON.stringify(this.GET_TASK_DATA);
+      this.task = JSON.parse(this.task);
     }
     else {
-      this.task.author=this.$store.state.user.user.username ? this.$store.state.user.user.username: this.$store.state.user.user.email;
+      this.task.author = this.$store.state.user.user.username ? this.$store.state.user.user.username : this.$store.state.user.user.email;
     }
-    this.easy=this.task.difficulty===1;
-    this.normal=this.task.difficulty===2;
-    this.hard=this.task.difficulty===3;
+    this.easy = this.task.difficulty === 1;
+    this.normal = this.task.difficulty === 2;
+    this.hard = this.task.difficulty === 3;
+  },
+  watch: {
+    'task.time'(newVal,oldVal) {
+      for (let i = 0; i < this.task.time.length; i++) {
+        if (i !== 2) {
+          if (!/[0-9]/.test(newVal[i])) {
+            this.task.time = oldVal;
+            break;
+          }
+        }
+        else {
+          if (!(newVal[i] === ':')) {
+            this.task.time = oldVal;
+            break;
+          }
+        }
+      }
+      if (newVal > oldVal) {
+        if (this.task.time.length === 2) this.task.time += ':';
+        if (this.task.time.length >= 5) this.task.time = this.task.time.slice(0, 5);
+      }
+      if (newVal < oldVal) {
+              if (newVal[newVal.length-1] === ':') this.task.time = this.task.time.slice(0, newVal.length - 1);
+      }
+    },
+    'task.timeF'(newVal,oldVal) {
+      for (let i = 0; i < this.task.timeF.length; i++) {
+        if (i !== 2) {
+          if (!/[0-9]/.test(newVal[i])) {
+            this.task.timeF = oldVal;
+            break;
+          }
+        }
+        else {
+          if (!(newVal[i] === ':')) {
+            this.task.timeF = oldVal;
+            break;
+          }
+        }
+      }
+      if (newVal > oldVal) {
+        if (this.task.timeF.length === 2) this.task.timeF += ':';
+        if (this.task.timeF.length >= 5) this.task.timeF = this.task.timeF.slice(0, 5);
+      }
+    }
   }
   // watch: {
   //   'task.deadline'(newVal, oldVal) {
@@ -440,6 +499,7 @@ export default {
 
 <style>
 @import '~vue-single-date-picker/dist/vue-single-date-picker.css';
+
 .mask-modal-window-task {
   color: #889ABD;
   position: fixed;
