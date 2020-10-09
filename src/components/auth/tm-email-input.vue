@@ -2,8 +2,8 @@
   <div class="tm-email-input">
     <div
         class="form-helper"
-        :style="{visibility: (ERROR&&$v.email.$invalid) ? 'visible' : email.length ? 'visible' : 'hidden',
-                 color: (ERROR&&$v.email.$invalid) ? '#EC1B1B' : focusEmail ? '#4F8AFD' : '#A7B4CF'}"
+        :style="{visibility: ((ERROR&&$v.email.$invalid)||ERROR==='The email has already been taken.') ? 'visible' : email.length ? 'visible' : 'hidden',
+                 color: ((ERROR&&$v.email.$invalid)||ERROR==='The email has already been taken.') ? '#EC1B1B' : focusEmail ? '#4F8AFD' : '#A7B4CF'}"
     >E-mail
     </div>
     <div class="container-input-log">
@@ -12,7 +12,7 @@
               :fill="(ERROR&&$v.email.$invalid) ? '#EC1B1B' : focusEmail ? '#4F8AFD' : '#A7B4CF'"/>
       </svg>
       <div class="input"
-           :style="{borderBottom: (ERROR&&$v.email.$invalid) ? '1px solid #EC1B1B' : focusEmail ? '1px solid #4F8AFD' : '1px solid #A7B4CF'}">
+           :style="{borderBottom: ((ERROR&&$v.email.$invalid)||ERROR==='The email has already been taken.') ? '1px solid #EC1B1B' : focusEmail ? '1px solid #4F8AFD' : '1px solid #A7B4CF'}">
         <input
             class="log-input"
             type="text"

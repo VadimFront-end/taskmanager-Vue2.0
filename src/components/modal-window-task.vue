@@ -348,7 +348,7 @@ export default {
           deadline: this.task.deadline,
           difficulty: this.task.difficulty,
           time: this.task.time,
-          timeF: this.timeF,
+          timeF: this.task.timeF,
           author: this.task.author,
           description: this.task.description,
           subtasks: []
@@ -428,7 +428,7 @@ export default {
         if (this.task.time.length >= 5) this.task.time = this.task.time.slice(0, 5);
       }
       if (newVal < oldVal) {
-              if (newVal[newVal.length-1] === ':') this.task.time = this.task.time.slice(0, newVal.length - 1);
+        if (newVal.length===2) this.task.time = this.task.time.slice(0, newVal.length - 1);
       }
     },
     'task.timeF'(newVal,oldVal) {
@@ -438,8 +438,7 @@ export default {
             this.task.timeF = oldVal;
             break;
           }
-        }
-        else {
+        } else {
           if (!(newVal[i] === ':')) {
             this.task.timeF = oldVal;
             break;
@@ -449,6 +448,9 @@ export default {
       if (newVal > oldVal) {
         if (this.task.timeF.length === 2) this.task.timeF += ':';
         if (this.task.timeF.length >= 5) this.task.timeF = this.task.timeF.slice(0, 5);
+      }
+      if (newVal < oldVal) {
+        if (newVal.length===2) this.task.timeF = this.task.timeF.slice(0, newVal.length - 1);
       }
     }
   }
