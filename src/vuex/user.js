@@ -231,11 +231,20 @@ export default {
         async editSubtaskTitle({commit}, editedSubtask) {
             commit('editSubtaskTitle', editedSubtask);
         },
+        async editStatusSubtask({commit}, newStatus) {
+            commit('editStatusSubtask', newStatus);
+        },
         async editStatusTask({commit}, newStatus) {
             commit('editStatusTask', newStatus);
         },
         async deleteTask({commit}, taskId) {
             commit('deleteTask', taskId);
+        },
+        async createNewTask({commit}, newTask) {
+            commit('createNewTask', newTask);
+        },
+        async editTask({commit}, newTask) {
+            commit('editTask', newTask);
         }
     },
     getters: {

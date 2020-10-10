@@ -250,7 +250,7 @@ export default {
         indexTask: this.indexTask,
         indexSubtask: this.indexSubTask
       }
-      this.$store.commit('editStatusSubtask', newStatus);
+      this.$store.dispatch('editStatusSubtask', newStatus);
     }
   },
   watch: {

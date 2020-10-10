@@ -9,6 +9,7 @@
         </div>
       </div>
       <input type="text" class="edit-tasks-title" placeholder="Название задачи" v-model.trim="task.title">
+      <div class="error" style="margin-bottom: 11px;margin-left: 4px">Введите название задачи</div>
       <div class="persons">
         <div>
           <div class="title-for-input-mw"
@@ -69,6 +70,7 @@
           </div>
         </div>
       </div>
+      <div class="error" style="margin-bottom: 38px">Укажите создателя задачи</div>
       <div style="color: #344360;margin-bottom: 32px">Дополнительные поля (необязательные)</div>
       <div style="display: flex">
         <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none"
@@ -80,6 +82,7 @@
         <input type="text" placeholder="Описание задачи..." class="edit-tasks-description"
                v-model.trim="task.description">
       </div>
+      <div class="error" style="margin-bottom: 11px">Превышено количество символов</div>
       <div class="title-for-input-mw"
            :style="{color: focusDeadline ? '#0356F6': '',visibility: task.deadline.length ? 'visible': 'hidden'}">
         Дедлайн
@@ -143,6 +146,7 @@
           </div>
         </div>
       </div>
+      <div class="error" style="margin-bottom: 11px">Дата введена некорректно</div>
       <div class="edit-tasks-time">
         <div>
           <div class="title-for-input-mw"
@@ -214,6 +218,10 @@
             </div>
           </label>
         </div>
+      </div>
+      <div style="display: flex;margin-bottom: 30px">
+        <div class="error" style="width: 49%">Время введено некорректно</div>
+        <div class="error">Время введено некорректно</div>
       </div>
       <div class="tasks-differently">
         <svg style="margin-right: 12px" width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -353,8 +361,8 @@ export default {
           description: this.task.description,
           subtasks: []
         };
-        if (Number.isNaN(this.task.id)) this.$store.commit('createNewTask', newTask);
-        else this.$store.commit('editTask', this.task);
+        if (Number.isNaN(this.task.id)) this.$store.dispatch('createNewTask', newTask);
+        else this.$store.dispatch('editTask', this.task);
         this.$store.commit('closeTaskWindow');
       }
     },
@@ -541,7 +549,6 @@ export default {
 }
 
 .edit-tasks-title {
-  margin-bottom: 29px;
   width: calc(100% - 4px);
   padding: 4px 2px;
   font-size: 1.75rem;
@@ -552,7 +559,6 @@ export default {
 .persons {
   display: flex;
   align-items: center;
-  margin-bottom: 56px;
 }
 
 .selected-executer-menu {
@@ -609,7 +615,6 @@ export default {
   font-size: 1rem;
   color: #10141D;
   border-bottom: 1px solid #889ABD;
-  margin-bottom: 29px;
 }
 
 .edit-tasks-time {
@@ -617,7 +622,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 48px;
 }
 
 .tasks-differently {
