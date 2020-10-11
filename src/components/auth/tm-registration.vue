@@ -161,7 +161,7 @@ export default {
         else return true;
       },
       nameSigns(name) {
-        return /^[-ЁёА-яA-z0-9\s]+$/.test(name);
+        return /^[-Ёёа-яА-ЯA-Za-z0-9\s]+$/.test(name);
       }
     },
     email: {

@@ -9,9 +9,13 @@
         </div>
       </div>
       <input type="text" class="edit-tasks-title" placeholder="Название задачи" v-model.trim="task.title">
-      <div class="error" style="margin-bottom: 11px;margin-left: 4px">Введите название задачи</div>
+      <div
+          class="error"
+          :style="{visibility: error&&((!task.title.length)||task.title.length>64) ? 'visible': 'hidden'}"
+          style="margin-bottom: 11px;margin-left: 4px">{{task.title.length ? 'Превышено количество символов': 'Введите название задачи'}}
+      </div>
       <div class="persons">
-        <div>
+        <label for="move-here">
           <div class="title-for-input-mw"
                :style="{visibility: (focusExecuter||task.executer.length) ? 'visible': 'hidden',color: focusExecuter ? '#0356F6': ''}">
             Исполнитель
@@ -30,6 +34,7 @@
                     type="text"
                     placeholder="Исполнитель"
                     class="input-edit"
+                    id="move-here"
                     @focus="focusExecuter=true"
                     @blur="kostil"
                     style="background: white;cursor: pointer"
@@ -55,7 +60,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </label>
         <div>
           <div style="margin: 0 25px 5px;font-size: .85rem">Создатель</div>
           <div style="display: flex">
@@ -82,7 +87,10 @@
         <input type="text" placeholder="Описание задачи..." class="edit-tasks-description"
                v-model.trim="task.description">
       </div>
-      <div class="error" style="margin-bottom: 11px">Превышено количество символов</div>
+      <div
+          class="error"
+          style="margin-bottom: 11px"
+          :style="{visibility: task.title.length>500 ? 'visible': 'hidden'}">Превышено количество символов</div>
       <div class="title-for-input-mw"
            :style="{color: focusDeadline ? '#0356F6': '',visibility: task.deadline.length ? 'visible': 'hidden'}">
         Дедлайн
@@ -146,7 +154,7 @@
           </div>
         </div>
       </div>
-      <div class="error" style="margin-bottom: 11px">Дата введена некорректно</div>
+<!--      <div class="error" style="margin-bottom: 11px">Дата введена некорректно</div>-->
       <div class="edit-tasks-time">
         <div>
           <div class="title-for-input-mw"
@@ -220,8 +228,17 @@
         </div>
       </div>
       <div style="display: flex;margin-bottom: 30px">
-        <div class="error" style="width: 49%">Время введено некорректно</div>
-        <div class="error">Время введено некорректно</div>
+        <div
+            class="error"
+            style="width: 49%"
+            :style="{visibility: !this.checkOnTime(this.task.time)&&this.task.time.length!==0 ? 'visible': 'hidden'}"
+        >Время введено некорректно
+        </div>
+        <div
+            class="error"
+            :style="{visibility: !this.checkOnTime(this.task.timeF)&&this.task.timeF.length!==0 ? 'visible': 'hidden'}"
+        >Время введено некорректно
+        </div>
       </div>
       <div class="tasks-differently">
         <svg style="margin-right: 12px" width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -339,15 +356,17 @@ export default {
       focusExecuter: false,
       deletingSubtask: false,
       showCalendar: false,
-      persons: ['Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag']
+      persons: ['Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag'],
+      error: false
     }
   },
   methods: {
     saveTask() {
-      if (this.task.title &&
+      if ((this.task.title&&this.task.title.length<65) &&
           this.persons.includes(this.task.executer) &&
           (this.checkOnTime(this.task.time)||this.task.time.length===0) &&
-          (this.checkOnTime(this.task.timeF)||this.task.timeF.length===0)) {
+          (this.checkOnTime(this.task.timeF)||this.task.timeF.length===0)&&
+          (this.task.description.length<=500)) {
         let newTask = {
           status: this.task.status,
           type: this.task.type,
@@ -365,6 +384,7 @@ export default {
         else this.$store.dispatch('editTask', this.task);
         this.$store.commit('closeTaskWindow');
       }
+      else this.error=true;
     },
     showOnlyThis2(index) {
       this.easy = false;
@@ -392,7 +412,6 @@ export default {
       if(time.length===5) {
         if (+(time.slice(0, 2)) > 23 || +(time.slice(0, 2)) < 0) return false;
         if (+(time.slice(3, 5)) > 59 || +(time.slice(3, 5)) < 0) return false;
-        console.log('true')
         return true;
       }
       else return false;

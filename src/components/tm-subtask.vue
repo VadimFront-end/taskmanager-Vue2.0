@@ -199,7 +199,7 @@ export default {
         required,
         maxLength: maxLength(64),
         passwordSigns(newSubtask) {
-          return /^[-0-9A-zА-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
+          return /^[-0-9A-Za-zА-Яа-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
         }
     }
   },
