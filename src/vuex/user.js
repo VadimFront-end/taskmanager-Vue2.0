@@ -90,6 +90,49 @@ export default {
                 subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             }
         ],
+        projects: [
+            {
+                name: 'project 1',
+                author: 'Vadim',
+                team: ['Vadim','Saha','Kirill'],
+                deadline: '14:00',
+                description: 'sddfsdfsdfsdf',
+                status: 1
+            },
+            {
+                name: 'project 2',
+                author: 'Vadi',
+                team: ['Vadim','Saha','Kirill'],
+                deadline: '14:00',
+                description: 'sddfsdfsdfsdf',
+                status: 1
+            },
+            {
+                name: 'project 3',
+                author: 'Vad',
+                team: ['Vadim','Saha','Kirill','Gosha'],
+                deadline: '14:00',
+                description: 'sddfsdfsdfsdf',
+                status: 1
+            },
+            {
+                name: 'project 4',
+                author: 'Va',
+                team: ['Vadim','Saha','Kirill'],
+                deadline: '14:00',
+                description: 'sddfsdfsdfsdf',
+                status: 1
+            },
+            {
+                name: 'project 5',
+                author: 'V',
+                team: ['Vadim','Saha'],
+                deadline: '14:00',
+                description: 'sddfsdfsdfsdf',
+                status: 1
+            }
+
+        ],
         selectedSubtaskIndex: 0,
         error: false,
         id: null,
@@ -282,6 +325,9 @@ export default {
         },
         GET_TASK_DATA(state) {
             return state.getTaskData;
+        },
+        PROJECTS(state) {
+            return state.projects;
         }
     }
 }
