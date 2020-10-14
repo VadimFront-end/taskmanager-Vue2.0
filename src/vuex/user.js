@@ -13,7 +13,7 @@ export default {
                 executer: 'Madim',
                 deadline: '20',
                 difficulty: 1,
-                time: '2:34',
+                time: '06:34',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
@@ -27,7 +27,7 @@ export default {
                 executer: 'Vadim',
                 deadline: '20',
                 difficulty: 1,
-                time: '2:34',
+                time: '07:34',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -41,7 +41,7 @@ export default {
                 executer: 'Badim',
                 deadline: '20',
                 difficulty: 3,
-                time: '2:34',
+                time: '08:34',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -55,7 +55,7 @@ export default {
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 2,
-                time: '2:34',
+                time: '02:34',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -69,7 +69,7 @@ export default {
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 1,
-                time: '2:34',
+                time: '05:34',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
@@ -83,56 +83,15 @@ export default {
                 executer: 'Tadim',
                 deadline: '20',
                 difficulty: 3,
-                time: '2:34',
+                time: '00:30',
                 timeF: '10:00',
                 author: 'Vadim',
                 description: 'asdasdasdasdasd',
                 subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
             }
         ],
-        projects: [
-            {
-                name: 'project 1',
-                author: 'Vadim',
-                team: ['Vadim','Saha','Kirill'],
-                deadline: '14:00',
-                description: 'sddfsdfsdfsdf',
-                status: 1
-            },
-            {
-                name: 'project 2',
-                author: 'Vadi',
-                team: ['Vadim','Saha','Kirill'],
-                deadline: '14:00',
-                description: 'sddfsdfsdfsdf',
-                status: 1
-            },
-            {
-                name: 'project 3',
-                author: 'Vad',
-                team: ['Vadim','Saha','Kirill','Gosha'],
-                deadline: '14:00',
-                description: 'sddfsdfsdfsdf',
-                status: 1
-            },
-            {
-                name: 'project 4',
-                author: 'Va',
-                team: ['Vadim','Saha','Kirill'],
-                deadline: '14:00',
-                description: 'sddfsdfsdfsdf',
-                status: 1
-            },
-            {
-                name: 'project 5',
-                author: 'V',
-                team: ['Vadim','Saha'],
-                deadline: '14:00',
-                description: 'sddfsdfsdfsdf',
-                status: 1
-            }
-
-        ],
+        projects: [],
+        users: [],
         selectedSubtaskIndex: 0,
         error: false,
         id: null,
@@ -228,6 +187,16 @@ export default {
         },
         closeTaskWindow(state) {
             state.showTaskWindow=false;
+        },
+        getAllProjects(state, projects) {
+            state.projects=projects;
+            console.log(projects)
+        },
+        getAllUsers(state, users) {
+            state.users=users;
+        },
+        addProject(state, newProject) {
+            state.projects.push(newProject);
         }
     },
     actions: {
@@ -249,7 +218,7 @@ export default {
                 })
         },
         async signUp({commit}, userData) {
-            axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/register', {
+            await axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/register', {
                 username: userData.name,
                 email: userData.email,
                 password: userData.password,
@@ -264,6 +233,25 @@ export default {
                     if(error.response.data.email)commit('setErrorFromServer', error.response.data.email[0]);
                     else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
+        },
+        async getAllProjects({commit}) {
+            await axios.get('http://radiant-ridge-41845.herokuapp.com/api/project')
+                .then(res => {
+                    commit('getAllProjects', res.data);
+                })
+                .catch(error => {
+                    console.log(error,commit)
+                })
+            await axios.get('https://radiant-ridge-41845.herokuapp.com/api/users')
+                .then(res => {
+                    commit('getAllUsers', res.data);
+                })
+                .catch(error => {
+                    console.log(error,commit)
+                })
+        },
+        async addProject({commit}, newProject) {
+          commit('addProject', newProject);
         },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
@@ -328,6 +316,9 @@ export default {
         },
         PROJECTS(state) {
             return state.projects;
+        },
+        GET_ALL_USERS(state) {
+            return state.users;
         }
     }
 }

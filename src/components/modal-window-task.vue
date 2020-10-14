@@ -48,7 +48,6 @@
                 <div class="selected-executer-menu" v-show="focusExecuter">
                   <div
                       :style="{background: item===task.executer ? '#D4E3FF':''}"
-                      v-show="item.toLocaleLowerCase().indexOf(task.executer)!==-1"
                       v-for="(item,index) in persons"
                       :key="index"
                       @click="task.executer=item"
@@ -56,6 +55,7 @@
                     <div class="selected-executer-menu-item-pic-person">{{ item[0] }}</div>
                     <div>{{ item }}</div>
                   </div>
+<!--                  v-show="item.toLocaleLowerCase().indexOf(task.executer)!==-1"-->
                 </div>
               </div>
             </div>
@@ -75,8 +75,8 @@
           </div>
         </div>
       </div>
-      <div class="error" style="margin-bottom: 38px">Укажите создателя задачи</div>
-      <div style="color: #344360;margin-bottom: 32px">Дополнительные поля (необязательные)</div>
+      <div class="error" style="margin-bottom: 38px">Укажите исполнителя задачи</div>
+      <div style="color: #344360;margin-bottom: 32px;font-weight: 600">Дополнительные поля (необязательные)</div>
       <div style="display: flex">
         <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none"
              xmlns="http://www.w3.org/2000/svg">
@@ -479,6 +479,9 @@ export default {
       if (newVal < oldVal) {
         if (newVal.length===2) this.task.timeF = this.task.timeF.slice(0, newVal.length - 1);
       }
+    },
+    focusExecuter() {
+      console.log(this.focusExecuter)
     }
   }
   // watch: {
@@ -571,6 +574,7 @@ export default {
   width: calc(100% - 4px);
   padding: 4px 2px;
   font-size: 1.75rem;
+  font-weight: 600;
   color: #10141D;
   border-bottom: 1px solid #889ABD;
 }

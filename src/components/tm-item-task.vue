@@ -57,10 +57,14 @@
       </div>
     </div>
     <div class="tasks-time mobile" @click="exportDataTask">
-      <div style="color: #576F9D;font-weight: 600">Оценочное</div>
-      <div style="margin-top: 2px;font-size: 0.85rem">{{task.time}}</div>
-      <div style="color: #576F9D;margin-top: 6px;font-weight: 600">Фактическое</div>
-      <div style="margin-top: 2px;font-size: 0.85rem">{{task.timeF}}</div>
+      <div style="color: #576F9D;font-weight: 600" v-show="task.time">Оценочное</div>
+      <div style="margin-top: 2px;font-size: 0.85rem"
+      >{{ task.time.slice(0,2)==='00'||!task.time.slice(0,2) ? '': +task.time.slice(0,1)===0 ? task.time.slice(1,2) + ' ч': task.time.slice(0,2) + ' ч'}} {{ task.time.slice(3,5)==='00'||!task.time.slice(3,5) ? '': +task.time.slice(3,4)===0 ? task.time.slice(4,5) + ' мин': task.time.slice(3,5) + ' мин'}}
+      </div>
+      <div style="color: #576F9D;margin-top: 6px;font-weight: 600" v-show="task.timeF">Фактическое</div>
+      <div style="margin-top: 2px;font-size: 0.85rem"
+      >{{ task.timeF.slice(0,2)==='00'||!task.timeF.slice(0,2) ? '': +task.timeF.slice(0,1)===0 ? task.timeF.slice(1,2) + ' ч': task.timeF.slice(0,2) + ' ч'}} {{ task.timeF.slice(3,5)==='00'||!task.timeF.slice(3,5) ? '': +task.timeF.slice(3,4)===0 ? task.timeF.slice(4,5) + ' мин': task.timeF.slice(3,5) + ' мин'}}
+      </div>
     </div>
     <div class="executer mobile" v-show="!isProject" @click="exportDataTask">
       <div class="executer-round">
@@ -195,6 +199,7 @@ export default {
   z-index: 3;
 }
 .tasks-title {
+  word-break: break-all;
   display: flex;
 }
 .executer {
@@ -239,6 +244,7 @@ export default {
   height: 2px;
 }
 .for-description {
+  word-break: break-all;
   margin: auto 15px;
   font-size: 0.85rem;
   text-overflow: ellipsis;

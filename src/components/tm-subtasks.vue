@@ -140,6 +140,7 @@ export default {
   color: #10141D;
 }
 .add-subtask {
+  font-weight: 600;
   display: flex;
   align-items: center;
   color: #0356F6;

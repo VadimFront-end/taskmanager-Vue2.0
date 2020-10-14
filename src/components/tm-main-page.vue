@@ -75,41 +75,7 @@ export default {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 30px;
 }
-.project-now-item {
-  padding: 16px 26px 26px;
-  background: white;
-  box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
-  border-radius: 10px;
-  cursor: pointer;
-}
-.project-now-item:hover {
-  box-shadow: 0 0 25px rgba(2, 57, 164, 0.15);
-}
-.project-now-item-title {
-  line-height: 22px;
-  color: #10141D;
-  margin-bottom: 8px;
-}
-.executers {
-  display: flex;
-}
-.project-now-status {
-  display: grid;
-  grid-template-columns: 21px 25%;
-  margin-bottom: 21px;
-}
-.executers-item {
-  background: #91B6FE;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FCFCFD;
-  font-size: 1.3rem;
-  border: 3px solid #FFFFFF;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
+
 @media (max-width: 1250px) {
   .last-tasks,.title-for-colon {
     grid-template-columns: 82px 340px 100px 82px;
