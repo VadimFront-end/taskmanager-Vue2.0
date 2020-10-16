@@ -16,7 +16,7 @@
     <svg :style="{transform: openThisTableStatuses===taskId ? 'rotate(180deg)': ''}" style="margin-left: 4px" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5.70345 5.30376C5.31378 5.68944 4.68622 5.68944 4.29655 5.30376L0.666294 1.71074C0.031322 1.08228 0.476353 5.37548e-08 1.36975 -2.4348e-08L8.63026 -6.59082e-07C9.52365 -7.37185e-07 9.96868 1.08228 9.33371 1.71074L5.70345 5.30376Z" fill="#B0BCD3"/>
     </svg>
-    <div class="description-for-status" v-show="ShowStatus">
+    <div class="description-for-status" style="font-weight: 600" v-show="ShowStatus">
       <div
           v-show="status===3"
           style="color: #27B310"
@@ -111,6 +111,7 @@ export default {
 
 <style>
 .select-status-for-task {
+  font-weight: 600;
   position: absolute;
   top: 75%;
   box-shadow: 0 0 10px rgba(2, 57, 164, 0.2);

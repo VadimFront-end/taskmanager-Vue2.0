@@ -1,6 +1,5 @@
 <template>
   <div class="tm-container-for-content-page">
-    <modalWindowProject v-if="isShowModalWindowProject" @closeWindow="closeWindow"/>
    <div class="title-main-page">Мои проекты</div>
     <div class="container-for-projects">
       <div class="container-for-filters-for-projects">
@@ -27,13 +26,14 @@
           <span style="margin-left: 4px">Завершен</span>
         </div>
       </div>
-      <button class="button-for-add-task" @click="isShowModalWindowProject=true">Добавить проект</button>
+      <button class="button-for-add-task" @click="$store.commit('isShowProjectWindow')">Добавить проект</button>
     </div>
     <div class="project-now">
       <tmProject
-        v-for="(project,index) in PROJECTS"
-        :project="project"
-        :key="index"/>
+          @click.native="$store.commit('showProject',project.id)"
+          v-for="(project,index) in PROJECTS"
+          :project="project"
+          :key="index"/>
     </div>
  </div>
 </template>
@@ -41,27 +41,15 @@
 <script>
 import tmProject from '../components/tm-project-now'
 import {mapGetters} from 'vuex'
-import ModalWindowProject from "./modal-window-project";
 export default {
   name: "tm-projects",
   components: {
-    ModalWindowProject,
     tmProject
-  },
-  data() {
-    return {
-      isShowModalWindowProject: false
-    }
   },
   computed: {
     ...mapGetters([
         'PROJECTS'
     ])
-  },
-  methods: {
-    closeWindow() {
-      this.isShowModalWindowProject=false;
-    }
   },
   mounted() {
     this.$store.dispatch('getAllProjects');

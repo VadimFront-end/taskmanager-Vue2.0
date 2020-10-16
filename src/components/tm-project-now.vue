@@ -1,5 +1,5 @@
 <template>
-  <div class="project-now-item" @click="fuck">
+  <div class="project-now-item">
     <div class="project-now-item-title">{{ project.project_name }}</div>
     <div class="project-now-status" style="margin-bottom: 6px">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,11 +37,6 @@ export default {
       default() {
         return {};
       }
-    }
-  },
-  methods: {
-    fuck() {
-      this.$router.push('/project');
     }
   },
   computed: {

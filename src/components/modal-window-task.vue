@@ -75,7 +75,10 @@
           </div>
         </div>
       </div>
-      <div class="error" style="margin-bottom: 38px">Укажите исполнителя задачи</div>
+      <div
+          class="error"
+          style="margin-bottom: 38px"
+          :style="{visibility: error&&!this.persons.includes(this.task.executer) ? 'visible': 'hidden'}">Укажите исполнителя задачи</div>
       <div style="color: #344360;margin-bottom: 32px;font-weight: 600">Дополнительные поля (необязательные)</div>
       <div style="display: flex">
         <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none"
@@ -231,13 +234,13 @@
         <div
             class="error"
             style="width: 49%"
-            :style="{visibility: !this.checkOnTime(this.task.time)&&this.task.time.length!==0 ? 'visible': 'hidden'}"
+            :style="{visibility: !this.checkOnTime(this.task.time)&&error ? 'visible': 'hidden'}"
         >Время введено некорректно
         </div>
         <div
             class="error"
-            :style="{visibility: !this.checkOnTime(this.task.timeF)&&this.task.timeF.length!==0 ? 'visible': 'hidden'}"
-        >Время введено некорректно
+            :style="{visibility: ((!this.checkOnTime(this.task.timeF))||!this.task.time)&&error ? 'visible': 'hidden'}"
+        >{{!this.task.time ? 'Нужна исходная оценка': 'Время введено некорректно'}}
         </div>
       </div>
       <div class="tasks-differently">
@@ -364,9 +367,13 @@ export default {
     saveTask() {
       if ((this.task.title&&this.task.title.length<65) &&
           this.persons.includes(this.task.executer) &&
-          (this.checkOnTime(this.task.time)||this.task.time.length===0) &&
-          (this.checkOnTime(this.task.timeF)||this.task.timeF.length===0)&&
-          (this.task.description.length<=500)) {
+          this.checkOnTime(this.task.time) &&
+          this.checkOnTime(this.task.timeF) &&
+          this.task.description.length<=500) {
+        if((!this.task.time.length)&&(this.task.timeF.length)) {
+          this.error=true;
+          return;
+        }
         let newTask = {
           status: this.task.status,
           type: this.task.type,
@@ -414,6 +421,7 @@ export default {
         if (+(time.slice(3, 5)) > 59 || +(time.slice(3, 5)) < 0) return false;
         return true;
       }
+      if(time.length===0)return true;
       else return false;
     }
   },

@@ -1,6 +1,7 @@
 <template>
   <div id="tm-main-wrapper">
     <modalWindowTask v-if="SHOW_TASK_WINDOW"/>
+    <modalWindowProject v-if="SHOW_WINDOW_PROJECT"/>
     <div class="header">
       <div class="header-container">
         <div class="container-for-burgMenu" @click="showLeftMenu=!showLeftMenu">
@@ -86,11 +87,13 @@
 import tmLogo from '../components/tm-logo'
 import {mapGetters} from 'vuex'
 import modalWindowTask from '../components/modal-window-task'
+import ModalWindowProject from "./modal-window-project";
 
 export default {
   name: "tm-main-wrapper",
   components: {
     tmLogo,
+    ModalWindowProject,
     modalWindowTask
   },
   data() {
@@ -102,7 +105,8 @@ export default {
   computed: {
     ...mapGetters([
         'SHOW_TASK_WINDOW',
-        'GET_TASK_DATA'
+        'GET_TASK_DATA',
+        'SHOW_WINDOW_PROJECT'
     ])
   }
 }

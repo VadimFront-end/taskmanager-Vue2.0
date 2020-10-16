@@ -4,110 +4,27 @@ import router from '../router/router'
 export default {
     state: {
         user: {},
-        tasks: [
-            {
-                status: 1,
-                id: 0,
-                type: true,
-                title: 'Создать макет авторизации регистрации',
-                executer: 'Madim',
-                deadline: '20',
-                difficulty: 1,
-                time: '06:34',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd sdsdas dasd a sd asd asdas dasd asd asdsd sd asd ыв ывф ыв фы ывфы вфы ы ыфasd asd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            },
-            {
-                status: 2,
-                id: 1,
-                type: false,
-                title: 'FUCK',
-                executer: 'Vadim',
-                deadline: '20',
-                difficulty: 1,
-                time: '07:34',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            },
-            {
-                status: 1,
-                id: 2,
-                type: true,
-                title: 'FUCK',
-                executer: 'Badim',
-                deadline: '20',
-                difficulty: 3,
-                time: '08:34',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            },
-            {
-                status: 2,
-                id: 3,
-                type: false,
-                title: 'FUCK ыыыыы ыыыыы ',
-                executer: 'Tadim',
-                deadline: '20',
-                difficulty: 2,
-                time: '02:34',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            },
-            {
-                status: 2,
-                id: 4,
-                type: false,
-                title: 'FUCK ыыыыы ыыыыы ',
-                executer: 'Tadim',
-                deadline: '20',
-                difficulty: 1,
-                time: '05:34',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            },
-            {
-                status: 3,
-                id: 5,
-                type: false,
-                title: 'FUCK ыыыыы ыыыыы ',
-                executer: 'Tadim',
-                deadline: '20',
-                difficulty: 3,
-                time: '00:30',
-                timeF: '10:00',
-                author: 'Vadim',
-                description: 'asdasdasdasdasd',
-                subtasks: [{title: 'Дело1',status: 1},{title: 'Дело2',status: 3},{title: 'Дело3',status: 1},{title: 'Дело4',status: 2}]
-            }
-        ],
+        tasks: [],
         projects: [],
         users: [],
         selectedSubtaskIndex: 0,
-        error: false,
         id: null,
+        error: false,
         showTaskWindow: false,
-        getTaskData: {}
+        showProjectWindow: false,
+        getTaskData: {},
+        getProjectData: {}
     },
     mutations: {
         logIn(state,userData) {
             state.user=userData;
             localStorage.setItem('token', userData.auth_token);
-            state.id=userData.auth_token;
+            state.id=userData.user_id;
         },
         signUp(state,userData) {
             state.user=userData;
             localStorage.setItem('token', userData.auth_token);
-            state.id=userData.auth_token;
+            state.id=userData.user_id;
         },
         setError(state) {
             state.error=true;
@@ -188,15 +105,32 @@ export default {
         closeTaskWindow(state) {
             state.showTaskWindow=false;
         },
+        showProject(state, idProject) {
+            for(let i=0;i<state.projects.length;i++) {
+                if(state.projects[i].id===idProject) {
+                    state.getProjectData=state.projects[i];
+                    router.push('/project');
+                    break;
+                }
+            }
+        },
         getAllProjects(state, projects) {
             state.projects=projects;
-            console.log(projects)
         },
         getAllUsers(state, users) {
             state.users=users;
         },
         addProject(state, newProject) {
             state.projects.push(newProject);
+        },
+        getProjectNull(state) {
+            state.getProjectData={};
+        },
+        isShowProjectWindow(state) {
+            state.showProjectWindow=!state.showProjectWindow;
+        },
+        GET_USER_TASKS(state, tasks) {
+            state.tasks=tasks;
         }
     },
     actions: {
@@ -251,7 +185,30 @@ export default {
                 })
         },
         async addProject({commit}, newProject) {
-          commit('addProject', newProject);
+            await axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                project_name: newProject.project_name,
+                project_description: newProject.project_description
+            })
+                .then(res => {
+                    console.log(res.data)
+                    commit('addProject', res.data);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        async GET_USER_TASKS({commit}) {
+            await axios.get(`https://radiant-ridge-41845.herokuapp.com/api/user_tasks/${this.state.user.user.user_id}`)
+                .then(res => {
+                    console.log(res.data)
+                    commit('GET_USER_TASKS', res.data);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
@@ -319,6 +276,33 @@ export default {
         },
         GET_ALL_USERS(state) {
             return state.users;
+        },
+        SHOW_WINDOW_PROJECT(state) {
+            return state.showProjectWindow;
+        },
+        GET_PROJECT_DATA(state) {
+            let project={}
+            if(Object.keys(state.getProjectData).length === 0) {
+                project = {
+                    project_creator: state.user.username,
+                    project_name: '',
+                    id: NaN,
+                    project_description: '',
+                    project_deadline: '',
+                    project_status: '1'
+                };
+            }
+            else {
+                project = {
+                    project_creator: state.getProjectData.project_creator,
+                    project_name: state.getProjectData.project_name,
+                    id: state.getProjectData.id,
+                    project_description: state.getProjectData.project_description,
+                    project_deadline: state.getProjectData.project_deadline,
+                    project_status: state.getProjectData.project_status
+                }
+            }
+            return project;
         }
     }
 }
