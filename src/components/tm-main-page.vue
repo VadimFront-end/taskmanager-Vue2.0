@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {mapGetters,mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
 import tmItemTask from '../components/tm-item-task'
 import tmProject from '../components/tm-project-now'
 
@@ -45,14 +45,14 @@ export default {
         'PROJECTS'
     ])
   },
-  methods: {
-    ...mapActions([
-      'GET_USER_TASKS'
-    ])
-  },
-  mounted() {
-    this.GET_USER_TASKS();
-  }
+  // methods: {
+  //   ...mapActions([
+  //     'GET_USER_TASKS'
+  //   ])
+  // },
+  // mounted() {
+  //   this.GET_USER_TASKS();
+  // }
 }
 </script>
 

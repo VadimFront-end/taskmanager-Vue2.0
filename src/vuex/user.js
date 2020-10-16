@@ -42,9 +42,10 @@ export default {
         editTask(state,newTask) {
             for(let i=0;i<state.tasks.length;i++) {
                 if(state.tasks[i].id===newTask.id) {
-                    state.tasks[i]=newTask;
-                    state.tasks.push(newTask);
-                    state.tasks.pop();
+                    // state.tasks[i]=newTask;
+                    state.tasks.splice(i,1,newTask);
+                    // state.tasks.push(newTask);
+                    // state.tasks.pop();
                 }
             }
         },
@@ -134,8 +135,8 @@ export default {
         }
     },
     actions: {
-        async signIn({commit}, userLoginPass) {
-            await axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/login', {
+        signIn({commit}, userLoginPass) {
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/login', {
                 email: userLoginPass.email,
                 password: userLoginPass.password
             })
@@ -151,8 +152,8 @@ export default {
                     else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
         },
-        async signUp({commit}, userData) {
-            await axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/register', {
+        signUp({commit}, userData) {
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/users/register', {
                 username: userData.name,
                 email: userData.email,
                 password: userData.password,
@@ -168,15 +169,17 @@ export default {
                     else commit('setErrorFromServer', 'Неизвестная ошибка');
                 })
         },
-        async getAllProjects({commit}) {
-            await axios.get('http://radiant-ridge-41845.herokuapp.com/api/project')
+        getAllProjects({commit}) {
+            axios.get('http://radiant-ridge-41845.herokuapp.com/api/project')
                 .then(res => {
                     commit('getAllProjects', res.data);
                 })
                 .catch(error => {
                     console.log(error,commit)
                 })
-            await axios.get('https://radiant-ridge-41845.herokuapp.com/api/users')
+        },
+        GET_USERS({commit}) {
+            axios.get('https://radiant-ridge-41845.herokuapp.com/api/users')
                 .then(res => {
                     commit('getAllUsers', res.data);
                 })
@@ -184,24 +187,24 @@ export default {
                     console.log(error,commit)
                 })
         },
-        async addProject({commit}, newProject) {
-            await axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
+        addProject({commit}, newProject) {
+            axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
                 project_name: newProject.project_name,
                 project_description: newProject.project_description
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
             })
                 .then(res => {
-                    console.log(res.data)
                     commit('addProject', res.data);
                 })
                 .catch(error => {
                     console.log(error)
                 })
         },
-        async GET_USER_TASKS({commit}) {
-            await axios.get(`https://radiant-ridge-41845.herokuapp.com/api/user_tasks/${this.state.user.user.user_id}`)
+        GET_USER_TASKS({commit}) {
+            axios.get(`https://radiant-ridge-41845.herokuapp.com/api/user_tasks/${this.state.user.user.user_id}`)
                 .then(res => {
                     console.log(res.data)
                     commit('GET_USER_TASKS', res.data);

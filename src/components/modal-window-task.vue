@@ -328,7 +328,7 @@
 
 <script>
 import SingleDatePicker from 'vue-single-date-picker'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 
 export default {
   name: "modal-window-task",
@@ -423,7 +423,10 @@ export default {
       }
       if(time.length===0)return true;
       else return false;
-    }
+    },
+    ...mapActions([
+        'GET_USERS'
+    ])
   },
   computed: {
     ...mapGetters([
@@ -445,6 +448,7 @@ export default {
     this.persons=this.GET_ALL_USERS.map(val => {
       return val.username;
     })
+    this.GET_USERS();
   },
   watch: {
     'task.time'(newVal,oldVal) {
@@ -491,9 +495,6 @@ export default {
       if (newVal < oldVal) {
         if (newVal.length===2) this.task.timeF = this.task.timeF.slice(0, newVal.length - 1);
       }
-    },
-    focusExecuter() {
-      console.log(this.focusExecuter)
     }
   }
   // watch: {
