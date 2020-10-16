@@ -170,7 +170,7 @@ export default {
                 })
         },
         getAllProjects({commit}) {
-            axios.get('http://radiant-ridge-41845.herokuapp.com/api/project')
+            axios.get('https://radiant-ridge-41845.herokuapp.com/api/project')
                 .then(res => {
                     commit('getAllProjects', res.data);
                 })
