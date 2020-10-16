@@ -47,13 +47,13 @@
                 </div>
                 <div class="selected-executer-menu" v-show="focusExecuter">
                   <div
-                      :style="{background: item===task.executer ? '#D4E3FF':''}"
-                      v-for="(item,index) in persons"
+                      :style="{background: item.username===task.executer ? '#D4E3FF':''}"
+                      v-for="(item,index) in GET_ALL_USERS"
                       :key="index"
-                      @click="task.executer=item"
+                      @click="task.executer=item.username"
                       class="selected-executer-menu-item">
-                    <div class="selected-executer-menu-item-pic-person">{{ item[0] }}</div>
-                    <div>{{ item }}</div>
+                    <div class="selected-executer-menu-item-pic-person">{{ item.username[0] }}</div>
+                    <div>{{ item.username }}</div>
                   </div>
 <!--                  v-show="item.toLocaleLowerCase().indexOf(task.executer)!==-1"-->
                 </div>
@@ -78,7 +78,7 @@
       <div
           class="error"
           style="margin-bottom: 38px"
-          :style="{visibility: error&&!this.persons.includes(this.task.executer) ? 'visible': 'hidden'}">Укажите исполнителя задачи</div>
+          :style="{visibility: error&&!persons.includes(this.task.executer) ? 'visible': 'hidden'}">Укажите исполнителя задачи</div>
       <div style="color: #344360;margin-bottom: 32px;font-weight: 600">Дополнительные поля (необязательные)</div>
       <div style="display: flex">
         <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none"
@@ -351,6 +351,7 @@ export default {
         id: NaN
       },
       easy: false,
+      persons: [],
       normal: false,
       hard: false,
       focusTime: false,
@@ -359,7 +360,6 @@ export default {
       focusExecuter: false,
       deletingSubtask: false,
       showCalendar: false,
-      persons: ['Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag', 'Iosif Guzeev', 'Djack Dag'],
       error: false
     }
   },
@@ -427,7 +427,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'GET_TASK_DATA'
+      'GET_TASK_DATA',
+      'GET_ALL_USERS'
     ])
   },
   mounted() {
@@ -441,6 +442,9 @@ export default {
     this.easy = this.task.difficulty === 1;
     this.normal = this.task.difficulty === 2;
     this.hard = this.task.difficulty === 3;
+    this.persons=this.GET_ALL_USERS.map(val => {
+      return val.username;
+    })
   },
   watch: {
     'task.time'(newVal,oldVal) {
