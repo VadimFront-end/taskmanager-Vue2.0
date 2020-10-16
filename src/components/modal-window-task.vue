@@ -239,7 +239,7 @@
         </div>
         <div
             class="error"
-            :style="{visibility: ((!this.checkOnTime(this.task.timeF))||!this.task.time)&&error ? 'visible': 'hidden'}"
+            :style="{visibility: ((!this.checkOnTime(this.task.timeF))||(!this.task.time&&this.task.timeF))&&error ? 'visible': 'hidden'}"
         >{{!this.task.time ? 'Нужна исходная оценка': 'Время введено некорректно'}}
         </div>
       </div>
@@ -351,9 +351,9 @@ export default {
         id: NaN
       },
       easy: false,
-      persons: [],
       normal: false,
       hard: false,
+      persons: [],
       focusTime: false,
       focusTimeF: false,
       focusDeadline: false,
