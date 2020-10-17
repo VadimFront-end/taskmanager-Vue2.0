@@ -114,7 +114,7 @@ export default {
 
 <style>
 .header {
-  z-index: 2;
+  z-index: 100;
   display: flex;
   height: 56px;
   position: fixed;

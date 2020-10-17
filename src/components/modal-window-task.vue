@@ -55,7 +55,6 @@
                     <div class="selected-executer-menu-item-pic-person">{{ item.username[0] }}</div>
                     <div>{{ item.username }}</div>
                   </div>
-<!--                  v-show="item.toLocaleLowerCase().indexOf(task.executer)!==-1"-->
                 </div>
               </div>
             </div>
@@ -413,7 +412,7 @@ export default {
     kostil() {
       setTimeout(() => {
         this.focusExecuter = false;
-      }, 100)
+      }, 500)
     },
     checkOnTime(time) {
       if(time.length===5) {
