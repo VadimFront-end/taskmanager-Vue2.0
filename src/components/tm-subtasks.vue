@@ -33,6 +33,9 @@
             <path d="M6.52925 5.11853C6.46425 5.05354 6.46425 4.94771 6.52925 4.88272L9.70815 1.70715C10.0973 1.31635 10.0973 0.683901 9.70815 0.293101C9.31901 -0.0977002 8.68907 -0.0977002 8.29993 0.293101L5.11853 3.47117C5.05354 3.53616 4.94771 3.53616 4.88272 3.47117L1.70798 0.292267C1.31718 -0.096867 0.683901 -0.096867 0.293101 0.292267C-0.0977002 0.681401 -0.0977002 1.31135 0.293101 1.70048L3.47117 4.88105C3.53616 4.94605 3.53616 5.05187 3.47117 5.11687L0.292267 8.29243C-0.096867 8.68323 -0.096867 9.31568 0.292267 9.70648C0.681401 10.0973 1.31135 10.0973 1.70048 9.70648L4.88105 6.52841C4.94605 6.46342 5.05187 6.46342 5.11687 6.52841L8.29243 9.70732C8.68323 10.0964 9.31568 10.0964 9.70648 9.70732C10.0973 9.31818 10.0973 8.68823 9.70648 8.2991L6.52925 5.11853Z"/>
           </svg>
         </div>
+        <div v-if="!$v.newSubtask.required&&error" class="error" style="margin: 0 20px">Нужно название подзадачи</div>
+        <div v-else-if="!$v.newSubtask.maxLength&&error" class="error" style="margin: 0 20px">Максиум 64 символа</div>
+        <div v-else-if="!$v.newSubtask.passwordSigns&&error" class="error" style="margin: 0 20px">Имеются запрещенные символы</div>
       </div>
     </div>
   </div>
@@ -66,7 +69,8 @@ export default {
       indexFocus: NaN,
       creatingSubtask: false,
       newSubtask: '',
-      openThisTableStatuses: NaN
+      openThisTableStatuses: NaN,
+      error: false
     }
   },
   validations: {
@@ -74,7 +78,7 @@ export default {
       required,
       maxLength: maxLength(64),
       passwordSigns(newSubtask) {
-        return /^[0-9A-zА-яЁё.,!#$%&"*+/=?^_`{|}~@-]+$/.test(newSubtask);
+        return /^[-0-9A-Za-zА-Яа-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
       }
     }
   },
@@ -87,9 +91,10 @@ export default {
             subtask: this.newSubtask
           }
           this.$store.dispatch('createSubtask', newSubtask);
+          this.error=false;
         }
         else {
-          console.log('Validation!');
+          this.error=true;
           return;
         }
       }

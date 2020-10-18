@@ -190,7 +190,6 @@ export default {
                 })
         },
         addProject({commit}, newProject) {
-            console.log(newProject)
             axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
                 project_name: newProject.project_name,
                 project_description: newProject.project_description,
@@ -209,14 +208,31 @@ export default {
                 })
         },
         GET_USER_TASKS({commit}) {
-            axios.get(`https://radiant-ridge-41845.herokuapp.com/api/user_tasks/${this.state.user.user.user_id}`)
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_tasks', {}, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
                 .then(res => {
                     console.log(res.data)
                     commit('GET_USER_TASKS', res.data);
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error.response)
                 })
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_private_tasks', {}, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => {
+                    console.log(res.data)
+                    commit('GET_USER_TASKS', res.data);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+
         },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
