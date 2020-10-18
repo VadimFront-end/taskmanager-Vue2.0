@@ -19,7 +19,8 @@
       <div
         v-for="(executer,index) in GET_ALL_USERS"
         class="executers-item"
-        :style="{transform: `translateX(${-15*index}px)`,zIndex: GET_ALL_USERS.length+1-index}"
+        :style="{transform: `translateX(${-15*index}px)`,zIndex: GET_ALL_USERS.length+1-index,
+                 display: index>4 ? 'none': ''}"
         :key="index"
       >{{executer.username[0]}}
       </div>

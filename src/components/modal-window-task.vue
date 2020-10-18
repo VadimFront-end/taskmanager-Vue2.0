@@ -546,7 +546,7 @@ export default {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: 2000;
   left: 0;
   top: 0;
   display: flex;

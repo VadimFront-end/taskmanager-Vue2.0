@@ -42,10 +42,7 @@ export default {
         editTask(state,newTask) {
             for(let i=0;i<state.tasks.length;i++) {
                 if(state.tasks[i].id===newTask.id) {
-                    // state.tasks[i]=newTask;
                     state.tasks.splice(i,1,newTask);
-                    // state.tasks.push(newTask);
-                    // state.tasks.pop();
                 }
             }
         },
@@ -132,7 +129,6 @@ export default {
         },
         GET_USER_TASKS(state, tasks) {
             state.tasks=tasks;
-            console.log(state.tasks)
         }
     },
     actions: {
@@ -232,7 +228,6 @@ export default {
                 .catch(error => {
                     console.log(error.response)
                 })
-
         },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);

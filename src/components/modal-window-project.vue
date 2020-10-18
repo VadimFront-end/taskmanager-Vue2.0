@@ -155,7 +155,7 @@
           >Удалить
          </span>
           <div v-show="deletingSubtask" style="display: flex;margin-left: 12px">
-            <div style="color: #10141D">Вы точно хотите удалить задачу?</div>
+            <div style="color: #10141D">Вы точно хотите удалить проект?</div>
             <div class="only-for-hover1">Удалить</div>
             <div @click="deletingSubtask=false" class="only-for-hover2">Назад</div>
           </div>
