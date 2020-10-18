@@ -132,6 +132,7 @@ export default {
         },
         GET_USER_TASKS(state, tasks) {
             state.tasks=tasks;
+            console.log(state.tasks)
         }
     },
     actions: {
@@ -172,6 +173,7 @@ export default {
         getAllProjects({commit}) {
             axios.get('https://radiant-ridge-41845.herokuapp.com/api/project')
                 .then(res => {
+                    console.log(res.data)
                     commit('getAllProjects', res.data);
                 })
                 .catch(error => {
@@ -188,9 +190,12 @@ export default {
                 })
         },
         addProject({commit}, newProject) {
+            console.log(newProject)
             axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
                 project_name: newProject.project_name,
-                project_description: newProject.project_description
+                project_description: newProject.project_description,
+                project_deadline: newProject.project_deadline,
+                project_status: newProject.project_status
             }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -200,7 +205,7 @@ export default {
                     commit('addProject', res.data);
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error.response)
                 })
         },
         GET_USER_TASKS({commit}) {
@@ -236,6 +241,17 @@ export default {
         },
         async editTask({commit}, newTask) {
             commit('editTask', newTask);
+        },
+        AUTO_AUTH({commit}) {
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/users', {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+                })
+                .then(res => {
+                    // res.data.auth_token=localStorage.getItem('token');
+                    console.log(res.data)
+                    commit('logIn', res.data);
+                    router.push('/mainPage');
+                })
         }
     },
     getters: {
