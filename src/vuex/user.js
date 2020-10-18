@@ -58,7 +58,7 @@ export default {
         },
         createSubtask(state, newSubtask) {
             const addStatus= {
-                status: 1,
+                status: false,
                 title: newSubtask.subtask
             }
             state.tasks[newSubtask.indexTask].subtasks.push(addStatus);

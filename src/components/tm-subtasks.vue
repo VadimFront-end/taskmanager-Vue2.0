@@ -21,7 +21,7 @@
         <input
             class="subtask-description"
             placeholder="Название подзадачи"
-            style="border-bottom: 1px solid #889ABD"
+            :style="{borderBottom: error&&$v.newSubtask.$invalid ? '1px solid #EC1B1B': '1px solid #889ABD'}"
             v-model.trim="newSubtask">
         <div class="edit-or-not" @click="createSubtask(true)">
           <svg class="my-pain1" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">

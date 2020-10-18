@@ -2,7 +2,7 @@
   <div class="mask-modal-window-task">
     <div class="modal-window">
       <div style="display: flex;justify-content: space-between">
-        <div style="color: #344360;margin-bottom: 8px">Проект</div>
+        <div style="color: #344360;margin-bottom: 8px;font-weight: 600">Проект</div>
         <div class="button-to-exit" @click="$store.commit('isShowProjectWindow')">
           <div class="part-of-exit" style="transform: rotate(45deg)"></div>
           <div class="part-of-exit" style="transform: rotate(-45deg)"></div>

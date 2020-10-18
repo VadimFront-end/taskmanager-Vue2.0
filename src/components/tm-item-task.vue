@@ -188,6 +188,7 @@ export default {
   font-size: 0.7rem;
 }
 .description-for-status {
+  font-weight: 600;
   position: absolute;
   padding: 9px 16px;
   font-size: 0.85rem;

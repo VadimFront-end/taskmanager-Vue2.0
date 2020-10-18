@@ -37,11 +37,11 @@ export default {
 
 <style>
 .button-for-add-task {
+  font-weight: 600;
   cursor: pointer;
   color: #FCFCFD;
   background: #4F8AFD;
   border-radius: 22px;
-  font-weight: 500;
   padding: 8px 24px;
   border: none;
 }

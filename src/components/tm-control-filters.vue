@@ -2,15 +2,6 @@
   <div class="view-controls">
     <div class="left-filters">
         <div class="filters">
-          <span style="margin-right: 8px">Создатель:</span>
-<!--          <div class="executers">-->
-<!--            <div class="executers-item" style="background: black;z-index: 5;"></div>-->
-<!--            <div class="executers-item" style="background: blue;transform: translate(-15px);z-index: 4;border: 3px solid #FFFFFF;"></div>-->
-<!--            <div class="executers-item" style="background: red;transform: translate(-30px);z-index: 3;border: 3px solid #FFFFFF;"></div>-->
-<!--            <div class="executers-item" style="background: orange;transform: translate(-45px);z-index: 2;border: 3px solid #FFFFFF;"></div>-->
-<!--          </div>-->
-        </div>
-        <div class="filters">
           <span style="margin-right: 8px">Статус:</span>
           <div
               @click="showOnlyThis(0)"

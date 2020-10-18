@@ -59,6 +59,7 @@ export default {
   border-radius: 14px;
 }
 .title-status-tasks {
+  font-weight: 600;
   font-size: 1.15rem;
   color: #393939;
   margin-bottom: 16px;
