@@ -35,7 +35,6 @@
         </div>
         <div v-if="!$v.newSubtask.required&&error" class="error" style="margin: 0 20px">Нужно название подзадачи</div>
         <div v-else-if="!$v.newSubtask.maxLength&&error" class="error" style="margin: 0 20px">Максиум 64 символа</div>
-        <div v-else-if="!$v.newSubtask.passwordSigns&&error" class="error" style="margin: 0 20px">Имеются запрещенные символы</div>
       </div>
     </div>
   </div>
@@ -76,10 +75,7 @@ export default {
   validations: {
     newSubtask: {
       required,
-      maxLength: maxLength(64),
-      passwordSigns(newSubtask) {
-        return /^[-0-9A-Za-zА-Яа-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
-      }
+      maxLength: maxLength(64)
     }
   },
   methods: {

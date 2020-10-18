@@ -190,7 +190,7 @@ export default {
                 })
         },
         addProject({commit}, newProject) {
-            axios.post('http://radiant-ridge-41845.herokuapp.com/api/project', {
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/project', {
                 project_name: newProject.project_name,
                 project_description: newProject.project_description,
                 project_deadline: newProject.project_deadline,

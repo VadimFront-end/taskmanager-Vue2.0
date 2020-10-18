@@ -91,7 +91,6 @@
       </div>
       <div v-if="!$v.subtaskToEdit.required" class="error" style="margin: 0 20px">Нужно название подзадачи</div>
       <div v-else-if="!$v.subtaskToEdit.maxLength" class="error" style="margin: 0 20px">Максиум 64 символа</div>
-      <div v-else-if="!$v.subtaskToEdit.passwordSigns" class="error" style="margin: 0 20px">Имеются запрещенные символы</div>
     </div>
     <div style="display: flex;align-items: center" v-else>
       <label :for="'editTask' + indexSubTask" class="edit-pan">
@@ -176,10 +175,7 @@ export default {
   validations: {
     subtaskToEdit: {
         required,
-        maxLength: maxLength(64),
-        passwordSigns(newSubtask) {
-          return /^[-0-9A-Za-zА-Яа-яЁё.,!#$%&"*+/=?^_`{|}~@\s]+$/.test(newSubtask);
-        }
+        maxLength: maxLength(64)
     }
   },
   methods: {
