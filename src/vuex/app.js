@@ -13,7 +13,12 @@ export default {
             normal: false,
             hard: false
         },
-        difficultyFilterIndex: -1
+        difficultyFilterIndex: -1,
+        typeFilter: {
+            private: false,
+            arbiten: false
+        },
+        typeFilterIndex: -1
     },
     mutations: {
         showOnlyThis1(state, index) {
@@ -40,11 +45,16 @@ export default {
             }
             else state.difficultyFilterIndex=-1;
         },
-        // nullIndex(state) {
-        //     state.difficultyFilter.easy=false;
-        //     state.difficultyFilter.normal=false;
-        //     state.difficultyFilter.hard=false;
-        // }
+        showOnlyThis3(state, index) {
+            state.typeFilter.private=false;
+            state.typeFilter.arbiten=false;
+            if(state.typeFilterIndex!==index) {
+                state.typeFilterIndex=index;
+                if(index===0)state.typeFilter.private=true;
+                if(index===1)state.typeFilter.arbiten=true;
+            }
+            else state.typeFilterIndex=-1;
+        }
     },
     getters: {
         STATUSFILTER(state) {
@@ -72,6 +82,12 @@ export default {
             });
             if(state.difficultyFilter.hard)filteredTasks=filteredTasks.filter((val) => {
                 return val.difficulty===3
+            });
+            if(state.typeFilter.private)filteredTasks=filteredTasks.filter((val) => {
+                return !val.type
+            });
+            if(state.typeFilter.arbiten)filteredTasks=filteredTasks.filter((val) => {
+                return val.type
             });
             return filteredTasks;
         }

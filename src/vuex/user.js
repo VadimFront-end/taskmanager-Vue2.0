@@ -31,33 +31,6 @@ export default {
         deleteError(state) {
             state.error=false;
         },
-        createNewTask(state,newTask) {
-
-            let newTaskMy = {
-                status: +newTask.task.status,
-                type: newTask.task.is_private,
-                timeF: newTask.task.done_time ? newTask.task.done_time: '',
-                title: newTask.task.task_name,
-                executer: newTask.executer,
-                executer_id: newTask.task.executer_id,
-                author: newTask.creator,
-                author_id: newTask.task.creator_id,
-                deadline: newTask.task.deadline,
-                difficulty: +newTask.task.urgency,
-                time: newTask.task.estimated_time ? newTask.task.estimated_time: '',
-                description: newTask.task.task_description,
-                id: newTask.task.id,
-                project_id: newTask.task.project_id
-            }
-            state.tasks.push(newTaskMy);
-        },
-        editTask(state,newTask) {
-            for(let i=0;i<state.tasks.length;i++) {
-                if(state.tasks[i].id===newTask.id) {
-                    state.tasks.splice(i,1,newTask);
-                }
-            }
-        },
         deleteTask(state, taskId) {
             for(let i=0;i<state.tasks.length;i++) {
                 if(state.tasks[i].id===taskId) {
@@ -119,8 +92,7 @@ export default {
             state.users=users;
         },
         GET_USER_TASKS(state, tasks) {
-            state.tasks=[];
-            console.log(this.state.user.users)
+            state.tasks=[]
             for(let i=0;i<tasks.length;i++) {
                 let nameExecuter='';
                 let nameAuthor='';
@@ -202,24 +174,11 @@ export default {
                 }
             })
                 .then(res => {
-                    console.log(res.data)
                     commit('GET_USER_TASKS', res.data);
                 })
                 .catch(error => {
                     console.log(error.response)
                 })
-            // axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_private_tasks', {}, {
-            //     headers: {
-            //         'Authorization': `Bearer ${localStorage.getItem('token')}`
-            //     }
-            // })
-            //     .then(res => {
-            //         console.log(res.data)
-            //         commit('GET_USER_TASKS', res.data);
-            //     })
-            //     .catch(error => {
-            //         console.log(error.response)
-            //     })
         },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
@@ -237,7 +196,7 @@ export default {
             commit('editStatusTask', newStatus);
         },
         async deleteTask({commit}, taskId) {
-            axios.delete(`https://radiant-ridge-41845.herokuapp.com/api/task/${2}`, {
+            axios.delete(`https://radiant-ridge-41845.herokuapp.com/api/task/${taskId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

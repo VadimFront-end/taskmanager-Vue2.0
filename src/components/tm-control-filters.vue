@@ -55,13 +55,19 @@
         </div>
         <div style="display: flex;align-items: center">
           <div style="margin-right: 8px">Тип:</div>
-          <div class="filter-for-type" style="padding: 5px 6px 5px 8px;border-radius: 50px 0 0 50px;margin-right: 2px">
+          <div
+              class="filter-for-type"
+              style="padding: 5px 6px 5px 8px;border-radius: 50px 0 0 50px;margin-right: 2px"
+              @click="$store.commit('showOnlyThis3', 0)">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10.8 2.4H8.4V1.2C8.4 0.534 7.866 0 7.2 0H4.8C4.134 0 3.6 0.534 3.6 1.2V2.4H1.2C0.534 2.4 0.00599999 2.934 0.00599999 3.6L0 10.2C0 10.866 0.534 11.4 1.2 11.4H10.8C11.466 11.4 12 10.866 12 10.2V3.6C12 2.934 11.466 2.4 10.8 2.4ZM7.2 2.4H4.8V1.2H7.2V2.4Z" fill="#889ABD"/>
             </svg>
             <div style="font-size: 12px;color: #485C83;margin-left: 4px">Рабочая</div>
           </div>
-          <div class="filter-for-type" style="padding: 5px 8px 5px 6px;border-radius: 0 50px 50px 0">
+          <div
+              class="filter-for-type"
+              style="padding: 5px 8px 5px 6px;border-radius: 0 50px 50px 0"
+              @click="$store.commit('showOnlyThis3', 1)">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0)">
                 <path d="M5.91448 5.78043C6.7086 5.78043 7.39625 5.49561 7.95811 4.93367C8.51997 4.37181 8.80479 3.68434 8.80479 2.89013C8.80479 2.09618 8.51997 1.40862 7.95802 0.846585C7.39607 0.284819 6.70851 0 5.91448 0C5.12026 0 4.43279 0.284819 3.87094 0.846676C3.30908 1.40853 3.02417 2.09609 3.02417 2.89013C3.02417 3.68434 3.30908 4.3719 3.87103 4.93376C4.43298 5.49552 5.12054 5.78043 5.91448 5.78043Z" fill="#889ABD"/>
