@@ -9,7 +9,7 @@
         </svg>
         <span class="project-status-for-project-now">Завершен</span>
       </div>
-      <div v-if="project.project_status==='2'" style="display: flex;align-items: center">
+      <div v-else-if="project.project_status==='2'" style="display: flex;align-items: center">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 8C16 12.416 12.416 16 8 16C3.584 16 0 12.416 0 8C0 7.048 0.176 6.144 0.48 5.296L1.984 5.84C1.736 6.512 1.6 7.24 1.6 8C1.6 11.528 4.472 14.4 8 14.4C11.528 14.4 14.4 11.528 14.4 8C14.4 4.472 11.528 1.6 8 1.6C7.24 1.6 6.52 1.736 5.848 1.984L5.304 0.472C6.152 0.176 7.056 0 8 0C12.416 0 16 3.584 16 8ZM2.8 4C3.464 4 4 3.464 4 2.8C4 2.136 3.464 1.6 2.8 1.6C2.136 1.6 1.6 2.136 1.6 2.8C1.6 3.464 2.136 4 2.8 4ZM5.6 5.6V10.4H7.2V5.6H5.6ZM8.8 5.6V10.4H10.4V5.6H8.8Z" fill="#EC1B1B"/>
         </svg>

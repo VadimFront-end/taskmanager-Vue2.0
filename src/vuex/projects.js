@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "../router/router";
+import user from './user'
 
 export default {
     state: {
@@ -89,7 +90,7 @@ export default {
             let project={}
             if(Object.keys(state.getProjectData).length === 0) {
                 project = {
-                    project_creator: state.user.username,
+                    project_creator: user.state.user.username,
                     project_name: '',
                     id: NaN,
                     project_description: '',
@@ -107,7 +108,6 @@ export default {
                     project_status: state.getProjectData.project_status
                 }
             }
-            console.log(project)
             return project;
         },
         PROJECTS(state) {

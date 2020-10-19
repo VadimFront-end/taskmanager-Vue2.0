@@ -66,7 +66,16 @@
           <div style="color: #0239A4">{{GET_PROJECT_DATA.project_creator}}</div>
         </div>
         <div class="title-projects-items" style="margin-top: 16px">Команда:</div>
-        <div style="margin-top: 16px" class="creater"></div>
+        <div style="display: flex">
+          <div
+              v-for="(executer,index) in GET_ALL_USERS"
+              class="executers-item"
+              :style="{transform: `translateX(${-15*index}px)`,zIndex: GET_ALL_USERS.length+1-index,
+                 display: index>4 ? 'none': ''}"
+              :key="index"
+          >{{executer.username[0]}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -95,9 +104,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'FILTERED',
         'GET_PROJECT_DATA',
-        'GET_PROJECT_TASKS'
+        'GET_PROJECT_TASKS',
+        'GET_ALL_USERS'
     ])
   },
   destroyed() {
