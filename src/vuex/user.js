@@ -32,16 +32,19 @@ export default {
             state.error=false;
         },
         createNewTask(state,newTask) {
+
             let newTaskMy = {
                 status: +newTask.task.status,
                 type: newTask.task.is_private,
                 timeF: newTask.task.done_time ? newTask.task.done_time: '',
                 title: newTask.task.task_name,
                 executer: newTask.executer,
+                executer_id: newTask.task.executer_id,
+                author: newTask.creator,
+                author_id: newTask.task.creator_id,
                 deadline: newTask.task.deadline,
                 difficulty: +newTask.task.urgency,
                 time: newTask.task.estimated_time ? newTask.task.estimated_time: '',
-                author: newTask.creator,
                 description: newTask.task.task_description,
                 id: newTask.task.id,
                 project_id: newTask.task.project_id
@@ -119,10 +122,14 @@ export default {
             state.tasks=[];
             console.log(this.state.user.users)
             for(let i=0;i<tasks.length;i++) {
-                let name='';
+                let nameExecuter='';
+                let nameAuthor='';
                 for(let j=0;j<this.state.user.users.length;j++) {
                     if(this.state.user.users[j].id===tasks[i].creator_id) {
-                        name=this.state.user.users[j].username;
+                        nameAuthor=this.state.user.users[j].username;
+                    }
+                    if(this.state.user.users[j].id===tasks[i].assignee_id) {
+                        nameExecuter=this.state.user.users[j].username;
                     }
                 }
                 let tmpTask = {
@@ -130,19 +137,19 @@ export default {
                     type: tasks[i].is_private,
                     timeF: tasks[i].done_time ? tasks[i].done_time: '',
                     title: tasks[i].task_name,
-                    executer: this.state.user.user.username,
+                    executer: nameExecuter,
+                    executer_id: tasks[i].assignee_id,
+                    author: nameAuthor,
+                    author_id: tasks[i].creator_id,
                     deadline: tasks[i].deadline,
                     difficulty: +tasks[i].urgency,
                     time: tasks[i].estimated_time ? tasks[i].estimated_time: '',
-                    author: name,
-                    autor_id: tasks[i].creator_id,
                     description: tasks[i].task_description,
                     id: tasks[i].id,
                     project_id: tasks[i].project_id
                 }
                 state.tasks.push(tmpTask);
             }
-            console.log(state.tasks)
         }
     },
     actions: {
@@ -243,13 +250,12 @@ export default {
                     console.log(error.response)
                 })
         },
-        async createNewTask({commit}, newTask) {
-            console.log(newTask.executer,this.state.user.id)
+        async createNewTask({dispatch}, newTask) {
             axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
                 is_private: newTask.type ? 1: 0,
                 done_time: newTask.timeF,
                 task_name: newTask.title,
-                assignee_id: newTask.executer,
+                assignee_id: newTask.executer_id,
                 deadline: newTask.deadline,
                 urgency: newTask.difficulty,
                 estimated_time: newTask.time,
@@ -260,20 +266,20 @@ export default {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-                .then(res => {
-                    if(newTask.executer===this.state.user.id)commit('createNewTask', res.data);
+                .then(() => {
+                    dispatch('GET_USER_TASKS');
                 })
                 .catch(error => {
                     console.log(error.response)
                 })
         },
-        async editTask({commit}, newTask) {
-            console.log(newTask.executer)
-            axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
+        async editTask({dispatch}, newTask) {
+            console.log(newTask)
+            axios.patch('https://radiant-ridge-41845.herokuapp.com/api/task', {
                 is_private: newTask.type ? 1: 0,
                 done_time: newTask.timeF,
                 task_name: newTask.title,
-                assignee_id: newTask.executer,
+                assignee_id: newTask.executer_id,
                 deadline: newTask.deadline,
                 urgency: newTask.difficulty,
                 estimated_time: newTask.time,
@@ -284,14 +290,12 @@ export default {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-                .then(res => {
-                    console.log(res.data)
-                    commit('createNewTask', newTask);
+                .then(() => {
+                    dispatch('GET_USER_TASKS');
                 })
                 .catch(error => {
                     console.log(error.response)
                 })
-            commit('editTask', newTask);
         },
         AUTO_AUTH({commit}) {
             axios.post('https://radiant-ridge-41845.herokuapp.com/api/users', {}, {

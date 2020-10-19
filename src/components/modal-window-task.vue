@@ -50,7 +50,7 @@
                       :style="{background: item.username===task.executer ? '#D4E3FF':''}"
                       v-for="(item,index) in GET_ALL_USERS"
                       :key="index"
-                      @click="indexUser=index+1;task.executer=item.username"
+                      @click="task.executer=item.username;task.executer_id=item.id"
                       class="selected-executer-menu-item">
                     <div class="selected-executer-menu-item-pic-person">{{ item.username[0] }}</div>
                     <div>{{ item.username }}</div>
@@ -337,7 +337,8 @@ export default {
         type: false,
         timeF: '',
         title: '',
-        executer: '',
+        executer: this.$store.state.user.user.username,
+        executer_id: this.$store.state.user.id,
         deadline: '',
         difficulty: 1,
         time: '',
@@ -374,19 +375,19 @@ export default {
           status: this.task.status,
           type: this.task.type,
           title: this.task.title,
-          executer: this.indexUser,
+          executer: this.task.executer,
+          executer_id: this.task.executer_id,
+          author: this.task.author,
           deadline: this.task.deadline,
           difficulty: this.task.difficulty,
           time: this.task.time,
           timeF: this.task.timeF,
-          author: this.task.author,
           description: this.task.description,
           project_id: null,
           subtasks: []
         };
         if (Number.isNaN(this.task.id)) this.$store.dispatch('createNewTask', newTask);
         else {
-          this.task.executer=this.indexUser;
           this.$store.dispatch('editTask', this.task);
         }
         this.$store.commit('closeTaskWindow');

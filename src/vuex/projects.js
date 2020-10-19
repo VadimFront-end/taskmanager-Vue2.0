@@ -34,8 +34,7 @@ export default {
         },
         isShowProjectWindow(state) {
             state.showProjectWindow=!state.showProjectWindow;
-        },
-
+        }
     },
     actions: {
         getProjectTasks({commit}, projectId) {
@@ -56,7 +55,7 @@ export default {
         getAllProjects({commit}) {
             axios.get('https://radiant-ridge-41845.herokuapp.com/api/project')
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     commit('getAllProjects', res.data);
                 })
                 .catch(error => {
