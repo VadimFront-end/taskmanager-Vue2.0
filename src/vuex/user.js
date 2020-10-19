@@ -244,7 +244,7 @@ export default {
                 })
         },
         async createNewTask({commit}, newTask) {
-            console.log(newTask.executer)
+            console.log(newTask.executer,this.state.user.id)
             axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
                 is_private: newTask.type ? 1: 0,
                 done_time: newTask.timeF,
@@ -268,6 +268,29 @@ export default {
                 })
         },
         async editTask({commit}, newTask) {
+            console.log(newTask.executer)
+            axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
+                is_private: newTask.type ? 1: 0,
+                done_time: newTask.timeF,
+                task_name: newTask.title,
+                assignee_id: newTask.executer,
+                deadline: newTask.deadline,
+                urgency: newTask.difficulty,
+                estimated_time: newTask.time,
+                task_description: newTask.description,
+                project_id: newTask.project_id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => {
+                    console.log(res.data)
+                    commit('createNewTask', newTask);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
             commit('editTask', newTask);
         },
         AUTO_AUTH({commit}) {
