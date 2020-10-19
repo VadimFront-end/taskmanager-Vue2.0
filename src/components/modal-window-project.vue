@@ -210,7 +210,7 @@ export default {
           project_deadline: this.project.project_deadline,
           project_status: this.project.project_status
         }
-        this.$store.dispatch('addProject', newProject);
+        if(Number.isNaN(this.project.id))this.$store.dispatch('addProject', newProject);
         this.$store.commit('isShowProjectWindow');
       }
       else this.error=true;

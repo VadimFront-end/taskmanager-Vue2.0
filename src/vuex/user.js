@@ -4,10 +4,93 @@ import router from '../router/router'
 export default {
     state: {
         user: {},
-        tasks: [],
+        tasks: [
+            {
+                status: 1,
+                type: false,
+                timeF: '00:50',
+                title: 'Сделать создание задач',
+                executer: 'user',
+                deadline: '29.10.2020',
+                difficulty: 1,
+                time: '02:00',
+                author: 'Vadim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 0,
+                subtasks: [{title: 'Subtask1',status: true},{title: 'Subtask2',status: false},{title: 'Subtask3',status: false},{title: 'Subtask4',status: true}]
+            },
+            {
+                status: 3,
+                type: true,
+                timeF: '02:50',
+                title: 'Сделать создание задач 1',
+                executer: 'user',
+                deadline: '05.10.2020',
+                difficulty: 2,
+                time: '03:00',
+                author: 'Madim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 1,
+                subtasks: [{title: 'Subtask1',status: true},{title: 'Subtask2',status: false},{title: 'Subtask3',status: false}]
+            },
+            {
+                status: 1,
+                type: false,
+                timeF: '05:50',
+                title: 'Сделать создание задач 2',
+                executer: 'user',
+                deadline: '29.10.2020',
+                difficulty: 3,
+                time: '03:00',
+                author: 'Nadim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 2,
+                subtasks: [{title: 'Subtask1',status: true},{title: 'Subtask2',status: false},{title: 'Subtask3',status: false},{title: 'Subtask4',status: true},{title: 'Subtask5',status: true},{title: 'Subtask6',status: true}]
+            },
+            {
+                status: 3,
+                type: false,
+                timeF: '00:50',
+                title: 'Сделать создание задач 3',
+                executer: 'user',
+                deadline: '29.09.2020',
+                difficulty: 1,
+                time: '02:00',
+                author: 'Iadim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 3,
+                subtasks: [{title: 'Subtask1',status: true},{title: 'Subtask2',status: false},{title: 'Subtask3',status: false}]
+            },
+            {
+                status: 2,
+                type: false,
+                timeF: '00:40',
+                title: 'Сделать создание задач 4',
+                executer: 'user',
+                deadline: '10.10.2020',
+                difficulty: 1,
+                time: '20:00',
+                author: 'Oadim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 4,
+                subtasks: [{title: 'Subtask',status: true},{title: 'Subtask50',status: false},{title: 'Subtask200',status: false}]
+            },
+            {
+                status: 1,
+                type: false,
+                timeF: '04:10',
+                title: 'Сделать создание задач 5',
+                executer: 'user',
+                deadline: '29.10.2020',
+                difficulty: 2,
+                time: '05:05',
+                author: 'Zadim',
+                description: 'Мы должны бороться с религией. Это - азбука всего материализма и, следовательно, марксизма. Но марксизм не есть материализм, остановившийся на азбуке. Марксизм идет дальше. Он говорит: надо уметь бороться с религией, а для этого надо материалистически объяснить источник веры и религии у масс',
+                id: 5
+            }
+        ],
         projects: [],
         users: [],
-        selectedSubtaskIndex: 0,
         id: null,
         error: false,
         showTaskWindow: false,
@@ -128,7 +211,25 @@ export default {
             state.showProjectWindow=!state.showProjectWindow;
         },
         GET_USER_TASKS(state, tasks) {
-            state.tasks=tasks;
+            state.tasks=[];
+            for(let i=0;i<tasks.length;i++) {
+                let tmpTask = {
+                    status: tasks[i].status,
+                    type: tasks[i].is_private,
+                    timeF: tasks[i].done_time,
+                    title: tasks[i].task_name,
+                    executer: tasks[i].assignee_id,
+                    deadline: tasks[i].deadline,
+                    difficulty: tasks[i].urgency,
+                    time: tasks[i].estimated_time,
+                    author: tasks[i].creator_id,
+                    description: tasks[i].task_description,
+                    id: tasks[i].id,
+                    project_id: tasks[i].project_id
+                }
+                state.tasks.push(tmpTask);
+            }
+            console.log(state.tasks)
         }
     },
     actions: {
@@ -203,32 +304,32 @@ export default {
                     console.log(error.response)
                 })
         },
-        GET_USER_TASKS({commit}) {
-            axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_tasks', {}, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-                .then(res => {
-                    console.log(res.data)
-                    commit('GET_USER_TASKS', res.data);
-                })
-                .catch(error => {
-                    console.log(error.response)
-                })
-            axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_private_tasks', {}, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-                .then(res => {
-                    console.log(res.data)
-                    commit('GET_USER_TASKS', res.data);
-                })
-                .catch(error => {
-                    console.log(error.response)
-                })
-        },
+        // GET_USER_TASKS({commit}) {
+        //     axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_tasks', {}, {
+        //         headers: {
+        //             'Authorization': `Bearer ${localStorage.getItem('token')}`
+        //         }
+        //     })
+        //         .then(res => {
+        //             console.log(res.data)
+        //             commit('GET_USER_TASKS', res.data);
+        //         })
+        //         .catch(error => {
+        //             console.log(error.response)
+        //         })
+        //     axios.post('https://radiant-ridge-41845.herokuapp.com/api/user_private_tasks', {}, {
+        //         headers: {
+        //             'Authorization': `Bearer ${localStorage.getItem('token')}`
+        //         }
+        //     })
+        //         .then(res => {
+        //             console.log(res.data)
+        //             commit('GET_USER_TASKS', res.data);
+        //         })
+        //         .catch(error => {
+        //             console.log(error.response)
+        //         })
+        // },
         async createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
         },
@@ -249,6 +350,28 @@ export default {
         },
         async createNewTask({commit}, newTask) {
             commit('createNewTask', newTask);
+            // axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
+            //     is_private: newTask.type ? 1: 0,
+            //     done_time: newTask.timeF,
+            //     task_name: newTask.title,
+            //     assignee_id: 0,
+            //     deadline: newTask.deadline,
+            //     urgency: newTask.difficulty,
+            //     estimated_time: newTask.time,
+            //     task_description: newTask.description,
+            //     project_id: 0
+            // }, {
+            //     headers: {
+            //         'Authorization': `Bearer ${localStorage.getItem('token')}`
+            //     }
+            // })
+            //     .then(res => {
+            //         console.log(res.data)
+            //
+            //     })
+            //     .catch(error => {
+            //         console.log(error.response)
+            //     })
         },
         async editTask({commit}, newTask) {
             commit('editTask', newTask);
@@ -277,6 +400,12 @@ export default {
                 return index>=state.tasks.length-5;
             })
             return lastTasks;
+        },
+        LAST_PROJECTS(state) {
+            const lastProjects=state.projects.filter((val,index)=> {
+                return index>=state.projects.length-4;
+            })
+            return lastProjects;
         },
         STATUSOK(state) {
             const ok=state.tasks.filter(val => {

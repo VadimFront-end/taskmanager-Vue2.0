@@ -21,7 +21,7 @@
    <div class="title-main-page">Текущие проекты</div>
    <div class="project-now">
      <tmProject
-         v-for="(project,index) in PROJECTS"
+         v-for="(project,index) in LAST_PROJECTS"
          :project="project"
          :key="index"/>
    </div>
@@ -43,18 +43,20 @@ export default {
     ...mapGetters([
         'LAST_TASKS',
         'PROJECTS',
-        'GET_ALL_USERS'
+        'GET_ALL_USERS',
+        'LAST_PROJECTS'
     ])
   },
   methods: {
     ...mapActions([
-      'GET_USER_TASKS',
+      // 'GET_USER_TASKS',
       'GET_USERS'
     ])
   },
   mounted() {
     this.GET_USERS();
-    this.GET_USER_TASKS();
+    // this.GET_USER_TASKS();
+    this.$store.dispatch('getAllProjects');
   }
 }
 </script>
