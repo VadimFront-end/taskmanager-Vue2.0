@@ -1,5 +1,3 @@
-// import axios from 'axios'
-// import router from '../router/router'
 import user from '../vuex/user'
 
 export default {
@@ -48,7 +46,6 @@ export default {
         //     state.difficultyFilter.hard=false;
         // }
     },
-    actions: {},
     getters: {
         STATUSFILTER(state) {
             return state.statusFilter;

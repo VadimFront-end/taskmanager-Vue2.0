@@ -49,13 +49,13 @@ export default {
   },
   methods: {
     ...mapActions([
-      // 'GET_USER_TASKS',
+      'GET_USER_TASKS',
       'GET_USERS'
     ])
   },
   mounted() {
     this.GET_USERS();
-    // this.GET_USER_TASKS();
+    this.GET_USER_TASKS();
     this.$store.dispatch('getAllProjects');
   }
 }

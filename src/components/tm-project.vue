@@ -21,7 +21,7 @@
     <div class="adaptiv-project">
       <div style="width: 90%">
         <tmItemTask
-            v-for="(task,index) in FILTERED"
+            v-for="(task,index) in GET_PROJECT_TASKS"
             :key="index"
             :isProject="true"
             :index="index"
@@ -96,7 +96,8 @@ export default {
   computed: {
     ...mapGetters([
         'FILTERED',
-        'GET_PROJECT_DATA'
+        'GET_PROJECT_DATA',
+        'GET_PROJECT_TASKS'
     ])
   },
   destroyed() {

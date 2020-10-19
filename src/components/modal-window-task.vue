@@ -50,7 +50,7 @@
                       :style="{background: item.username===task.executer ? '#D4E3FF':''}"
                       v-for="(item,index) in GET_ALL_USERS"
                       :key="index"
-                      @click="task.executer=item.username"
+                      @click="task.executer=item.username;indexUser=index+1"
                       class="selected-executer-menu-item">
                     <div class="selected-executer-menu-item-pic-person">{{ item.username[0] }}</div>
                     <div>{{ item.username }}</div>
@@ -355,7 +355,8 @@ export default {
       focusExecuter: false,
       deletingSubtask: false,
       showCalendar: false,
-      error: false
+      error: false,
+      indexUser: 0
     }
   },
   methods: {
@@ -373,13 +374,14 @@ export default {
           status: this.task.status,
           type: this.task.type,
           title: this.task.title,
-          executer: this.task.executer,
+          executer: this.indexUser,
           deadline: this.task.deadline,
           difficulty: this.task.difficulty,
           time: this.task.time,
           timeF: this.task.timeF,
           author: this.task.author,
           description: this.task.description,
+          project_id: null,
           subtasks: []
         };
         if (Number.isNaN(this.task.id)) this.$store.dispatch('createNewTask', newTask);
@@ -437,6 +439,7 @@ export default {
     else {
       this.task.author = this.$store.state.user.user.username ? this.$store.state.user.user.username : this.$store.state.user.user.email;
     }
+    console.log(this.task.difficulty)
     this.easy = this.task.difficulty === 1;
     this.normal = this.task.difficulty === 2;
     this.hard = this.task.difficulty === 3;
