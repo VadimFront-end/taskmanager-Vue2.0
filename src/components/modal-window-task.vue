@@ -389,7 +389,6 @@ export default {
         };
         if (Number.isNaN(this.task.id)) this.$store.dispatch('createNewTask', newTask);
         else {
-          console.log(1)
           this.$store.dispatch('editTask', this.task);
         }
         this.$store.commit('closeTaskWindow');
