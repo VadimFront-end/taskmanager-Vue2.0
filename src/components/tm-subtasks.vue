@@ -82,7 +82,6 @@ export default {
     createSubtask(bool) {
       if (bool) {
         if(!this.$v.newSubtask.$invalid) {
-          console.log(this.indexTask)
           const newSubtask = {
             indexTask: this.indexTask,
             subtask: this.newSubtask
