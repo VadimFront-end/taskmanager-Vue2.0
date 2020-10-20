@@ -92,7 +92,8 @@
       <div
           class="error"
           style="margin-bottom: 11px"
-          :style="{visibility: task.title.length>500 ? 'visible': 'hidden'}">Превышено количество символов</div>
+          :style="{visibility: task.title.length>500 ? 'visible': 'hidden'}">Превышено количество символов
+      </div>
       <div class="title-for-input-mw"
            :style="{color: focusDeadline ? '#0356F6': '',visibility: task.deadline.length ? 'visible': 'hidden'}">
         Дедлайн

@@ -8,11 +8,11 @@
           <div class="part-of-exit" style="transform: rotate(-45deg)"></div>
         </div>
       </div>
-      <input type="text" class="edit-tasks-title" placeholder="Название задачи" v-model.trim="project.project_name">
+      <input type="text" class="edit-tasks-title" placeholder="Название проекта" v-model.trim="project.project_name">
       <div
           class="error"
           :style="{visibility: error&&((!project.project_name.length)||project.project_name.length>64) ? 'visible': 'hidden'}"
-          style="margin-bottom: 36px;margin-left: 4px">{{project.project_name.length ? 'Превышено количество символов': 'Введите название задачи'}}
+          style="margin-bottom: 36px;margin-left: 4px">{{project.project_name.length ? 'Превышено количество символов': 'Введите название проекта'}}
       </div>
       <div class="select-status-project">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +78,7 @@
         <div style="color: #10141D;">{{ project.project_creator }}</div>
       </div>
       <div style="color: #344360;margin-bottom: 32px;font-weight: 600">Дополнительные поля (необязательные)</div>
-      <div style="display: flex;margin-bottom: 36px">
+      <div style="display: flex">
         <svg style="margin-right: 8px" width="16" height="14" viewBox="0 0 16 14" fill="none"
              xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd"
@@ -87,6 +87,11 @@
         </svg>
         <input type="text" placeholder="Описание проекта..." class="edit-tasks-description"
                v-model.trim="project.project_description">
+      </div>
+      <div
+          class="error"
+          style="margin-bottom: 17px"
+          :style="{visibility: project.project_description.length>500 ? 'visible': 'hidden'}">Превышено количество символов
       </div>
 <!--      <div class="title-for-input-mw"-->
 <!--           :style="{color: focusDeadline ? '#0356F6': '',visibility: project.project_deadline.length ? 'visible': 'hidden'}">-->
@@ -193,7 +198,8 @@ export default {
     return {
       project: {
         project_name: '',
-        project_deadline: ''
+        project_deadline: '',
+        project_description: ''
       },
       error: false,
       deletingSubtask: false,
@@ -203,7 +209,7 @@ export default {
   },
   methods: {
     saveTask() {
-      if(this.project.project_name.length<65&&this.project.project_name) {
+      if((this.project.project_name.length<65&&this.project.project_name)&&(this.project.project_description.length<501)) {
         const newProject = {
           project_name: this.project.project_name,
           project_description: this.project.project_description,

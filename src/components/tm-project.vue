@@ -1,6 +1,9 @@
 <template>
   <div class="tm-container-for-content-page">
-    <div class="title-main-page">Проект: {{GET_PROJECT_DATA.project_name}}</div>
+    <div style="display: flex;align-items: center;justify-content: space-between">
+      <div class="title-main-page">Проект: {{GET_PROJECT_DATA.project_name}}</div>
+      <button class="button-for-add-task" @click="$store.commit('showTaskWindow', -1)">Добавить задачу</button>
+    </div>
     <tmControlFilters @view="getView"/>
     <div style="display: flex">
       <div class="title-for-colon-project">
