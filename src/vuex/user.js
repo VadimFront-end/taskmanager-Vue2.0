@@ -50,7 +50,12 @@ export default {
                 status: false,
                 title: newSubtask.subtask
             }
-            state.tasks[newSubtask.indexTask].subtasks.push(addStatus);
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===newSubtask.indexTask) {
+                    state.tasks[i].subtasks.push(addStatus);
+                    break;
+                }
+            }
         },
         deleteSubtask(state,deleteSubtask) {
             for(let i=0;i<state.tasks.length;i++) {
@@ -113,6 +118,7 @@ export default {
                 }
                 let tmpTask = {
                     status: +tasks[i].status,
+                    subtasks: [],
                     type: tasks[i].is_private,
                     timeF: tasks[i].done_time ? tasks[i].done_time: '',
                     title: tasks[i].task_name,
