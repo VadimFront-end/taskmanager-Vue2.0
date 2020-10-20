@@ -38,6 +38,13 @@ export default {
                 }
             }
         },
+        editTask(state,newTask) {
+            for(let i=0;i<state.tasks.length;i++) {
+                if(state.tasks[i].id===newTask.id) {
+                    state.tasks.splice(i,1,newTask);
+                }
+            }
+        },
         createSubtask(state, newSubtask) {
             const addStatus= {
                 status: false,
@@ -122,6 +129,7 @@ export default {
                 }
                 state.tasks.push(tmpTask);
             }
+            console.log(state.tasks)
         }
     },
     actions: {
@@ -232,9 +240,10 @@ export default {
                     console.log(error.response)
                 })
         },
-        async editTask({dispatch}, newTask) {
+        async editTask({commit}, newTask) {
             console.log(newTask)
-            axios.patch('https://radiant-ridge-41845.herokuapp.com/api/task', {
+            axios.post(`https://radiant-ridge-41845.herokuapp.com/api/task/${newTask.id}`, {
+                _method: "PATCH",
                 is_private: newTask.type ? 1: 0,
                 done_time: newTask.timeF,
                 task_name: newTask.title,
@@ -250,7 +259,7 @@ export default {
                 }
             })
                 .then(() => {
-                    dispatch('GET_USER_TASKS');
+                    commit('editTask', newTask);
                 })
                 .catch(error => {
                     console.log(error.response)
