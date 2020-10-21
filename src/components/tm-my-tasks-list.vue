@@ -17,32 +17,16 @@
         :lengthArray="FILTERED.length"
         :task="task"
         :style="{borderRadius: (index===FILTERED.length-1)&&(index===0) ? '14px': index===FILTERED.length-1 ? '0 0 14px 14px': index===0 ? '14px 14px 0 0' : ''}"/>
-    <div style="display: none">
-      <tmContainerForDragAndDrop id="bord-1">
-        <tmCardForDragAndDrop id="card-1">
-          drag me
-        </tmCardForDragAndDrop>
-        <tmCardForDragAndDrop id="card-2">
-          drag me
-        </tmCardForDragAndDrop >
-      </tmContainerForDragAndDrop>
-      <tmContainerForDragAndDrop id="bord-2">
-      </tmContainerForDragAndDrop>
-    </div>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import tmContainerForDragAndDrop from '../components/tm-container-for-drag-and-drop'
-import tmCardForDragAndDrop from  '../components/tm-card-for-drag-and-drop'
 import tmItemTask from '../components/tm-item-task'
 
 export default {
 name: "tm-container-for-my-tasks",
   components: {
-    tmContainerForDragAndDrop,
-    tmCardForDragAndDrop,
     tmItemTask
   },
   data() {

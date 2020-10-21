@@ -67,7 +67,7 @@ export default {
 .container-for-task-in-table {
   background: white;
   padding: 12px 16px 12px;
-  box-shadow: 0px 0px 15px rgba(2, 57, 164, 0.05);
+  box-shadow: 0 0 15px rgba(2, 57, 164, 0.05);
   border-radius: 14px;
   margin-bottom: 8px;
 }

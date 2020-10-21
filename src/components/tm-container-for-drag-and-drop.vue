@@ -23,10 +23,14 @@ export default {
 </script>
 
 <style>
-  .tm-container-for-drag-and-drop {
-    width: 30%;
-    height: 50vh;
-    background: #2CCF11;
-    margin-right: 20px;
-  }
+.tm-container-for-drag-and-drop {
+  width: 406px;
+  box-sizing: border-box;
+  height: 434px;
+  overflow: scroll;
+  padding: 8px;
+  background: #EDF3FF;
+  border-radius: 14px;
+}
+.tm-container-for-drag-and-drop::-webkit-scrollbar { width: 0; }
 </style>

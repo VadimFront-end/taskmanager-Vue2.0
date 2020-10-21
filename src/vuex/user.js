@@ -289,6 +289,9 @@ export default {
         }
     },
     getters: {
+        TASKS(state) {
+            return state.tasks;
+        },
         USER(state) {
             return state.user;
         },
@@ -312,7 +315,8 @@ export default {
                 return val.status===2;
             })
             return work;
-        },STATUSTODO(state) {
+        },
+        STATUSTODO(state) {
             const toDo=state.tasks.filter(val => {
                 return val.status===1;
             })
