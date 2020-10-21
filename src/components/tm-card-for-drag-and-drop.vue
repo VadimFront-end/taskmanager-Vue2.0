@@ -82,4 +82,7 @@ export default {
   box-sizing: border-box;
   margin-top: 8px;
 }
+.tm-card-for-drag-and-drop:active {
+  cursor: grabbing;
+}
 </style>

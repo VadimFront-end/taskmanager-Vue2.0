@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '../router/router'
 import projectVuex from './projects'
+import store from "./store";
 
 export default {
     state: {
@@ -242,13 +243,13 @@ export default {
             })
                 .then(() => {
                     dispatch('GET_USER_TASKS');
+                    store.dispatch('getProjectTasks',projectVuex.state.getProjectData.id);
                 })
                 .catch(error => {
                     console.log(error.response)
                 })
         },
         editTask({commit}, newTask) {
-            console.log(newTask)
             axios.post(`https://radiant-ridge-41845.herokuapp.com/api/task/${newTask.id}`, {
                 _method: "PATCH",
                 is_private: newTask.type ? 1: 0,

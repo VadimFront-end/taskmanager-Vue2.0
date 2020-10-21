@@ -55,7 +55,6 @@ export default {
                 }
                 state.projectTasks.push(tmpTask);
             }
-            console.log(state.projectTasks)
         },
         addProject(state, newProject) {
             state.projects.push(newProject);
@@ -66,6 +65,15 @@ export default {
         },
         isShowProjectWindow(state) {
             state.showProjectWindow=!state.showProjectWindow;
+        },
+        showTaskWindowInProject(state,status) {
+            for(let i=0;i<state.projectTasks.length;i++) {
+                if(state.projectTasks[i].id===status) {
+                    user.state.getTaskData=state.projectTasks[i];
+                    break;
+                }
+            }
+            user.state.showTaskWindow=true;
         }
     },
     actions: {
@@ -77,6 +85,7 @@ export default {
                 }
             })
                 .then(res => {
+                    console.log( res.data.tasks)
                     commit('getProjectTasks', res.data.tasks);
                 })
                 .catch(error => {

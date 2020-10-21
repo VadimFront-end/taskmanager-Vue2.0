@@ -11,10 +11,10 @@
       <div class="wrapper-for-container-drag-and-drop">
         <tmContainerForDragAndDrop id="bord-1">
           <tmCardForDragAndDrop
-              v-for="(card,index) in TASKS"
-              :key="index"
-              :card="card"
-              :id="`card-${index+1}`"/>
+            v-for="(card,index) in TASKS"
+            :key="index"
+            :card="card"
+            :id="`card-${index+1}`"/>
         </tmContainerForDragAndDrop>
         <tmContainerForDragAndDrop id="bord-2">
         </tmContainerForDragAndDrop>

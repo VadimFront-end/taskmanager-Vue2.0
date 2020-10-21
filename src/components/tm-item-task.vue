@@ -152,7 +152,8 @@ export default {
       else this.indexForShow=taskId;
     },
     exportDataTask() {
-      this.$store.commit('showTaskWindow', this.task.id);
+      if(this.isProject)this.$store.commit('showTaskWindowInProject', this.task.id);
+      else this.$store.commit('showTaskWindow', this.task.id);
     }
   }
 }
