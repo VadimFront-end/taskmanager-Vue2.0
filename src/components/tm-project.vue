@@ -4,7 +4,7 @@
       <div class="title-main-page">Проект: {{GET_PROJECT_DATA.project_name}}</div>
       <button class="button-for-add-task" @click="$store.commit('showTaskWindow', -1)">Добавить задачу</button>
     </div>
-    <tmControlFilters @view="getView"/>
+    <tmControlFilters @view="getView" style="display: none"/>
     <div style="display: flex">
       <div class="title-for-colon-project">
         <div style="margin-left: 15px">Cтатус</div>
@@ -28,9 +28,9 @@
             :key="index"
             :isProject="true"
             :index="index"
-            :lengthArray="FILTERED.length"
+            :lengthArray="GET_PROJECT_TASKS.length"
             :task="task"
-            :style="{borderRadius: (index===FILTERED.length-1)&&(index===0) ? '14px': index===FILTERED.length-1 ? '0 0 14px 14px': index===0 ? '14px 14px 0 0' : ''}"/>
+            :style="{borderRadius: (index===GET_PROJECT_TASKS.length-1)&&(index===0) ? '14px': index===GET_PROJECT_TASKS.length-1 ? '0 0 14px 14px': index===0 ? '14px 14px 0 0' : ''}"/>
       </div>
       <div class="description-of-project">
         <div style="display: flex;align-items: center" v-if="GET_PROJECT_DATA.project_status==='1'">

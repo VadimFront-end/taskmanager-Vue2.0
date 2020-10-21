@@ -24,13 +24,45 @@ export default {
             state.projects=projects;
         },
         getProjectTasks(state, projectsTasks) {
-            state.projectTasks=projectsTasks;
+            state.projectTasks=[];
+            for(let task in projectsTasks) {
+                let nameExecuter='';
+                let nameAuthor='';
+                for(let j=0;j<user.state.users.length;j++) {
+                    if(user.state.users[j].id===projectsTasks[task].creator_id) {
+                        nameAuthor=user.state.users[j].username;
+                    }
+                    if(user.state.users[j].id===projectsTasks[task].assignee_id) {
+                        nameExecuter=user.state.users[j].username;
+                    }
+                }
+                let tmpTask = {
+                    status: +projectsTasks[task].status,
+                    subtasks: [],
+                    type: projectsTasks[task].is_private,
+                    timeF: projectsTasks[task].done_time ? projectsTasks[task].done_time: '',
+                    title: projectsTasks[task].task_name,
+                    executer: nameExecuter,
+                    executer_id: projectsTasks[task].assignee_id,
+                    author: nameAuthor,
+                    author_id: projectsTasks[task].creator_id,
+                    deadline: projectsTasks[task].deadline,
+                    difficulty: +projectsTasks[task].urgency,
+                    time: projectsTasks[task].estimated_time ? projectsTasks[task].estimated_time: '',
+                    description: projectsTasks[task].task_description,
+                    id: projectsTasks[task].id,
+                    project_id: projectsTasks[task].project_id
+                }
+                state.projectTasks.push(tmpTask);
+            }
+            console.log(state.projectTasks)
         },
         addProject(state, newProject) {
             state.projects.push(newProject);
         },
         getProjectNull(state) {
             state.getProjectData={};
+            state.projectTasks=[];
         },
         isShowProjectWindow(state) {
             state.showProjectWindow=!state.showProjectWindow;
@@ -39,13 +71,13 @@ export default {
     actions: {
         getProjectTasks({commit}, projectId) {
             console.log(projectId)
-            axios.get(`http://radiant-ridge-41845.herokuapp.com/api/project/1`, {
+            axios.get(`https://radiant-ridge-41845.herokuapp.com/api/project/${projectId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
                 .then(res => {
-                    commit('getProjectTasks', res.data);
+                    commit('getProjectTasks', res.data.tasks);
                 })
                 .catch(error => {
                     console.log(error.response)

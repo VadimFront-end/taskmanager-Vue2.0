@@ -1,6 +1,10 @@
 <template>
  <div class="tm-container-for-content-page">
-   <div class="title-main-page">Последние задачи</div>
+   <modalWindowDayPlan v-if="isShowDayPlan" @closeWindowPlan="closeWindowPlan"/>
+   <div style="display: flex;align-items: center;justify-content: space-between">
+     <div class="title-main-page">Последние задачи</div>
+     <button class="button-for-add-task" @click="isShowDayPlan=true">Запланировать день</button>
+   </div>
    <div class="title-for-colon">
      <div style="margin-left: 15px">Cтатус</div>
      <div style="margin-left: 15px">Название задачи</div>
@@ -32,12 +36,19 @@
 import {mapGetters,mapActions} from 'vuex'
 import tmItemTask from '../components/tm-item-task'
 import tmProject from '../components/tm-project-now'
+import modalWindowDayPlan from '../components/modal-window-day-plan'
 
 export default {
   name: "tm-main-page",
+  data() {
+    return {
+      isShowDayPlan: false
+    }
+  },
   components: {
     tmItemTask,
-    tmProject
+    tmProject,
+    modalWindowDayPlan
   },
   computed: {
     ...mapGetters([
@@ -48,7 +59,10 @@ export default {
     ])
   },
   methods: {
-    ...mapActions([
+    closeWindowPlan() {
+      this.isShowDayPlan=false;
+    },
+     ...mapActions([
       'GET_USER_TASKS',
       'GET_USERS'
     ])

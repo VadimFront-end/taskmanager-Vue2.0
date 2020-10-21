@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '../router/router'
+import projectVuex from './projects'
 
 export default {
     state: {
@@ -194,22 +195,22 @@ export default {
                     console.log(error.response)
                 })
         },
-        async createSubtask({commit}, newSubtask) {
+        createSubtask({commit}, newSubtask) {
             commit('createSubtask', newSubtask);
         },
-        async deleteSubtask({commit},deleteSubtask) {
+        deleteSubtask({commit},deleteSubtask) {
             commit('deleteSubtask', deleteSubtask);
         },
-        async editSubtaskTitle({commit}, editedSubtask) {
+        editSubtaskTitle({commit}, editedSubtask) {
             commit('editSubtaskTitle', editedSubtask);
         },
-        async editStatusSubtask({commit}, newStatus) {
+        editStatusSubtask({commit}, newStatus) {
             commit('editStatusSubtask', newStatus);
         },
-        async editStatusTask({commit}, newStatus) {
+        editStatusTask({commit}, newStatus) {
             commit('editStatusTask', newStatus);
         },
-        async deleteTask({commit}, taskId) {
+        deleteTask({commit}, taskId) {
             axios.delete(`https://radiant-ridge-41845.herokuapp.com/api/task/${taskId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -223,7 +224,7 @@ export default {
                     console.log(error.response)
                 })
         },
-        async createNewTask({dispatch}, newTask) {
+        createNewTask({dispatch}, newTask) {
             axios.post('https://radiant-ridge-41845.herokuapp.com/api/task', {
                 is_private: newTask.type ? 1: 0,
                 done_time: newTask.timeF,
@@ -233,7 +234,7 @@ export default {
                 urgency: newTask.difficulty,
                 estimated_time: newTask.time,
                 task_description: newTask.description,
-                project_id: newTask.project_id
+                project_id: projectVuex.state.getProjectData ? projectVuex.state.getProjectData.id: null
             }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -246,7 +247,7 @@ export default {
                     console.log(error.response)
                 })
         },
-        async editTask({commit}, newTask) {
+        editTask({commit}, newTask) {
             console.log(newTask)
             axios.post(`https://radiant-ridge-41845.herokuapp.com/api/task/${newTask.id}`, {
                 _method: "PATCH",

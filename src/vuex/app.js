@@ -63,6 +63,9 @@ export default {
         DIFFICULTY_FILTER(state) {
             return state.difficultyFilter;
         },
+        TYPE_FILTER(state) {
+          return state.typeFilter;
+        },
         FILTERED(state) {
             let filteredTasks=user.state.tasks;
             if(state.statusFilter.statusDane)filteredTasks=user.state.tasks.filter((val) => {

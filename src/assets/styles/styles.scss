@@ -34,6 +34,10 @@ button:focus {
   outline: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .error {
   font-size: 0.85rem;
   line-height: 14px;
@@ -49,9 +53,6 @@ button:focus {
   margin-top: 15px;
 }
 
-a {
-  text-decoration: none;
-}
 
 .mobile {
   display: block;

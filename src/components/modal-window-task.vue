@@ -384,7 +384,6 @@ export default {
           time: this.task.time,
           timeF: this.task.timeF,
           description: this.task.description,
-          project_id: null,
           subtasks: []
         };
         if (Number.isNaN(this.task.id)) this.$store.dispatch('createNewTask', newTask);
@@ -405,6 +404,7 @@ export default {
       this.task.difficulty = index + 1;
     },
     selectDate(data) {
+      data.month++;
       this.task.deadline = (String(data.date).length === 1 ? '0' + data.date : data.date) + '.' + (String(data.month).length === 1 ? '0' + data.month : data.month) + '.' + data.year;
       this.showCalendar = false;
     },
