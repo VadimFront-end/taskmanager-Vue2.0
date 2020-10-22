@@ -89,6 +89,11 @@ export default {
   mounted() {
     this.$store.dispatch('getAllProjects');
     this.projectFiltered=this.PROJECTS;
+  },
+  watch: {
+    PROJECTS() {
+      this.projectFiltered=this.PROJECTS;
+    }
   }
 }
 </script>

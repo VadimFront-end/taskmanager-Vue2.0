@@ -46,6 +46,11 @@ export default {
                     state.tasks.splice(i,1,newTask);
                 }
             }
+            for(let i=0;i<projectVuex.state.projectTasks.length;i++) {
+                if(projectVuex.state.projectTasks[i].id===newTask.id) {
+                    projectVuex.state.projectTasks.splice(i,1,newTask);
+                }
+            }
         },
         createSubtask(state, newSubtask) {
             const addStatus= {
@@ -84,6 +89,11 @@ export default {
             for(let i=0;i<state.tasks.length;i++) {
                 if(state.tasks[i].id===newStatus.indexTask) {
                     state.tasks[i].status=newStatus.status;
+                }
+            }
+            for(let i=0;i<projectVuex.state.projectTasks.length;i++) {
+                if(projectVuex.state.projectTasks[i].id===newStatus.indexTask) {
+                    projectVuex.state.projectTasks[i].status=newStatus.status;
                 }
             }
         },
@@ -137,7 +147,6 @@ export default {
                 }
                 state.tasks.push(tmpTask);
             }
-            console.log(state.tasks)
         }
     },
     actions: {
@@ -209,7 +218,21 @@ export default {
             commit('editStatusSubtask', newStatus);
         },
         editStatusTask({commit}, newStatus) {
-            commit('editStatusTask', newStatus);
+            axios.patch('https://radiant-ridge-41845.herokuapp.com/api/task', {
+                task_id: newStatus.indexTask,
+                status: newStatus.status
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(() => {
+                    commit('editStatusTask', newStatus);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+
         },
         deleteTask({commit}, taskId) {
             axios.delete(`https://radiant-ridge-41845.herokuapp.com/api/task/${taskId}`, {
@@ -217,9 +240,9 @@ export default {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-                .then(res => {
-                    console.log(res.data)
+                .then(() => {
                     commit('deleteTask', taskId);
+                    store.dispatch('getProjectTasks',projectVuex.state.getProjectData.id);
                 })
                 .catch(error => {
                     console.log(error.response)
@@ -260,7 +283,8 @@ export default {
                 urgency: newTask.difficulty,
                 estimated_time: newTask.time,
                 task_description: newTask.description,
-                project_id: newTask.project_id
+                project_id: newTask.project_id,
+                status: newTask.status
             }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`

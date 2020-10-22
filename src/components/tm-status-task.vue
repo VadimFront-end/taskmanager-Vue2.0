@@ -103,7 +103,7 @@ export default {
         status,
         indexTask: this.taskId
       }
-      this.$store.dispatch('editTask', newStatus);
+      this.$store.dispatch('editStatusTask', newStatus);
     }
   }
 }
