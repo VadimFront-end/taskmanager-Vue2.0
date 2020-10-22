@@ -5,8 +5,8 @@ import tmRegistration from '../components/auth/tm-registration'
 import tmChangePassword from '../components/auth/tm-change-password'
 import tmMainPage from '../components/tm-main-page'
 import tmMyTasks from '../components/tm-my-tasks'
-import tmProject from '../components/tm-project'
-import tmProjects from '../components/tm-projects'
+import tmProject from '../components/project/tm-project'
+import tmProjects from '../components/project/tm-projects'
 import store from '../vuex/store'
 Vue.use(Router);
 

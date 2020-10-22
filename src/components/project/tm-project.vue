@@ -86,8 +86,8 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import tmItemTask from '../components/tm-item-task'
-import tmControlFilters from '../components/tm-control-filters'
+import tmItemTask from '../tm-item-task'
+import tmControlFilters from '../tm-control-filters'
 
 export default {
   name: "tm-project",

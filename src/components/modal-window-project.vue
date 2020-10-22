@@ -161,7 +161,7 @@
          </span>
           <div v-show="deletingSubtask" style="display: flex;margin-left: 12px">
             <div style="color: #10141D">Вы точно хотите удалить проект?</div>
-            <div class="only-for-hover1">Удалить</div>
+            <div class="only-for-hover1" @click="$store.dispatch('deleteProject', project.id)">Удалить</div>
             <div @click="deletingSubtask=false" class="only-for-hover2">Назад</div>
           </div>
         </div>
@@ -179,7 +179,7 @@
               </clipPath>
             </defs>
           </svg>
-          <span style="color: #FCFCFD" v-show="!deletingSubtask">Сохранить</span>
+          <span style="color: #FCFCFD" v-show="!deletingSubtask" @click="saveTask">Сохранить</span>
         </div>
       </div>
     </div>
@@ -214,14 +214,17 @@ export default {
           project_name: this.project.project_name,
           project_description: this.project.project_description,
           project_deadline: this.project.project_deadline,
-          project_status: this.project.project_status
+          project_status: this.project.project_status,
+          id: this.project.id
         }
         if(Number.isNaN(this.project.id))this.$store.dispatch('addProject', newProject);
+        else this.$store.dispatch('editProject', newProject);
         this.$store.commit('isShowProjectWindow');
       }
       else this.error=true;
     },
     selectDate(data) {
+      data.month++;
       this.project.project_deadline = (String(data.date).length === 1 ? '0' + data.date : data.date) + '.' + (String(data.month).length === 1 ? '0' + data.month : data.month) + '.' + data.year;
       this.showCalendar = false;
     }

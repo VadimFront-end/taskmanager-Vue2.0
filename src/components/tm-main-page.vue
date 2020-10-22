@@ -35,7 +35,7 @@
 <script>
 import {mapGetters,mapActions} from 'vuex'
 import tmItemTask from '../components/tm-item-task'
-import tmProject from '../components/tm-project-now'
+import tmProject from './project/tm-project-now'
 import modalWindowDayPlan from '../components/modal-window-day-plan'
 
 export default {

@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import tmProject from '../components/tm-project-now'
+import tmProject from './tm-project-now'
 import {mapGetters} from 'vuex'
 export default {
   name: "tm-projects",

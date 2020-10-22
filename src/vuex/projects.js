@@ -59,6 +59,20 @@ export default {
         addProject(state, newProject) {
             state.projects.push(newProject);
         },
+        editProject(state, newProject) {
+            state.getProjectData=newProject;
+            state.showProjectWindow=false;
+        },
+        deleteProject(state, projectId) {
+            for(let i=0;i<state.projects.length;i++) {
+                if(state.projects[i].id===projectId) {
+                    state.projects.splice(i,1);
+                    router.push('/projects');
+                    state.showProjectWindow=false;
+                    break;
+                }
+            }
+        },
         getProjectNull(state) {
             state.getProjectData={};
             state.projectTasks=[];
@@ -114,6 +128,37 @@ export default {
             })
                 .then(res => {
                     commit('addProject', res.data);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+        },
+        editProject({commit}, newProject) {
+            axios.patch(`https://radiant-ridge-41845.herokuapp.com/api/project/${newProject.id}`, {
+                project_name: newProject.project_name,
+                project_description: newProject.project_description,
+                project_deadline: newProject.project_deadline,
+                project_status: newProject.project_status
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then((res) => {
+                    commit('editProject', res.data);
+                })
+                .catch(error => {
+                    console.log(error.response)
+                })
+        },
+        deleteProject({commit}, projectId) {
+            axios.delete(`https://radiant-ridge-41845.herokuapp.com/api/project/${projectId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(() => {
+                    commit('deleteProject', projectId);
                 })
                 .catch(error => {
                     console.log(error.response)
