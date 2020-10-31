@@ -60,13 +60,7 @@ export default {
         target.style.display='none';
       }, 0);
     },
-    dragEnd(e) {
-      const target=e.target;
-      e.dataTransfer.setData('card_id', target.id);
-      setTimeout(() => {
-        target.style.display='block';
-      }, 0);
-    }
+    
   }
 }
 </script>
